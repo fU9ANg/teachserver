@@ -28,6 +28,7 @@
     MSGNAME (CT_SelectedClassRoom, handleSelectedClassRoom);
     MSGNAME (CT_CourseFinished, handleCourseFinished);
     MSGNAME (CT_GetDBRecordFinished, handleDBRecordFinished);
+    MSGNAME (CT_GetCourseItemKeyInfoReq, handleGetCourseItemKeyInfoReq);
 
     /////////////////////
 

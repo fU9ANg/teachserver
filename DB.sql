@@ -264,6 +264,7 @@ CREATE TABLE `course_item` (
     `course_item_id` int (11) NOT NULL AUTO_INCREMENT,
     `course_id` int (11) NOT NULL,
     `item_id` int (11) NOT NULL,
+    `keys_info` varchar(512) NOT NULL,
     PRIMARY KEY (`course_item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -272,17 +273,17 @@ CREATE TABLE `course_item` (
 #
 LOCK TABLES `course_item` WRITE;
 /*!40000 ALTER TABLE `course_item` DISABLE KEYS */;
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (1,2);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (1,3);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (2,2);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (2,3);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (3,1);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (3,2);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (3,3);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (3,4);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (3,5);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (4,2);
-INSERT INTO `course_item`(`course_id`, `item_id`) VALUES (4,3);
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (1,2, '123,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (1,3, '223,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (2,2, '323,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (2,3, '423,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,1, '523,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,2, '523,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,3, '623,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,4, '723,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,5, '823,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (4,2, '923,abc,123');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (4,3, '023,abc,123');
 /*!40000 ALTER TABLE `course_item` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -24,6 +24,8 @@
 #include "Buf.h"
 #include "Sock.h"
 #include "AtomicT.h"
+
+#include "roommanager.h"
 #define SERVADDR "127.0.0.1"
 #define SERVPORT 8888
 #define MAXFD 10240

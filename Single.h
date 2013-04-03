@@ -14,9 +14,6 @@ class Single {
         QueueT<Buf*> sendqueue;
         PoolT<Buf> bufpool;
 
-        twomapT<int, int> map_id_fd; //<id, fd>
-
-
     private:
         Single();
         static class Single* p_;

@@ -6,9 +6,9 @@
 #include "HandleMessage.h"
 
 #include "roommanager.h"
-#include "class.h"
 #include "protocol.h"
 #include "Buf.h"
+#include "LoginCheck.h"
 
 /*
 =====================
@@ -27,7 +27,6 @@ void CHandleMessage::handleTest (Buf* p)
 */
 void CHandleMessage::handleChangeScene (Buf* p)
 {
-    //todo:
     printf ("change scene: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
 }
 
@@ -38,7 +37,7 @@ void CHandleMessage::handleChangeScene (Buf* p)
 */
 void CHandleMessage::handleLogin (Buf* p)
 {
-    //todo:
+    LoginCheck::check(p);
 }
 
 /*
@@ -58,7 +57,8 @@ void CHandleMessage::handleLoginResult (Buf* p)
 */
 void CHandleMessage::handleGetCourseDBCount (Buf* p)
 {
-    //todo:
+    cout << "CT_GetDBRecordCount\n";
+    CHandleMessage::postDBRecordCount (p, 1);
 }
 
 /*
@@ -68,7 +68,8 @@ void CHandleMessage::handleGetCourseDBCount (Buf* p)
 */
 void CHandleMessage::handleGetCourseDB (Buf* p)
 {
-    //todo:
+    cout << "CT_GetDBCourseDB\n";
+    CHandleMessage::postDBRecord (p, 1);
 }
 
 /*
@@ -78,7 +79,44 @@ void CHandleMessage::handleGetCourseDB (Buf* p)
 */
 void CHandleMessage::handleSetCourseGroup (Buf* p)
 {
-    //todo:
+    cout << "CT_SetCourseGroup\n";
+
+    try {
+        MutexLockGuard guard (DATABASE->m_mutex);
+        PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_USED_COURSE);
+
+        sCourseGroup* cg = (sCourseGroup*) (((char*)p->ptr()) + MSG_HEAD_LEN);
+        cout << "gradeName: " << cg->sGradeName << endl;
+        cout << "courseName: " << cg->sCourseGroupName << endl;
+        pstmt->setString (1, cg->sGradeName);
+        pstmt->setString (2, cg->sCourseGroupName);
+        ResultSet* prst = pstmt->executeQuery ();
+
+        while (prst->next())
+        {
+            CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+            if (room != NULL)
+            {
+                CCourse* course = new CCourse ();
+                if (course != NULL) {
+                    cout << "course_id: " << prst->getInt ("course_id") << endl;
+                    cout << "course_name: " << prst->getString ("course_name") << endl;
+                    course->setId (prst->getInt ("course_id"));
+                    course->setName (prst->getString ("course_name"));
+                    room->add_course (course);
+                }
+            }
+        }
+
+        delete pstmt;
+        delete prst;
+    }
+    catch (SQLException e) {
+        cout << e.what() << endl;
+    }
+
+    // add item of course to room
+    // todo
 }
 
 /*
@@ -88,7 +126,34 @@ void CHandleMessage::handleSetCourseGroup (Buf* p)
 */
 void CHandleMessage::handleGetCourseGroup (Buf* p)
 {
-    //todo:
+    cout << "CT_GetCourseGroup\n";
+    string sResult;
+
+    CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+    if (room != NULL)
+    {
+        CRoom::COURSELIST::iterator it;
+        for (it = room->m_course_list.begin (); it != room->m_course_list.end (); ++it) {
+            sResult += (*it)->getName();
+            sResult += ",";
+        }
+    }
+
+    struct sGetCourseGroup cList;
+    memset (&cList, 0x00, sizeof (sGetCourseGroup));
+    strncpy (cList.sCourseList, sResult.c_str(), sResult.size());
+    cout << "get courseItem: " << cList.sCourseList << endl;
+    cout << "get courseItem: " << sResult.c_str() << endl;
+
+    MSG_HEAD* head = (MSG_HEAD*) p;
+    head->cType = CT_GetCourseGroup;
+    head->cLen = MSG_HEAD_LEN + sizeof (struct sGetCourseGroup);
+    memcpy ((char*)p + MSG_HEAD_LEN, &cList, sizeof (struct sGetCourseGroup));
+
+    p->setsize (head->cLen);
+    SINGLE->sendqueue.enqueue (p);
+
+    return;
 }
 
 /*
@@ -98,7 +163,8 @@ void CHandleMessage::handleGetCourseGroup (Buf* p)
 */
 void CHandleMessage::handleGetCourseItemCount (Buf* p)
 {
-    //todo:
+    cout << "CT_GetCourseItemCount\n";
+    CHandleMessage::postDBRecordCount (p, 6);
 }
 
 /*
@@ -108,7 +174,8 @@ void CHandleMessage::handleGetCourseItemCount (Buf* p)
 */
 void CHandleMessage::handleGetCourseItem (Buf* p)
 {
-    //todo:
+    cout << "CT_GetCourseItem\n";
+    CHandleMessage::postDBRecord (p, 6);
 }
 
 /*
@@ -138,7 +205,8 @@ void CHandleMessage::handleLogoutReuslt (Buf* p)
 */
 void CHandleMessage::handleGetClassRoomDBCount (Buf* p)
 {
-    //todo:
+    cout << "CT_GetClassRoomDBCount\n";
+    CHandleMessage::postDBRecordCount (p, 4);
 }
 
 /*
@@ -148,7 +216,8 @@ void CHandleMessage::handleGetClassRoomDBCount (Buf* p)
 */
 void CHandleMessage::handleGetClassRoomDB (Buf* p)
 {
-    //todo:
+    cout << "CT_GetClassRoomDB\n";
+    CHandleMessage::postDBRecord (p, 4);
 }
 
 /*
@@ -158,7 +227,8 @@ void CHandleMessage::handleGetClassRoomDB (Buf* p)
 */
 void CHandleMessage::handleGetGradeDBCount (Buf* p)
 {
-    //todo:
+    cout << "CT_GetGradeDBCount\n";
+    CHandleMessage::postDBRecordCount (p, 2);
 }
 
 /*
@@ -168,7 +238,8 @@ void CHandleMessage::handleGetGradeDBCount (Buf* p)
 */
 void CHandleMessage::handleGetGradeDB (Buf* p)
 {
-    //todo:
+    cout << "CT_GetGradeDB\n";
+    CHandleMessage::postDBRecord (p, 2);
 }
 
 /*
@@ -178,7 +249,8 @@ void CHandleMessage::handleGetGradeDB (Buf* p)
 */
 void CHandleMessage::handleGetClassDBCount (Buf* p)
 {
-    //todo:
+    cout << "CT_GetClassDBCount\n";
+    CHandleMessage::postDBRecordCount (p, 3);
 }
 
 /*
@@ -188,7 +260,8 @@ void CHandleMessage::handleGetClassDBCount (Buf* p)
 */
 void CHandleMessage::handleGetClassDB (Buf* p)
 {
-    //todo:
+    cout << "CT_GetClassDB\n";
+    CHandleMessage::postDBRecord (p, 3);
 }
 
 /*
@@ -198,6 +271,23 @@ void CHandleMessage::handleGetClassDB (Buf* p)
 */
 void CHandleMessage::handleLoginClassRoom (Buf* p)
 {
+    struct sLoginOutClassRoom st_login_class_room;
+    memcpy(&st_login_class_room,
+            (char*)p->ptr() + sizeof(MSG_HEAD),
+            sizeof(struct sLoginOutClassRoom));
+    CRoom* proom = ROOMMANAGER->get_room_by_name(st_login_class_room.sClassRoomName);
+    if( NULL == proom) {
+        SINGLE->bufpool.free(p);
+        LOG(ERROR) << "cat find class room " << st_login_class_room.sClassRoomName <<endl;
+        printf("cat find class room [%s]\n", st_login_class_room.sClassRoomName);
+        return;
+    }
+    proom->set_teacher_fd(p->getfd());
+    proom->set_teacher_name(st_login_class_room.sTeacherName);
+    proom->set_class_name(st_login_class_room.sClassName);
+    printf("Teacher login class room [%d] success!\n", proom->get_room_id());
+
+    SINGLE->bufpool.free(p);
     //todo:
 }
 
@@ -213,7 +303,7 @@ void CHandleMessage::handleLogoutClassRoom (Buf* p)
 
 /*
 =====================
- 获得学生列表 (所有端)
+ 获得学生信息 (所有端)
 =====================
 */
 void CHandleMessage::handleGetStudentInfo (Buf* p)
@@ -303,8 +393,6 @@ void CHandleMessage::handleLockStudent (Buf* p)
 void CHandleMessage::handleSelectedClassRoom (Buf* p)
 {
     //todo:
-    printf ("CT_SelectedClassRoom: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
-
     TSelectedClassRoom* pp = (TSelectedClassRoom*)((char*)p->ptr() + sizeof(MSG_HEAD));
 
     //CClass* pclass = CLASSMANAGER->get_class(pp->classroom_id);
@@ -312,8 +400,10 @@ void CHandleMessage::handleSelectedClassRoom (Buf* p)
     if (MCT_STUDENT == pp->client_type) {
         CStudent* pstudent = new CStudent();
         proom->add_student(p->getfd(), pstudent);
+        printf("add a student[%d][%p]\n", p->getfd(), pstudent);
     }
     if (MCT_WHITEBOARD == pp->client_type) {
+        printf("white board login classroom[%d]", proom->get_room_id());
         proom->set_white_fd(p->getfd());
     }
     p->reset();
@@ -356,4 +446,34 @@ void CHandleMessage::handleDBRecordFinished (Buf* p)
     }
 #endif
     return;
+}
+
+void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {
+    MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
+    string keys_info;
+
+    GetCourseItemKeyInfoRsp rsp;
+
+    try {
+        MutexLockGuard guard (DATABASE->m_mutex);
+        PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_ITEM_KEYS);
+        pstmt->setInt(1, *(int*)p_head->cData());
+        ResultSet* rst = pstmt->executeQuery();
+        while(rst->next()) {
+            strcpy(rsp.keys, rst->getString("keys_info").c_str());
+        }
+        delete rst;
+        delete pstmt;
+    }catch( SQLException& e) {
+        printf(" %s %d:%s", __FUNCTION__, __LINE__, e.what());
+        LOG(ERROR) <<e.what()<<endl;
+        SINGLE->bufpool.free(p);
+        return;
+    }
+
+    p_head->cLen = sizeof(MSG_HEAD) + sizeof(GetCourseItemKeyInfoRsp);
+    p_head->cType = CT_GetCourseItemKeyInfoRsp;
+    memcpy(p_head->cData(), &rsp, sizeof(rsp));
+    p->setsize(p_head->cLen);
+    SINGLE->sendqueue.enqueue(p);
 }

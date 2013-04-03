@@ -21,6 +21,7 @@
 #include <glog/logging.h>
 
 #include "Config.h"
+#include "Mutex.h"
 
 using namespace sql;
 using namespace std;
@@ -55,6 +56,7 @@ class DataBase {
         PreparedStatement* preStatement(string sql);
 
         static DataBase* instance();
+        MutexLock m_mutex;
     private:
         DataBase();
         Driver* m_pDriver;

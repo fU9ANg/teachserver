@@ -56,7 +56,7 @@ public:
     }
 
 private:
-    static bool postMessage (Buf* p, enum CommandType iCommandType);
+    static bool postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen);
 
     static bool postTeacherToWhite (Buf* p, enum CommandType);
     static bool postStudentToWhite (Buf* p, enum CommandType);

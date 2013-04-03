@@ -23,7 +23,7 @@ enum CommandType
     CT_GetGradeDB,       // 获得教室年级数据库信息 (教师端)
     CT_GetClassDBCount,  // 获得班级信息数量 (教师端)
     CT_GetClassDB,       // 获得班级信息 (教师端)
-    CT_LoginClassRoom,   // 进入教室 (所有学生端)
+    CT_LoginClassRoom,   // 进入教室  老師->服務器
     CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)
     CT_GetStudentInfo,   // 获得学生列表 (所有端)
     CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)
@@ -39,7 +39,17 @@ enum CommandType
     ST_CourseFinished,      // 服务请求课程是否结束
     CT_GetDBRecordFinished, // 请求所有数据库记录是否完成
     ST_GetDBRecordFinished, // 服务器回应数据库记录是否完成
+    CT_GetCourseItemKeyInfoReq, // 教师端请求CourseItem的按键数据请求
+    CT_GetCourseItemKeyInfoRsp, // 教师端请求CourseItem的按键数据回应
 
+    CT_Common_PlayorPause,
+    ST_Common_PlayorPause,
+    //CT_Common_Pause,
+    //ST_Common_Pause,
+    CT_Common_Resume,
+    ST_Common_Resume,
+    CT_Common_Stop,
+    ST_Common_Stop,
     /////////////////////
 
     CT_ShowSpriteAnimation = 200,   // 串场动画 (教师端) *
@@ -198,11 +208,20 @@ struct sLogout
 
 struct sCourseGroup
 {
+    char sGradeName[20];    // 服务器没有处理这个字段
     char sCourseGroupName[20];
 };
 /*
 | len | CT_SetCourseGroup | struct sCourseGroup |
-| len | CT_GetCourseGroup | struct sCourseGroup |
+*/
+
+struct sGetCourseGroup
+{
+    char sCourseList[128];   // 动画片,暖身操,xxxx,
+};
+/*
+| len | CT_GetCourseGroup |
+| len | CT_GetCourseGroup | struct sGetCourseList |
 */
 
 struct sGetCourseDB
@@ -399,7 +418,7 @@ struct sGetTeacherInfo
 
 struct sControlLevel
 {
-    int level;  // VALUE: 0, 1, 2, 3
+    int level;  // VALUE: 0 (待机), 1, 2, 3, 4 (下一节)
 };
 /*
 | len | CT_ControlLevel | struct sControlLevel |
@@ -470,6 +489,16 @@ typedef struct sSubmitData
 		return this+1;
 	}; 	
 }MSG_HEAD;
+
+typedef struct _stCT_GetCourseItemKeyInfoReq{
+    unsigned int course_item_id;
+}GetCourseItemKeyInfoReq;
+
+typedef struct _stCT_GetCourseItemKeyInfoRsp{
+    char keys[512];
+}GetCourseItemKeyInfoRsp;
+
+#define MSG_HEAD_LEN sizeof(struct sSubmitData)
 
 #pragma pack()
 

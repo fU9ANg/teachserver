@@ -23,9 +23,9 @@ Evloop::~Evloop() {
 int Evloop::startlisten() {
     struct sockaddr_in servaddr;
     servaddr.sin_family = AF_INET;
-    //servaddr.sin_addr.s_addr = inet_addr(ip_.c_str());
+    servaddr.sin_addr.s_addr = inet_addr(ip_.c_str());
     //inet_pton (AF_INET, ip_.c_str(), &servaddr.sin_addr.s_addr);
-    servaddr.sin_addr.s_addr = htonl (INADDR_ANY);
+    //servaddr.sin_addr.s_addr = htonl (INADDR_ANY);
     servaddr.sin_port = htons(port_);
     if (0 != bind(listenfd_, (struct sockaddr*)&servaddr, sizeof(struct sockaddr))) {
         LOG(ERROR) << "bind error" << endl;;
@@ -106,7 +106,7 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     int *p = (int*)buf->ptr();
     i = recv_v(w->fd, (char*)buf->ptr() + sizeof(int), *p - sizeof(unsigned int));
 
-    if ( (*p - sizeof(unsigned int)) != i) {
+    if ( (*p - sizeof(unsigned int)) != (unsigned int)i) {
         LOG(ERROR) << w->fd <<":recv body error! hope = "<< *p <<" actually received len = "<< i <<endl;;
         Evloop::closefd(w->fd);
         return;
@@ -115,7 +115,6 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     Evloop::ioarray[w->fd].lasttime = ev_time();
     buf->setfd(w->fd);
     //将buf压入队列
-    printf("[%d]XXXXXXXXXXXXXXXX\n", w->fd);
     SINGLE->recvqueue.enqueue(buf);
     return;
 }
@@ -142,8 +141,8 @@ void Evloop::closefd(int fd) {
     ev_io_stop(loop, Evloop::ioarray[fd].io);
     free(Evloop::ioarray[fd].io);
     Evloop::ioarray[fd].io = NULL;
-    SINGLE->map_id_fd.delvalue(fd);
     Evloop::clientcount--;
+    ROOMMANAGER->del_client(fd);
 }
 
 void Evloop::time_cb(struct ev_loop* loop, struct ev_timer *timer, int revents) {

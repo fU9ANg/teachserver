@@ -1,0 +1,3 @@
+game.o: content/game.cpp content/game.h
+
+content/game.h:
