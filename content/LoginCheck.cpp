@@ -53,9 +53,6 @@ void LoginCheck::check(Buf* pbuf) {
 int LoginCheck::login_teacher(int fd, struct sLogin login) {
     string strpwd;
     string Account;
-    string fName;
-    string lName;
-    //int id = 0;
     try {
         MutexLockGuard guard(DATABASE->m_mutex);
         PreparedStatement* pstmt = DATABASE->preStatement (SQL_SELECT_TEACHER);
@@ -63,10 +60,12 @@ int LoginCheck::login_teacher(int fd, struct sLogin login) {
         ResultSet* prst = pstmt->executeQuery ();
         while (prst->next ()) {
             strpwd = prst->getString ("password");
+#if 0
             //id = prst->getInt("teacher_id");
             Account = prst->getString("account");
             Account = prst->getString("first_name");
             Account = prst->getString("last_name");
+#endif
         }
         delete prst;
         delete pstmt;
@@ -75,14 +74,6 @@ int LoginCheck::login_teacher(int fd, struct sLogin login) {
 
     if ((strcmp (login.password, strpwd.c_str()) == 0) && (!strlen (login.password))) {
         printf("teacher: login success!\n"); // ADD student_name to CLASS
- #if 0
-        cClass* pclass = new cClass();
-        pclass->getTeacher()->setAccount(Account);
-        pclass->getTeacher()->setSocket(fd);
-        pclass->getTeacher()->setName(fName, lName);
-        CLASSMANAGER->addClass(pclass);
-#endif
-
         return 0;
     }
     return -1;
@@ -114,26 +105,45 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
     }
     catch(SQLException e) {
         printf("[%s] %s\n",__FUNCTION__, e.what());
+        LOG(ERROR) << e.what() <<endl;
     }
 
     if ( 0 == strncmp(login.password, strpwd.c_str(), strpwd.size())) {
         printf("student: login success!\n"); // ADD student_name to CLASS
 
-        CRoom* pClass = ROOMMANAGER->get_room_by_fd (fd);
-        if (pClass == NULL) {
+        CRoom* pRoom = ROOMMANAGER->get_room_by_fd (fd);
+        if (pRoom == NULL) {
             LOG(ERROR) << "in login_student function. error: not found CLASS in CLASSMANAGER with fd" << endl;
             return -1;
         }
 
-        printf("room[%p] get a sutdent\n", pClass);
-        CStudent* pStudent = pClass->get_student_by_fd (fd);
-        if (pStudent == NULL)
+        printf("room[%d] get a sutdent\n", pRoom->get_room_id());
+
+        LOG(INFO) << "room ["<<pRoom->get_room_id()<<"] get a student " << id <<endl;
+        CStudent* pStudent = pRoom->get_student_by_fd (fd);
+        if (pStudent == NULL) {
             LOG(ERROR) << "in login_student function. error: not found STUDENT in CLASSMANGER with fd" << endl;
+        }
         pStudent->setName (strFirstName, strLastName);
         pStudent->setAccount (strAccount);
         pStudent->setId (id);
         pStudent->setPictureName (strPictureName);
         pStudent->setOnLine (true);
+
+        Buf* pp = SINGLE->bufpool.malloc();
+        MSG_HEAD* p_head = (MSG_HEAD*)pp->ptr();
+        p_head->cLen = sizeof(MSG_HEAD) + sizeof(TSendStudentStatusReq); 
+        p_head->cType = ST_SendStudentStatus;
+
+        TSendStudentStatusReq body;    
+        body.student_id = pStudent->getId();
+        body.status = 0x00000000;      
+        memcpy(p_head->cData(), &body, sizeof(body));
+
+
+        pp->setsize(p_head->cLen);      
+        pp->setfd(pRoom->get_teacher_fd());        
+        SINGLE->sendqueue.enqueue(pp);
 
         return 0;
     }

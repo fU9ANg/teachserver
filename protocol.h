@@ -25,7 +25,8 @@ enum CommandType
     CT_GetClassDB,       // 获得班级信息 (教师端)
     CT_LoginClassRoom,   // 进入教室  老師->服務器
     CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)
-    CT_GetStudentInfo,   // 获得学生列表 (所有端)
+    CT_GetStudentDetailInfo,   // 获得学生列表 (所有端)
+    ST_GetStudentDetailInfo,   // 获得学生列表 (所有端)
     CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)
     CT_GetAllStudentInfo,// 获得所有学生列表 (所有端)
     CT_LeaveEarly,       // 早退 (教师端)
@@ -41,6 +42,7 @@ enum CommandType
     ST_GetDBRecordFinished, // 服务器回应数据库记录是否完成
     CT_GetCourseItemKeyInfoReq, // 教师端请求CourseItem的按键数据请求
     CT_GetCourseItemKeyInfoRsp, // 教师端请求CourseItem的按键数据回应
+    ST_SendStudentStatus,   //学生在线状态
 
     CT_Common_PlayorPause,
     ST_Common_PlayorPause,
@@ -302,6 +304,18 @@ struct sGetCourseItem
 {
     char sCourseName[20];
 };
+
+/**
+ * 学生在线状态
+ */
+typedef struct ST_SendStudentStatusReq {
+    unsigned int student_id;
+    //0 断线
+    //!0 在线
+    unsigned int status;
+}TSendStudentStatusReq;
+
+
 /*
 | len | CT_GetCourseItem | struct sGetCourseItem |
 */
@@ -337,6 +351,15 @@ struct sLoginOutClassRoom
 | len | CT_LogoutClassRoom | struct sLoginOutClassRoom |
 */
 
+struct sSetStudentDetail
+{
+    int  iStudentId;
+    char sStudentName[20];
+};
+/*
+| len | CT_SetStudentDetailInfo | struct sSetStudentDetailInfo |
+*/
+
 struct sGetStudentDetailInfo
 {
     char sNumber[20];
@@ -360,7 +383,8 @@ SELECT s.number, s.last_name, s.first_name, s.sex, sc.school_name, g.grade_name,
 | 10000001 | yang      | c1         | 男   | 双楠幼儿园      | 小班       | 一年级     | 1       | 2000-01-01 | 四         | 李        |       1001 |
 | 10000035 | yang      | c35        | 男   | 双楠幼儿园      | 小班       | 一年级     | 35      | 2000-01-01 | 四         | 李        |       1035 |
 +----------+-----------+------------+------+-----------------+------------+------------+---------+------------+------------+-----------+------------+
-| len | CT_GetStudentDetailInfo | struct sGetStudentDetailInfo |
+
+| len | ST_GetStudentDetailInfo | struct sGetStudentDetailInfo |
 */
 
 struct sGetAllStudentInfo

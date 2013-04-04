@@ -4,10 +4,8 @@
 
 #include "room.h"
 
-CRoom::CRoom(int id, string class_name, string white_board) {
-    m_room_id = id;
-    m_room_name = class_name;
-    m_white_board = white_board;
+CRoom::CRoom(int id, string class_name, string white_board):
+    m_room_id(id),m_room_name(class_name),m_white_board(white_board) {
 }
 
 int CRoom::get_room_id() {
@@ -43,6 +41,20 @@ void CRoom::del_student(int fd) {
                 it->first,
                 it->second->getName().c_str());
 
+        Buf* p = SINGLE->bufpool.malloc();
+        MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
+        p_head->cLen = sizeof(MSG_HEAD) + sizeof(TSendStudentStatusReq);
+        p_head->cType = ST_SendStudentStatus;
+
+        TSendStudentStatusReq body;
+        body.student_id = it->second->getId();
+        body.status = 0xFFFFFFFF;
+        memcpy(p_head->cData(), &body, sizeof(body));
+
+        p->setsize(p_head->cLen);
+        p->setfd(m_teacher_fd);
+        SINGLE->sendqueue.enqueue(p);
+
         delete it->second;
         m_student_map.erase(it);
     }
@@ -51,6 +63,7 @@ void CRoom::del_student(int fd) {
 void CRoom::del_client(int fd) {
     if (fd == m_teacher_fd) {
         printf("room [%d] teacher disconnected!\n", m_room_id);
+        teacher_disconnect();
         m_teacher_fd = 0;
         return;
     }
@@ -138,4 +151,46 @@ CRoom* CRoom::get_room_by_fd (int fd)
         return this;
     else
         return NULL;
+}
+
+int CRoom::reset() {
+    STUDENTMAP::iterator it;
+    for (it = m_student_map.begin(); it != m_student_map.end();) {
+        delete it->second;
+        m_student_map.erase(it++);
+    }
+
+    COURSELIST::iterator it1;
+    for (it1 = m_course_list.begin(); it1 != m_course_list.end();) {
+        delete *it1;
+        m_course_list.erase(it1++);
+    }
+
+    GAMELIST::iterator it2;
+    for (it2 = m_game_list.begin(); it2 != m_game_list.end();) {
+        delete *it2;
+        m_game_list.erase(it2++);
+    }
+    m_white_fd = 0;
+    m_teacher_fd = 0;
+    return 0;
+}
+
+void CRoom::teacher_disconnect() {
+    STUDENTMAP::iterator it;
+    for (it = m_student_map.begin(); it != m_student_map.end(); ++it) {
+        Buf* p = SINGLE->bufpool.malloc();
+        MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
+        p_head->cLen = sizeof(MSG_HEAD) + sizeof(TSendStudentStatusReq);
+        p_head->cType = ST_SendStudentStatus;
+
+        TSendStudentStatusReq body;
+        body.student_id = 0XFFFFFFFF;
+        body.status = 0xFFFFFFFF;
+        memcpy(p_head->cData(), &body, sizeof(body));
+
+        p->setsize(p_head->cLen);
+        p->setfd(it->first);
+        SINGLE->sendqueue.enqueue(p);
+    }
 }

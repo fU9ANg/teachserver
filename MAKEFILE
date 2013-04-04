@@ -1,7 +1,7 @@
 CPP=ccache g++ 
 CC=ccache gcc
 CFLAGS=-Wall -Werror -g
-LINKS	= -lpthread -lrt -lev -lglog -L/usr/lib -lmysqlcppconn /usr/lib/liblua.a
+LINKS	= -lpthread -lrt -lev -lglog -lmysqlcppconn -llua5.2
 
 OBJS	= ThreadPool.o \
 		  content/LoginCheck.o \

@@ -28,7 +28,8 @@ int Evloop::startlisten() {
     //servaddr.sin_addr.s_addr = htonl (INADDR_ANY);
     servaddr.sin_port = htons(port_);
     if (0 != bind(listenfd_, (struct sockaddr*)&servaddr, sizeof(struct sockaddr))) {
-        LOG(ERROR) << "bind error" << endl;;
+        LOG(ERROR) << "bind error %s" << strerror(errno)<< endl;;
+        sleep(1);
         abort(); //致命错误
         return -1;
     }
@@ -39,13 +40,14 @@ int Evloop::startlisten() {
 int Evloop::work() {
     //建立监听
     startlisten();
-    ev_io ev_io_watcher;
+    ev_io *ev_io_watcher = (ev_io*)malloc(sizeof(ev_io));
+    //ev_io ev_io_watcher;
     //ev_timer timer;
     Evloop::loop = ev_loop_new(EVBACKEND_EPOLL);
 
-    ev_io_init(&ev_io_watcher, accept_cb, listenfd_, EV_READ);
+    ev_io_init(ev_io_watcher, accept_cb, listenfd_, EV_READ);
 
-    ev_io_start(Evloop::loop,&ev_io_watcher); 
+    ev_io_start(Evloop::loop, ev_io_watcher); 
 #if 0
     //定时器
     ev_timer_init(&timer, time_cb, 5, 5);
@@ -57,6 +59,7 @@ int Evloop::work() {
     ev_loop(Evloop::loop, 0);
 
     ev_loop_destroy(Evloop::loop);
+    free(ev_io_watcher);
     return 0;
 }
 
@@ -90,7 +93,9 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     //从内存池中取出一个buf
     Buf* buf = SINGLE->bufpool.malloc();
     if (NULL == buf) {
-        printf("null buf\n");
+        sleep (1);
+        printf("--null buf\n");
+        abort ();
         return;
     }
 

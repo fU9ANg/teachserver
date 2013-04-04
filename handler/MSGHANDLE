@@ -18,7 +18,7 @@
     MSGNAME (CT_GetClassDB, handleGetClassDB);
     MSGNAME (CT_LoginClassRoom, handleLoginClassRoom);
     MSGNAME (CT_LogoutClassRoom, handleLogoutClassRoom);
-    MSGNAME (CT_GetStudentInfo, handleGetStudentInfo);
+    MSGNAME (CT_GetStudentDetailInfo, handleGetStudentDetailInfo);
     MSGNAME (CT_GetAllStudentInfoCount, handleGetAllStudentInfoCount);
     MSGNAME (CT_GetAllStudentInfo, handleGetAllStudentInfo);
     MSGNAME (CT_LeaveEarly, handleLeaveEarly);
@@ -31,6 +31,10 @@
     MSGNAME (CT_GetCourseItemKeyInfoReq, handleGetCourseItemKeyInfoReq);
 
     /////////////////////
+
+    MSGNAME (CT_Common_PlayorPause, handleCommonPlayorPause);
+    MSGNAME (CT_Common_Resume, handleCommonResume);
+    MSGNAME (CT_Common_Stop, handleCommonStop);
 
     MSGNAME (CT_ShowSpriteAnimation, handleShowSpriteAnimation);
     

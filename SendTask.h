@@ -1,5 +1,6 @@
 #ifndef SENDTASK_H_
 #define SENDTASK_H_
+
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -9,13 +10,12 @@
 #include <signal.h>
 
 #include "task.h"
-#include "Sock.h"
-#include "Single.h"
-#include "Buf.h"
-class SendTask: public task{
+class SendTask: public task
+{
     public:
         SendTask();
         ~SendTask();
         virtual int work();
 };
+
 #endif

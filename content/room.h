@@ -59,6 +59,9 @@ public:
 
     CRoom* get_room_by_fd (int fd);
 
+    int reset();
+    void teacher_disconnect();
+
 private:
     CTeacher m_teacher;
     int m_room_id;

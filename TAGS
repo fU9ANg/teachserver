@@ -1,77 +1,4 @@
 
-DB.sql,1103
-# Source for table report (报表)report23,702
-# Source for table school (学校表)school51,1654
-# Source for table grade (年级表)grade71,2173
-# Source for table classroom (教室表)classroom93,2754
-# Source for table class (班级表)class118,3569
-# Source for table course_group (课件组表)course_group144,4338
-# Source for table course (课程表)course167,5045
-# Source for table course_group_course (课件课程表)course_group_course197,6029
-# Source for table item (选项表)item236,7480
-# Source for table course_item (课程选项表)course_item260,8143
-# Source for table grade_course (年级课程表)grade_course292,9759
-# Source for table resource_type (资源类型表)resource_type324,10767
-# Source for table resource (资源表)resource347,11475
-# Source for table country (国家表)country420,15389
-# Source for table race (民族配置表)race442,15912
-# Source for table native_place (所在地配置表)native_place465,16450
-# Source for table student (学生表)student488,17054
-# Source for table teacher (教师表)teacher558,22823
-
-main.cpp,45
-int main(int argc, char* argv[]){main9,130
-
-Single.cpp,144
-Single* Single::p_ = NULL;p_2,20
-Single* Single::instance() {instance3,47
-Single::Single(){Single10,150
-Single::~Single(){~Single13,175
-
-QueueT.h,391
-#define _QUEUET_H__QUEUET_H_7,74
-class QueueT {QueueT21,296
-    QueueT() {QueueT26,363
-    ~QueueT() {~QueueT33,512
-    int dequeue(TYPE& out, unsigned int timeout) {dequeue44,787
-    int enqueue(TYPE t) {enqueue65,1370
-    size_t size() {size82,1775
-    pthread_mutex_t m_mutex;m_mutex91,1967
-    pthread_cond_t m_con;m_con93,2014
-    queue<TYPE> m_queue;m_queue95,2055
-
-Evloop.h,632
-#define EVLOOP_H_EVLOOP_H_6,52
-#define SERVADDR SERVADDR27,462
-#define SERVPORT SERVPORT28,491
-#define MAXFD MAXFD29,513
-#define TIMEOUT TIMEOUT30,533
-typedef struct ev_io_info{ev_io_info32,553
-    struct ev_io* io;io33,580
-    ev_tstamp lasttime;lasttime34,602
-}ev_in_info;ev_in_info35,626
-class Evloop: public task{Evloop41,686
-        static struct ev_loop* loop;loop72,1692
-        static struct ev_io_info ioarray[MAXFD];ioarray75,1809
-        static AtomicT<int> clientcount;clientcount81,1904
-        int listenfd_;listenfd_84,2001
-        int port_;port_85,2024
-        string ip_;ip_86,2043
-
-SendTask.h,82
-#define SENDTASK_H_SENDTASK_H_2,20
-class SendTask: public task{SendTask15,268
-
-ProcessManager.h,412
-#define _PROCESSMAMAGER_H__PROCESSMAMAGER_H_2,27
-#define CONFIGFILE CONFIGFILE21,377
-  LOCK_WAIT   = LOCK_EX,            /**<阻塞锁*/LOCK_WAIT23,418
-  LOCK_NOWAIT = LOCK_EX | LOCK_NB,  /**<非阻塞锁*/LOCK_NOWAIT24,470
-  UNLOCK      = LOCK_UN             /**<解锁*/UNLOCK25,525
-class ProcessManagerProcessManager28,578
-    ThreadPool* thrpool_;thrpool_38,790
-    int lockfd_;lockfd_39,816
-
 Config.cpp,200
 Config* Config::p_ = NULL;p_2,20
 Config* Config::instance() {instance3,47
@@ -79,11 +6,202 @@ Config::Config(){Config10,150
 Config::~Config(){~Config13,175
 void Config::readconfig(string file){readconfig16,197
 
-Sock.c,140
-ssize_t send_n(int fd,send_n3,19
-ssize_t recv_n(int fd,recv_n34,684
-int send_v(int fd,send_v64,1352
-int recv_v(int fd,recv_v89,1845
+database.cpp,479
+DataBase* DataBase::pinstance = NULL;pinstance9,124
+bool DataBase::Init(string host, string user_name, string password, string database) {Init12,180
+DataBase::DataBase() {DataBase28,716
+DataBase::~DataBase() {~DataBase31,761
+Connection* DataBase::getConnection() {getConnection39,873
+Statement* DataBase::getStatement() {getStatement43,937
+PreparedStatement* DataBase::preStatement(string sql) {preStatement59,1227
+DataBase* DataBase::instance() {instance63,1330
+
+Evloop.cpp,860
+struct ev_loop* Evloop::loop = NULL;loop3,21
+struct ev_io_info Evloop::ioarray[MAXFD];ioarray4,58
+AtomicT<int> Evloop::clientcount;clientcount5,100
+Evloop::Evloop(string ip, int port) {Evloop7,135
+Evloop::~Evloop() {~Evloop19,417
+int Evloop::startlisten() {startlisten23,462
+int Evloop::work() {work40,1050
+void Evloop::accept_cb(struct ev_loop *loop, ev_io *w, int revents) {accept_cb69,1702
+void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {recv_cb92,2355
+void Evloop::setnonblock(int fd) {setnonblock127,3351
+void Evloop::setreuseaddr(int fd)setreuseaddr131,3447
+void Evloop::setnodelay (int fd)setnodelay137,3576
+void Evloop::closefd(int fd) {closefd143,3710
+void Evloop::time_cb(struct ev_loop* loop, struct ev_timer *timer, int revents) {time_cb153,3989
+int Evloop::getClientCount() {getClientCount167,4453
+
+main.cpp,45
+int main(int argc, char* argv[]){main9,130
+
+ProcessManager.cpp,346
+ProcessManager::ProcessManager() { ProcessManager2,28
+ProcessManager::~ProcessManager() {~ProcessManager7,119
+int ProcessManager::process_logic(int argc, char** argv) {process_logic10,158
+void ProcessManager::sig_term(int signo) {sig_term69,1756
+int ProcessManager::run() {run78,1912
+bool ProcessManager::lock(int mode) {lock112,2807
+
+RecvTask.cpp,481
+RecvTask::RecvTask() {RecvTask4,47
+RecvTask::~RecvTask() {~RecvTask7,73
+void login_check (Buf* buf)login_check10,100
+void process_scene (Buf* buf)process_scene16,194
+void getDBRecordCount (Buf* buf, int iCase)getDBRecordCount33,574
+void getDBRecord (Buf* buf, int iCase)getDBRecord38,635
+void handle_selected_class(Buf* p) {handle_selected_class43,691
+void handle_show_sprite_animation (Buf* p)handle_show_sprite_animation62,1272
+int RecvTask::work ()work82,1819
+
+SendTask.cpp,109
+SendTask::SendTask() {SendTask2,22
+SendTask::~SendTask() {~SendTask5,48
+int SendTask::work() {work8,75
+
+Single.cpp,144
+Single* Single::p_ = NULL;p_2,20
+Single* Single::instance() {instance3,47
+Single::Single(){Single10,150
+Single::~Single(){~Single13,175
+
+ThreadPool.cpp,413
+ThreadPool::ThreadPool(int n):ThreadPool3,25
+ThreadPool::~ThreadPool() {~ThreadPool7,88
+int ThreadPool::start() {start10,119
+int ThreadPool::stop() {stop21,385
+int ThreadPool::push_task(task* p) {push_task29,504
+int ThreadPool::getcount() {getcount33,584
+void* ThreadPool::thread(void* p) {thread38,686
+int ThreadPool::kill() {kill61,1260
+void ThreadPool::sighandle(int signo) {sighandle70,1461
+
+AtomicT.h,983
+#define _ATOMICT_H__ATOMICT_H_5,47
+class AtomicT {AtomicT11,153
+        AtomicT(){AtomicT13,181
+        AtomicT(TYPE a){AtomicT16,234
+        ~AtomicT(){~AtomicT19,293
+        TYPE value() {value22,324
+        TYPE operator+= (TYPE a){operator +=27,432
+        TYPE operator-= (TYPE a){operator -=32,556
+        TYPE operator++ (void){operator ++40,736
+        TYPE operator++ (int){operator ++48,912
+        TYPE operator-- (void){operator --53,1030
+        TYPE operator-- (int){operator --58,1149
+        AtomicT<TYPE>& operator= (TYPE a){operator =63,1267
+        bool operator== (TYPE a){operator ==70,1471
+        bool operator!= (TYPE a){operator !=75,1595
+        bool operator> (TYPE a){operator >80,1719
+        bool operator>= (TYPE a){operator >=85,1841
+        bool operator< (TYPE a){operator <90,1965
+        bool operator<= (TYPE a){operator <=95,2087
+        TYPE value_;value_101,2224
+        MutexLock lock_;lock_102,2245
+
+Buf.h,569
+#define _BUF_H__BUF_H_2,16
+class Buf {Buf6,54
+    Buf(size_t inSize = 5120) {Buf8,74
+    ~Buf(){~Buf15,202
+    void* ptr() {ptr22,309
+    size_t setsize(size_t in) {setsize26,355
+    size_t maxsize() {maxsize30,421
+    size_t size() {size34,473
+    void reset() {reset38,522
+    int getfd() {getfd42,583
+    void setfd(int fd) {setfd45,627
+    int getid() {getid49,677
+    void setid(int id) {setid52,721
+    void* ptr_;ptr_56,779
+    size_t size_;size_57,795
+    size_t used_;used_58,813
+    int fd_;fd_59,831
+    int id_;id_60,844
+
+config.h,1625
+#define HAVE_ARPA_INET_H HAVE_ARPA_INET_H5,185
+#define HAVE_FCNTL_H HAVE_FCNTL_H8,270
+#define HAVE_FORK HAVE_FORK11,345
+#define HAVE_FTRUNCATE HAVE_FTRUNCATE14,422
+#define HAVE_INTTYPES_H HAVE_INTTYPES_H17,508
+#define HAVE_LIMITS_H HAVE_LIMITS_H20,593
+#define HAVE_MALLOC HAVE_MALLOC24,719
+#define HAVE_MEMORY_H HAVE_MEMORY_H27,800
+#define HAVE_MEMSET HAVE_MEMSET30,878
+#define HAVE_NETINET_IN_H HAVE_NETINET_IN_H33,963
+#define HAVE_SELECT HAVE_SELECT36,1045
+#define HAVE_SOCKET HAVE_SOCKET39,1121
+#define HAVE_STDBOOL_H HAVE_STDBOOL_H42,1192
+#define HAVE_STDINT_H HAVE_STDINT_H45,1276
+#define HAVE_STDLIB_H HAVE_STDLIB_H48,1359
+#define HAVE_STRERROR HAVE_STRERROR51,1439
+#define HAVE_STRINGS_H HAVE_STRINGS_H54,1523
+#define HAVE_STRING_H HAVE_STRING_H57,1607
+#define HAVE_SYS_FILE_H HAVE_SYS_FILE_H60,1692
+#define HAVE_SYS_SOCKET_H HAVE_SYS_SOCKET_H63,1781
+#define HAVE_SYS_STAT_H HAVE_SYS_STAT_H66,1870
+#define HAVE_SYS_TYPES_H HAVE_SYS_TYPES_H69,1958
+#define HAVE_UNISTD_H HAVE_UNISTD_H72,2044
+#define HAVE_VFORK HAVE_VFORK75,2121
+#define HAVE_WORKING_FORK HAVE_WORKING_FORK81,2262
+#define HAVE_WORKING_VFORK HAVE_WORKING_VFORK84,2327
+#define HAVE__BOOL HAVE__BOOL87,2411
+#define PACKAGE PACKAGE90,2455
+#define PACKAGE_BUGREPORT PACKAGE_BUGREPORT93,2558
+#define PACKAGE_NAME PACKAGE_NAME96,2635
+#define PACKAGE_STRING PACKAGE_STRING99,2725
+#define PACKAGE_TARNAME PACKAGE_TARNAME102,2821
+#define PACKAGE_URL PACKAGE_URL105,2903
+#define PACKAGE_VERSION PACKAGE_VERSION108,2972
+#define STDC_HEADERS STDC_HEADERS111,3058
+#define VERSION VERSION114,3114
+
+Config.h,485
+#define _CONFIG_H__CONFIG_H_2,19
+class Config {Config8,123
+        string db_host;db_host13,248
+        string db_username;db_username14,272
+        string db_password;db_password15,300
+        string db_database;db_database16,328
+        string server_ip;server_ip17,356
+        int server_port;server_port18,382
+        int school_id;school_id19,407
+        int game_count;game_count20,430
+        static class Config* p_;p_23,485
+#define CONFIG CONFIG25,521
+
+database.h,472
+#define _DATABASE_H__DATABASE_H_7,66
+class DataBase {DataBase29,486
+        MutexLock m_mutex;m_mutex59,1345
+        Driver* m_pDriver;m_pDriver62,1405
+        Connection* m_pConn;m_pConn63,1432
+        string m_host;m_host64,1461
+        string m_user_name;m_user_name65,1484
+        string m_password;m_password66,1512
+        string m_database;m_database67,1539
+        static DataBase *pinstance;pinstance68,1566
+#define DATABASE DATABASE70,1605
+
+Evloop.h,632
+#define EVLOOP_H_EVLOOP_H_6,52
+#define SERVADDR SERVADDR29,488
+#define SERVPORT SERVPORT30,517
+#define MAXFD MAXFD31,539
+#define TIMEOUT TIMEOUT32,559
+typedef struct ev_io_info{ev_io_info34,579
+    struct ev_io* io;io35,606
+    ev_tstamp lasttime;lasttime36,628
+}ev_in_info;ev_in_info37,652
+class Evloop: public task{Evloop43,712
+        static struct ev_loop* loop;loop74,1718
+        static struct ev_io_info ioarray[MAXFD];ioarray77,1835
+        static AtomicT<int> clientcount;clientcount83,1930
+        int listenfd_;listenfd_86,2027
+        int port_;port_87,2050
+        string ip_;ip_88,2069
 
 Mutex.h,1003
 #define _MUTEX_LOCK_H__MUTEX_LOCK_H_2,23
@@ -109,116 +227,340 @@ class Condition{Condition56,1132
         pthread_cond_t pcond_;pcond_88,1932
 #define MutexLockGuard(MutexLockGuard90,1966
 
-handler/HandleMessage.cpp,800
-HANDLEMAP CHandleMessage::m_HandleMap;m_HandleMap15,186
-bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)postMessage23,306
-bool CHandleMessage::postTeacherToWhite (Buf* p, enum CommandType iCommandType)postTeacherToWhite48,886
-bool CHandleMessage::postStudentToWhite (Buf* p, enum CommandType iCommandType)postStudentToWhite77,1572
-bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandType)postTeacherToAllStudent106,2272
-bool CHandleMessage::postTeacherToStudent (Buf* p, enum CommandType iCommandType, int iStuId)postTeacherToStudent162,3832
-bool CHandleMessage::postDBRecordCount (Buf* p, int iCase)postDBRecordCount199,4838
-bool CHandleMessage::postDBRecord (Buf* buf, int iCase)postDBRecord292,7730
+PoolT.h,364
+#define _POOLT_H__POOLT_H_7,73
+class PoolT {PoolT22,305
+    PoolT(int n = 1000) {PoolT28,434
+    ~PoolT() {~PoolT38,658
+    TYPE* malloc() {malloc51,948
+    int free(TYPE* i) {free64,1195
+    int size() {size73,1350
+    int used() {used80,1441
+    queue<TYPE*> queue_;queue_86,1545
+    MutexLock lock_;lock_87,1570
+    int size_;size_88,1591
 
-handler/HandleBuildHouse.cpp,1967
-void CHandleMessage::handleBuildHouse_CaiHongXiaoWu (Buf* p)handleBuildHouse_CaiHongXiaoWu17,221
-void CHandleMessage::handleBuildHouse_CaiHongGu (Buf* p)handleBuildHouse_CaiHongGu28,417
-void CHandleMessage::handleBuildHouse_XiaoGuaiWu (Buf* p)handleBuildHouse_XiaoGuaiWu49,874
-void CHandleMessage::handleBuildHouse_MuBu (Buf* p)handleBuildHouse_MuBu70,1317
-void CHandleMessage::handleBuildHouse_OperatorDemo (Buf* p)handleBuildHouse_OperatorDemo92,1758
-void CHandleMessage::handleBuildHouse_SingleMode (Buf* p)handleBuildHouse_SingleMode113,2248
-void CHandleMessage::handleBuildHouse_GroupMode (Buf* p)handleBuildHouse_GroupMode134,2715
-void CHandleMessage::handleBuildHouse_SetStuGroupCount (Buf* p)handleBuildHouse_SetStuGroupCount155,3146
-void CHandleMessage::handleBuildHouse_SetStuGroup (Buf* p)handleBuildHouse_SetStuGroup165,3312
-void CHandleMessage::handleBuildHouse_GetStuGroupCount (Buf* p)handleBuildHouse_GetStuGroupCount175,3485
-void CHandleMessage::handleBuildHouse_GetStuGroup (Buf* p)handleBuildHouse_GetStuGroup185,3657
-void CHandleMessage::handleBuildHouse_GameStart (Buf* p)handleBuildHouse_GameStart196,3859
-void CHandleMessage::handleBuildHouse_UpdatePos (Buf* p)handleBuildHouse_UpdatePos217,4341
-void CHandleMessage::handleBuildHouse_GameEnd (Buf* p)handleBuildHouse_GameEnd228,4547
-void CHandleMessage::handleBuildHouse_Save (Buf* p)handleBuildHouse_Save251,5053
-void CHandleMessage::handleBuildHouse_EmailTibet (Buf* p)handleBuildHouse_EmailTibet262,5236
-void CHandleMessage::handleBuildHouse_EmailAmerica (Buf* p)handleBuildHouse_EmailAmerica285,5717
-void CHandleMessage::handleBuildHouse_Activation (Buf* p)handleBuildHouse_Activation309,6193
-void CHandleMessage::handleBuildHouse_Role (Buf* p)handleBuildHouse_Role332,6666
-void CHandleMessage::handleBuildHouse_Stamp (Buf* p)handleBuildHouse_Stamp355,7103
-void CHandleMessage::handleBuildHouse_SaveHouse (Buf* p)handleBuildHouse_SaveHouse377,7530
+ProcessManager.h,412
+#define _PROCESSMAMAGER_H__PROCESSMAMAGER_H_2,27
+#define CONFIGFILE CONFIGFILE21,377
+  LOCK_WAIT   = LOCK_EX,            /**<阻塞锁*/LOCK_WAIT23,418
+  LOCK_NOWAIT = LOCK_EX | LOCK_NB,  /**<非阻塞锁*/LOCK_NOWAIT24,470
+  UNLOCK      = LOCK_UN             /**<解锁*/UNLOCK25,525
+class ProcessManagerProcessManager28,578
+    ThreadPool* thrpool_;thrpool_38,790
+    int lockfd_;lockfd_39,816
 
-handler/HandleExercise.cpp,407
-void CHandleMessage::handleExercise_GameStart (Buf* p)handleExercise_GameStart17,223
-void CHandleMessage::handleExercise_Play (Buf* p)handleExercise_Play38,666
-void CHandleMessage::handleExercise_Pause (Buf* p)handleExercise_Pause59,1089
-void CHandleMessage::handleExercise_Stop (Buf* p)handleExercise_Stop80,1516
-void CHandleMessage::handleExercise_GameEnd (Buf* p)handleExercise_GameEnd101,1951
+protocol.h,18093
+#define _PROTOCOL_H_PROTOCOL_H2,20
+enum CommandTypeCommandType5,57
+    CT_Test = 1,CT_Test7,76
+    CT_ChangeScene = 100,CT_ChangeScene8,93
+    CT_Login = 150,      // 登录 (所有端)CT_Login10,120
+    CT_LoginResult,      // 登录结果 (所有端)CT_LoginResult11,167
+    CT_GetCourseDBCount, // 获得数据库中的课程信息数量 (教师端)CT_GetCourseDBCount12,220
+    CT_GetCourseDB,      // 获得数据库中的课程信息 (教师端)CT_GetCourseDB13,300
+    CT_SetCourseGroup,   // 设置开启的课程列表 (教师端)CT_SetCourseGroup14,374
+    CT_GetCourseGroup,      // 获得课程列表 (教师端和所有学生端)CT_GetCourseGroup15,442
+    CT_GetCourseItemCount,  // 获得课程列表的子项数量 (教师端)CT_GetCourseItemCount16,522
+    CT_GetCourseItem,    // 获得课程列表的子项 (教师端)CT_GetCourseItem17,599
+    CT_Logout,           // 登出 (所有端)CT_Logout18,667
+    CT_LogoutReuslt,     // 登出结果 (所有端)CT_LogoutReuslt19,714
+    CT_GetClassRoomDBCount, //获得教室班级数据库信息数量 (教师端)CT_GetClassRoomDBCount20,767
+    CT_GetClassRoomDB,   // 获得教室班级数据库信息 (教师端)CT_GetClassRoomDB21,849
+    CT_GetGradeDBCount,  // 获得教室年级数据库信息数量 (教师端)CT_GetGradeDBCount22,923
+    CT_GetGradeDB,       // 获得教室年级数据库信息 (教师端)CT_GetGradeDB23,1003
+    CT_GetClassDBCount,  // 获得班级信息数量 (教师端)CT_GetClassDBCount24,1077
+    CT_GetClassDB,       // 获得班级信息 (教师端)CT_GetClassDB25,1142
+    CT_LoginClassRoom,   // 进入教室  老師->服務器CT_LoginClassRoom26,1201
+    CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)CT_LogoutClassRoom27,1261
+    CT_GetStudentDetailInfo,   // 获得学生列表 (所有端)CT_GetStudentDetailInfo28,1332
+    ST_GetStudentDetailInfo,   // 获得学生列表 (所有端)ST_GetStudentDetailInfo29,1397
+    CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)CT_GetAllStudentInfoCount30,1462
+    CT_GetAllStudentInfo,// 获得所有学生列表 (所有端)CT_GetAllStudentInfo31,1539
+    CT_LeaveEarly,       // 早退 (教师端)CT_LeaveEarly32,1604
+    ST_LeaveEarly,       // 早退通知给 (学生端)ST_LeaveEarly33,1651
+    CT_ConfirmLeaveEarly,// 早退确认 (学生端) *CT_ConfirmLeaveEarly34,1707
+    CT_GetTeacherInfo,   // 获得教师信息 (所有学生端和教师端)CT_GetTeacherInfo35,1762
+    CT_LockStudent,      // 锁定学生端 (教师端) *CT_LockStudent36,1839
+    ST_LockStudent,      // 锁定学生端 (学生端) *ST_LockStudent37,1897
+    CT_SelectedClassRoom,CT_SelectedClassRoom38,1955
+    CT_CourseFinished,      // 请求课程是否结束 (所有端)CT_CourseFinished39,1981
+    ST_CourseFinished,      // 服务请求课程是否结束ST_CourseFinished40,2049
+    CT_GetDBRecordFinished, // 请求所有数据库记录是否完成CT_GetDBRecordFinished41,2111
+    ST_GetDBRecordFinished, // 服务器回应数据库记录是否完成ST_GetDBRecordFinished42,2182
+    CT_GetCourseItemKeyInfoReq, // 教师端请求CourseItem的按键数据请求CT_GetCourseItemKeyInfoReq43,2256
+    CT_GetCourseItemKeyInfoRsp, // 教师端请求CourseItem的按键数据回应CT_GetCourseItemKeyInfoRsp44,2338
+    ST_SendStudentStatus,   //学生在线状态ST_SendStudentStatus45,2420
+    CT_Common_PlayorPause,CT_Common_PlayorPause47,2470
+    ST_Common_PlayorPause,ST_Common_PlayorPause48,2497
+    CT_Common_Resume,CT_Common_Resume51,2570
+    ST_Common_Resume,ST_Common_Resume52,2592
+    CT_Common_Stop,CT_Common_Stop53,2614
+    ST_Common_Stop,ST_Common_Stop54,2634
+    CT_ShowSpriteAnimation = 200,   // 串场动画 (教师端) *CT_ShowSpriteAnimation57,2681
+    ST_ShowSpriteAnimation,         // 显示串场动画 (白板端) *ST_ShowSpriteAnimation58,2747
+    CT_ShowSpriteControl = 300,     // 控场动画 (教师端) *CT_ShowSpriteControl60,2824
+    ST_ShowSpriteControl,           // 控场动画显示 (白板端) *ST_ShowSpriteControl61,2890
+    CT_ControlLevel,                // 控场级别 (教师端)CT_ControlLevel62,2962
+    ST_ControlLevel,                // 显示控场动画级别 (白板端)ST_ControlLevel63,3026
+    CT_Exercise_GameStart = 400,    // 暖身操环节开始 (教师端) *CT_Exercise_GameStart65,3103
+    ST_Exercise_GameStart,          // 暖身操开始播放 (白板端) *ST_Exercise_GameStart66,3178
+    CT_Exercise_Play,               // 暖身操播放 (教师端) *CT_Exercise_Play67,3253
+    ST_Exercise_Play,               // 暖身操播放 (白板端) *ST_Exercise_Play68,3322
+    CT_Exercise_Pause,              // 暖身操暂停 (教师端) *CT_Exercise_Pause69,3391
+    ST_Exercise_Pause,              // 暖身操暂停 (白板端) *ST_Exercise_Pause70,3460
+    CT_Exercise_Stop,               // 暖身操停止 (教师端) *CT_Exercise_Stop71,3529
+    ST_Exercise_Stop,               // 暖身操停止 (白板端) *ST_Exercise_Stop72,3598
+    CT_Exercise_GameEnd,            // 暖身操环节结束 (教师端) *CT_Exercise_GameEnd73,3667
+    ST_Exercise_GameEnd,            // 暖身操结束播放 (白板端) *ST_Exercise_GameEnd74,3742
+    CT_Cartoon_GameStart = 500,     // 动画片环节开始 (教师端) *CT_Cartoon_GameStart76,3818
+    ST_Cartoon_GameStart,           // 动画片开始 (白板端) *ST_Cartoon_GameStart77,3893
+    CT_Cartoon_Play,                // 动画片播放 (教师端) *CT_Cartoon_Play78,3962
+    ST_Cartoon_Play,                // 动画片播放 (白板端) *ST_Cartoon_Play79,4031
+    CT_Cartoon_Pause,               // 动画片暂停 (教师端) *CT_Cartoon_Pause80,4100
+    ST_Cartoon_Pause,               // 动画片暂停 (白板端) *ST_Cartoon_Pause81,4169
+    CT_Cartoon_Stop,                // 动画片停止 (教师端) *CT_Cartoon_Stop82,4238
+    ST_Cartoon_Stop,                // 动画片停止 (白板端) *ST_Cartoon_Stop83,4307
+    CT_Cartoon_GameEnd,             // 动画片环节结束 (教师端) *CT_Cartoon_GameEnd84,4376
+    ST_Cartoon_GameEnd,             // 动画片结束播放 (白板端) *ST_Cartoon_GameEnd85,4451
+    CT_BuildHouse_CaiHongXiaoWu = 600,  // 彩虹小屋文字 (教师端)CT_BuildHouse_CaiHongXiaoWu89,4553
+    ST_BuildHouse_CaiHongXiaoWu,        // 显示彩虹小屋文字 (白板端)ST_BuildHouse_CaiHongXiaoWu90,4627
+    CT_BuildHouse_CaiHongGu,            // 彩虹谷背景 (教师端) *CT_BuildHouse_CaiHongGu91,4707
+    ST_BuildHouse_CaiHongGu,            // 显示彩虹谷背景 (白板端) *ST_BuildHouse_CaiHongGu92,4780
+    CT_BuildHouse_XiaoGuaiWu,           // 小怪物图片 (教师端) *CT_BuildHouse_XiaoGuaiWu93,4859
+    ST_BuildHouse_XiaoGuaiWu,           // 显示小怪物图片 (白板端) *ST_BuildHouse_XiaoGuaiWu94,4932
+    CT_BuildHouse_MuBu,                 // 幕布 (教师端) *CT_BuildHouse_MuBu95,5011
+    ST_BuildHouse_MuBu,                 // 显示幕布 (白板端) *ST_BuildHouse_MuBu96,5075
+    CT_BuildHouse_OperatorDemo,         // 操作演示 (教师端) *CT_BuildHouse_OperatorDemo98,5146
+    ST_BuildHouse_OperatorDemo,         // 响应教师的操作演示 (白板端) *ST_BuildHouse_OperatorDemo99,5216
+    CT_BuildHouse_SingleMode,           // 单人模式 (教师端) *CT_BuildHouse_SingleMode100,5301
+    ST_BuildHouse_SingleMode,           // 响应所有学生的单人模式操作情况 (白板端) *ST_BuildHouse_SingleMode101,5371
+    CT_BuildHouse_GroupMode,            // 分组模式 (教师端) *CT_BuildHouse_GroupMode102,5474
+    ST_BuildHouse_GroupMode,            // 响应分组模式操作情况 (白板端) *ST_BuildHouse_GroupMode103,5544
+    CT_BuildHouse_SetStuGroupCount,     // 设置学生组信息数量 (教师端)CT_BuildHouse_SetStuGroupCount105,5633
+    CT_BuildHouse_SetStuGroup,          // 设置学生组信息 (教师端)CT_BuildHouse_SetStuGroup106,5716
+    CT_BuildHouse_GetStuGroupCount,     // 获得学生组信息数量 (所有客户端)CT_BuildHouse_GetStuGroupCount107,5793
+    CT_BuildHouse_GetStuGroup,          // 获得学生组信息 (所有客户端)CT_BuildHouse_GetStuGroup108,5882
+    CT_BuildHouse_GameStart,            // 造房子游戏开始 (教师端) *CT_BuildHouse_GameStart109,5965
+    ST_BuildHouse_GameStart,            // 同步所有(学生端和白板端) *ST_BuildHouse_GameStart110,6044
+    CT_BuildHouse_UpdatePos,            // 学生添加/移动/删除素材 (所有学生端) **CT_BuildHouse_UpdatePos112,6200
+    ST_BuildHouse_UpdatePos,            // 同步造房子进度 (白板端) **ST_BuildHouse_UpdatePos113,6297
+    CT_BuildHouse_GameEnd,              // 发起造房子游戏结束 (教师端) *CT_BuildHouse_GameEnd114,6377
+    ST_BuildHouse_GameEnd,              // 同步所有(学生端和白板端) *ST_BuildHouse_GameEnd115,6462
+    CT_BuildHouse_Save,                 // 发送创建好的房子到服务器 (所有学生端) ***CT_BuildHouse_Save116,6543
+    ST_BuildHouse_Show,                 // 发送创建好的房子到 (白板端)ST_BuildHouse_Show117,6645
+    CT_BuildHouse_EmailTibet,           // 启动邮件1 (教师端) *CT_BuildHouse_EmailTibet118,6728
+    ST_BuildHouse_EmailTibet,           // 显示邮件1信息 (白板端) *ST_BuildHouse_EmailTibet119,6799
+    CT_BuildHouse_EmailAmerica,         // 启动邮件2 (教师端) *CT_BuildHouse_EmailAmerica120,6876
+    ST_BuildHouse_EmailAmerica,         // 显示邮件2信息 (白板端) *ST_BuildHouse_EmailAmerica121,6947
+    CT_BuildHouse_Activation,           // 激活 (教师端) *CT_BuildHouse_Activation123,7025
+    ST_BuildHouse_Activation,           // 激活场景 (白板端) *ST_BuildHouse_Activation124,7089
+    CT_BuildHouse_Role,                 // 角色登场 (教师端) *CT_BuildHouse_Role125,7159
+    ST_BuildHouse_Role,                 // 角色登场 (白板端) *ST_BuildHouse_Role126,7229
+    CT_BuildHouse_Stamp,                // 盖章 (教师端) *CT_BuildHouse_Stamp127,7299
+    ST_BuildHouse_Stamp,                // 盖章 (白板端) *ST_BuildHouse_Stamp128,7363
+    CT_BuildHouse_SaveHouse,            // 盖章确认 (教师端) ***CT_BuildHouse_SaveHouse129,7427
+    CT_Puzzle_GameStart = 700,  // 点击拼图开始 (教师端)CT_Puzzle_GameStart133,7524
+    ST_Puzzle_GameStart,        // 发送拼图游戏开始信息 (学生端和白板端)ST_Puzzle_GameStart134,7590
+    CT_Puzzle_IconStatus,       // 获得拼图是否正确的状态 (学生端) *CT_Puzzle_IconStatus136,7767
+    ST_Puzzle_IconStatus,       // 发送拼图是否正确的状态 (白板端) *ST_Puzzle_IconStatus137,7850
+    CT_Puzzle_Play,             // 拼图播放 (学生端) *CT_Puzzle_Play138,7933
+    ST_Puzzle_Play,             // 拼图播放 (白板端) *ST_Puzzle_Play139,7995
+    CT_Puzzle_Pause,            // 拼图暂停 (学生端) *CT_Puzzle_Pause140,8057
+    ST_Puzzle_Pause,            // 拼图暂停 (白板端) *ST_Puzzle_Pause141,8119
+    CT_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (客户端) **CT_Puzzle_MovePic142,8181
+    ST_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (白板端) **ST_Puzzle_MovePic143,8265
+    CT_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (客户端) **CT_Puzzle_DeletePic144,8349
+    ST_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (白板端) **ST_Puzzle_DeletePic145,8433
+    CT_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (客户端) **CT_Puzzle_AddPic146,8517
+    ST_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (白板端) **ST_Puzzle_AddPic147,8601
+    CT_Puzzle_CalcScore,        // 拼图的结果 (教师端) &*CT_Puzzle_CalcScore148,8685
+    CT_Puzzle_EndGame,          // 结束拼图课程 (教师端) *CT_Puzzle_EndGame149,8751
+    ST_Puzzle_EndGame,          // 结束拼图课程 (白板端和所有学生端) *ST_Puzzle_EndGame150,8819
+    ST_Dynamic_MessageType = 10000,  // 要求所发送的学生信息从10000号开始ST_Dynamic_MessageType152,8906
+struct sDBRecordFinishedsDBRecordFinished158,9043
+    unsigned int iFlagFinished;iFlagFinished160,9070
+struct sDBCountsDBCount167,9168
+    int count;count169,9186
+enum mClientTypemClientType172,9205
+    MCT_STUDENT = 1,MCT_STUDENT174,9224
+    MCT_TEACHER,MCT_TEACHER175,9245
+    MCT_WHITEBOARD,MCT_WHITEBOARD176,9262
+struct sLoginsLogin179,9286
+    int type;   // 客户端的类型(学生,教师或白板)type181,9302
+    char username[20];username182,9364
+    char password[20];password183,9387
+enum mLoginOutResultmLoginOutResult189,9455
+    RES_SUCCEED = 1,RES_SUCCEED191,9478
+    RES_FAIL,RES_FAIL192,9499
+struct sLoginOutResultsLoginOutResult194,9516
+    int succeed;succeed196,9541
+    char message[50];message197,9558
+struct sLogoutsLogout203,9640
+    int type; // 客户端的类型(学生,教师或白板)type205,9657
+struct sCourseGroupsCourseGroup211,9764
+    char sGradeName[20];    // 服务器没有处理这个字段sGradeName213,9786
+    char sCourseGroupName[20];sCourseGroupName214,9851
+struct sGetCourseGroupsGetCourseGroup220,9942
+    char sCourseList[128];   // 动画片,暖身操,xxxx,sCourseList222,9967
+struct sGetCourseDBsGetCourseDB229,10115
+    char sGradeName[20];sGradeName231,10137
+    char sGroupName[20];sGroupName232,10162
+    char sCourseName[20];sCourseName233,10187
+    int  iLanguage;iLanguage234,10213
+    int  iArt;iArt235,10233
+    int  iCommunity;iCommunity236,10248
+    int  iHealth;iHealth237,10269
+    int  iScience;iScience238,10287
+struct sGetGradeDBsGetGradeDB254,10915
+    char sGradeName[20];sGradeName256,10936
+struct sGetClassDBsGetClassDB268,11177
+    char sClassName[20];sClassName270,11198
+struct sGetClassRoomDBsGetClassRoomDB283,11460
+    char sClassRoomName[20];sClassRoomName285,11485
+typedef struct sSelectedClassRoom{sSelectedClassRoom298,11716
+    unsigned int classroom_id;classroom_id299,11751
+    mClientType client_type;client_type300,11782
+}TSelectedClassRoom;TSelectedClassRoom301,11811
+struct sGetCourseItemsGetCourseItem303,11833
+    char sCourseName[20];sCourseName305,11857
+typedef struct ST_SendStudentStatusReq {ST_SendStudentStatusReq311,11917
+    unsigned int student_id;student_id312,11958
+    unsigned int status;status315,12018
+}TSendStudentStatusReq;TSendStudentStatusReq316,12043
+struct sCourseItemsCourseItem323,12127
+    char sCourseName[20];sCourseName325,12148
+    char sItemName[20];sItemName326,12174
+struct sLoginOutClassRoomsLoginOutClassRoom342,12741
+    int  type;type344,12769
+    char sTeacherName[20];sTeacherName345,12784
+    char sClassName[20];sClassName346,12811
+    char sClassRoomName[20];sClassRoomName347,12836
+struct sSetStudentDetailInfosSetStudentDetailInfo354,12988
+    int  iStudentId;iStudentId356,13019
+    char sStudentName[20];sStudentName357,13040
+struct sGetStudentDetailInfosGetStudentDetailInfo363,13141
+    char sNumber[20];sNumber365,13172
+    char sFirstName[20];sFirstName366,13194
+    char sLastName[20];sLastName367,13219
+    char sSex[2];sSex368,13243
+    char sSchoolName[20];sSchoolName369,13261
+    char sGradeName[20];sGradeName370,13287
+    char sClassName[20];sClassName371,13312
+    char sAccount[20];sAccount372,13337
+    char birthday[20];birthday373,13360
+    char stFirstName[20];stFirstName374,13383
+    char stLastName[20];stLastName375,13409
+    int  iPicture_id;iPicture_id376,13434
+struct sGetAllStudentInfosGetAllStudentInfo390,14826
+    int iStudentId;iStudentId392,14854
+    char sPicName[128];sPicName393,14874
+struct sLeaveEarly // LeaveEarly / ConfirmLeaveEarlysLeaveEarly405,15238
+    int student_id;student_id411,15409
+enum ePuzzleTypeePuzzleType414,15433
+    PT_SQUARE = 1,  // 方块PT_SQUARE416,15452
+    PT_CIRCLE,      // 圆形PT_CIRCLE417,15482
+struct sPuzzleGameStartsPuzzleGameStart420,15516
+    char type;type422,15542
+    char size;  // 20/12size423,15557
+struct sGetTeacherInfosGetTeacherInfo435,15808
+    char sTeacherName[20];sTeacherName437,15833
+struct sControlLevelsControlLevel443,15923
+    int level;  // VALUE: 0 (待机), 1, 2, 3, 4 (下一节)level445,15946
+struct sBuildHouseCaiHongXiaoWusBuildHouseCaiHongXiaoWu452,16115
+    char sText[2];sText454,16149
+struct sBuildHouseSetStuGroupsBuildHouseSetStuGroup461,16322
+    int  iGroupIndex;iGroupIndex463,16354
+    int  iStudentCount;iStudentCount464,16376
+struct sBuildHouseStudentListsBuildHouseStudentList466,16403
+    char sStudentName[10];sStudentName468,16435
+enum ePuzzleIconStatusePuzzleIconStatus475,16672
+    PIS_OK = 1,PIS_OK477,16697
+    PIS_ERR,PIS_ERR478,16713
+    PIS_WAIT,PIS_WAIT479,16726
+struct sPuzzleIconStatussPuzzleIconStatus481,16743
+    int status;status483,16770
+enum ePuzzleActionTypePicePuzzleActionTypePic492,16933
+    AP_MOVE = 1,AP_MOVE494,16961
+    AP_DELETE,AP_DELETE495,16978
+    AP_ADD,AP_ADD496,16993
+struct sPuzzleUpdatePicsPuzzleUpdatePic499,17009
+    int action_type;action_type501,17035
+    int pic_idx; // 某张拼图块pic_idx502,17056
+    int x, y;x503,17092
+    int x, y;y503,17092
+typedef struct sSubmitDatasSubmitData508,17131
+	unsigned int cLen;          //数据长度cLen510,17160
+	enum CommandType cType;     //数据编号cType511,17204
+	void *cData() {             //指向数据的指针cData512,17248
+}MSG_HEAD;MSG_HEAD515,17324
+typedef struct _stCT_GetCourseItemKeyInfoReq{_stCT_GetCourseItemKeyInfoReq517,17336
+    unsigned int course_item_id;course_item_id518,17382
+}GetCourseItemKeyInfoReq;GetCourseItemKeyInfoReq519,17415
+typedef struct _stCT_GetCourseItemKeyInfoRsp{_stCT_GetCourseItemKeyInfoRsp521,17442
+    char keys[512];keys522,17488
+}GetCourseItemKeyInfoRsp;GetCourseItemKeyInfoRsp523,17508
+#define MSG_HEAD_LEN MSG_HEAD_LEN525,17535
 
-handler/HandlePuzzle.cpp,728
-void CHandleMessage::handlePuzzle_GameStart (Buf* p)handlePuzzle_GameStart17,235
-void CHandleMessage::handlePuzzle_IconStatus (Buf* p)handlePuzzle_IconStatus28,453
-void CHandleMessage::handlePuzzle_Play (Buf* p)handlePuzzle_Play51,910
-void CHandleMessage::handlePuzzle_Pause (Buf* p)handlePuzzle_Pause74,1343
-void CHandleMessage::handlePuzzle_MovePic (Buf* p)handlePuzzle_MovePic122,2278
-void CHandleMessage::handlePuzzle_DeletePic (Buf* p)handlePuzzle_DeletePic133,2496
-void CHandleMessage::handlePuzzle_AddPic (Buf* p)handlePuzzle_AddPic144,2716
-void CHandleMessage::handlePuzzle_CalcScore (Buf* p)handlePuzzle_CalcScore154,2865
-void CHandleMessage::handlePuzzle_EndGame (Buf* p)handlePuzzle_EndGame165,3071
+QueueT.h,391
+#define _QUEUET_H__QUEUET_H_7,74
+class QueueT {QueueT21,296
+    QueueT() {QueueT26,363
+    ~QueueT() {~QueueT33,512
+    int dequeue(TYPE& out, unsigned int timeout) {dequeue44,787
+    int enqueue(TYPE t) {enqueue65,1370
+    size_t size() {size82,1775
+    pthread_mutex_t m_mutex;m_mutex91,1967
+    pthread_cond_t m_con;m_con93,2014
+    queue<TYPE> m_queue;m_queue95,2055
 
-handler/HandleCartoon.cpp,397
-void CHandleMessage::handleCartoon_GameStart (Buf* p)handleCartoon_GameStart18,217
-void CHandleMessage::handleCartoon_Play (Buf* p)handleCartoon_Play39,656
-void CHandleMessage::handleCartoon_Pause (Buf* p)handleCartoon_Pause60,1075
-void CHandleMessage::handleCartoon_Stop (Buf* p)handleCartoon_Stop81,1498
-void CHandleMessage::handleCartoon_GameEnd (Buf* p)handleCartoon_GameEnd102,1929
+RecvTask.h,82
+#define RECVTASK_H_RECVTASK_H_2,20
+class RecvTask: public task{RecvTask16,295
 
-handler/HandleSprite.cpp,250
-void CHandleMessage::handleShowSpriteAnimation (Buf* p)handleShowSpriteAnimation20,233
-void CHandleMessage::handleShowSpriteControl (Buf* p)handleShowSpriteControl43,708
-void CHandleMessage::handleControlLevel (Buf* p)handleControlLevel66,1173
+SendTask.h,82
+#define SENDTASK_H_SENDTASK_H_2,20
+class SendTask: public task{SendTask15,268
 
-handler/HandleMessage.h,649
-#define _HANDLE_MESSAGE_H_HANDLE_MESSAGE_H7,54
-#define _EXECUTE__EXECUTE_21,249
-typedef void (*handlefunc)(Buf*);handlefunc23,268
-typedef map<int, handlefunc> HANDLEMAP;HANDLEMAP24,302
-class CHandleMessageCHandleMessage26,343
-    #define MSGNAME(MSGNAME30,375
-    #undef MSGNAMEMSGNAME32,462
-    static handlefunc getHandler (int iCommandType)getHandler35,490
-    static void initHandlers (void)initHandlers44,742
-        #define MSGNAME(MSGNAME46,784
-        #undef MSGNAMEMSGNAME49,924
-    static void setHandler (int iCommandType, handlefunc hHandler)setHandler52,954
-    static HANDLEMAP m_HandleMap;m_HandleMap71,1655
+Single.h,287
+#define _GLOBAL_DATA_H__GLOBAL_DATA_H_2,24
+class Single {Single9,165
+        QueueT<Buf*> recvqueue;recvqueue13,252
+        QueueT<Buf*> sendqueue;sendqueue14,284
+        PoolT<Buf> bufpool;bufpool15,316
+        static class Single* p_;p_19,376
+#define SINGLE SINGLE21,412
 
-handler/HandleClassRoom.cpp,2478
-void CHandleMessage::handleTest (Buf* p)handleTest18,201
-void CHandleMessage::handleChangeScene (Buf* p)handleChangeScene28,311
-void CHandleMessage::handleLogin (Buf* p)handleLogin39,530
-void CHandleMessage::handleLoginResult (Buf* p)handleLoginResult50,691
-void CHandleMessage::handleGetCourseDBCount (Buf* p)handleGetCourseDBCount60,859
-void CHandleMessage::handleGetCourseDB (Buf* p)handleGetCourseDB71,1097
-void CHandleMessage::handleSetCourseGroup (Buf* p)handleSetCourseGroup82,1316
-void CHandleMessage::handleGetCourseGroup (Buf* p)handleGetCourseGroup130,2607
-void CHandleMessage::handleGetCourseItemCount (Buf* p)handleGetCourseItemCount167,3689
-void CHandleMessage::handleGetCourseItem (Buf* p)handleGetCourseItem178,3925
-void CHandleMessage::handleLogout (Buf* p)handleLogout189,4125
-void CHandleMessage::handleLogoutReuslt (Buf* p)handleLogoutReuslt199,4261
-void CHandleMessage::handleGetClassRoomDBCount (Buf* p)handleGetClassRoomDBCount209,4424
-void CHandleMessage::handleGetClassRoomDB (Buf* p)handleGetClassRoomDB220,4662
-void CHandleMessage::handleGetGradeDBCount (Buf* p)handleGetGradeDBCount231,4897
-void CHandleMessage::handleGetGradeDB (Buf* p)handleGetGradeDB242,5133
-void CHandleMessage::handleGetClassDBCount (Buf* p)handleGetClassDBCount253,5345
-void CHandleMessage::handleGetClassDB (Buf* p)handleGetClassDB264,5566
-void CHandleMessage::handleLoginClassRoom (Buf* p)handleLoginClassRoom275,5772
-void CHandleMessage::handleLogoutClassRoom (Buf* p)handleLogoutClassRoom302,6722
-void CHandleMessage::handleGetStudentInfo (Buf* p)handleGetStudentInfo312,6873
-void CHandleMessage::handleGetAllStudentInfoCount (Buf* p)handleGetAllStudentInfoCount322,7035
-void CHandleMessage::handleGetAllStudentInfo (Buf* p)handleGetAllStudentInfo333,7282
-void CHandleMessage::handleLeaveEarly (Buf* p)handleLeaveEarly345,7526
-void CHandleMessage::handleConfirmLeaveEarly (Buf* p)handleConfirmLeaveEarly355,7668
-void CHandleMessage::handleGetTeacherInfo (Buf* p)handleGetTeacherInfo365,7839
-void CHandleMessage::handleLockStudent (Buf* p)handleLockStudent376,8019
-void CHandleMessage::handleSelectedClassRoom (Buf* p)handleSelectedClassRoom396,8363
-void CHandleMessage::handleCourseFinished (Buf* p)handleCourseFinished421,9119
-void CHandleMessage::handleDBRecordFinished (Buf* p)handleDBRecordFinished433,9377
-void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {handleGetCourseItemKeyInfoReq454,10010
+Sock.h,31
+#define _SOCK_H__SOCK_H_2,17
+
+SQL.h,1058
+#define _SQL_H__SQL_H_2,16
+#define SQL_SELECT_STU SQL_SELECT_STU4,33
+#define SQL_SELECT_COURSE SQL_SELECT_COURSE5,317
+#define SQL_SELECT_CLASS SQL_SELECT_CLASS6,398
+#define SQL_SELECT_CLASSROOM SQL_SELECT_CLASSROOM7,482
+#define SQL_SELECT_CLASSROOM1 SQL_SELECT_CLASSROOM18,588
+#define SQL_SELECT_TEACHER SQL_SELECT_TEACHER9,692
+#define SQL_SELECT_GRADE SQL_SELECT_GRADE10,761
+#define SQL_SELECT_ALLSTU SQL_SELECT_ALLSTU11,838
+#define SQL_SELECT_USED_COURSE SQL_SELECT_USED_COURSE13,1109
+#define SQL_SELECT_COURSE_DB SQL_SELECT_COURSE_DB15,1518
+#define SQL_SELECT_GRADE_DB SQL_SELECT_GRADE_DB17,1921
+#define SQL_SELECT_CLASS_DB SQL_SELECT_CLASS_DB18,1980
+#define SQL_SELECT_CLASSROOM_DB SQL_SELECT_CLASSROOM_DB19,2039
+#define SQL_SELECT_STUDENT_DB SQL_SELECT_STUDENT_DB20,2123
+#define SQL_SELECT_COURSEITEM_DB SQL_SELECT_COURSEITEM_DB21,2267
+#define SQL_SELECT_ROOM SQL_SELECT_ROOM23,2460
+#define SQL_SELECT_ITEM_KEYS SQL_SELECT_ITEM_KEYS25,2551
+#define SQL_SELECT_STUDENT_DETAILINFO SQL_SELECT_STUDENT_DETAILINFO27,2642
+
+task.h,185
+#define _TASK_H__TASK_H_2,17
+class task{task10,134
+        task():autorelease(true){task12,158
+        virtual ~task(){}~task14,202
+        bool autorelease;autorelease17,307
 
 ThreadPool.h,343
 #define _THREADPOOL_H__THREADPOOL_H_2,23
@@ -243,207 +585,6 @@ void delkey(T1 k) {delkey33,566
   map<T1, T2> kv_;kv_47,818
   map<T2, T1> vk_;vk_48,837
   MutexLock lock_;lock_49,856
-
-database.h,472
-#define _DATABASE_H__DATABASE_H_7,66
-class DataBase {DataBase29,486
-        MutexLock m_mutex;m_mutex59,1345
-        Driver* m_pDriver;m_pDriver62,1405
-        Connection* m_pConn;m_pConn63,1432
-        string m_host;m_host64,1461
-        string m_user_name;m_user_name65,1484
-        string m_password;m_password66,1512
-        string m_database;m_database67,1539
-        static DataBase *pinstance;pinstance68,1566
-#define DATABASE DATABASE70,1605
-
-content/main.cpp,28
-int main (void)main17,258
-
-content/teacher.cpp,369
-CTeacher::CTeacher() {CTeacher8,46
-void CTeacher::setSocket(int fd) {setSocket12,73
-int CTeacher::getSocket() {getSocket16,138
-void CTeacher::setAccount (string& sAccount)setAccount75,1656
-string CTeacher::getAccount (void)getAccount80,1738
-string CTeacher::getName (void)getName85,1800
-void CTeacher::setName (string& fName, string& lName)setName90,1869
-
-content/courseitem.cpp,190
-int CCourseItem::getId (void)getId4,26
-string CCourseItem::getName (void)getName9,82
-void CCourseItem::setId (int id)setId14,145
-void CCourseItem::setName (string name)setName19,202
-
-content/roommanager.cpp,438
-CRoomManager* CRoomManager::m_CRoomManager = NULL;m_CRoomManager8,61
-CRoomManager* CRoomManager::getInstance (void)getInstance10,115
-int CRoomManager::init() {init18,267
-int CRoomManager::get_room_count() {get_room_count37,895
-CRoom* CRoomManager::get_room(int id) {get_room41,969
-CRoom* CRoomManager::get_room_by_fd (int fd)get_room_by_fd49,1152
-CRoom* CRoomManager::get_room_by_name (string name) {get_room_by_name63,1473
-
-content/course.cpp,456
-CCourse :: CCourse ()CCourse8,44
-CCourse :: ~CCourse ()~CCourse12,71
-void CCourse::setName (string sName)setName16,99
-string CCourse::getName (void)getName21,167
-CCourseItem* CCourse::get_item_by_id (int id)get_item_by_id26,222
-CCourseItem* CCourse::get_item_by_name (string name)get_item_by_name38,477
-void CCourse::add_item (CCourseItem* pItem)add_item50,740
-void CCourse::setId (int id)setId60,888
-int CCourse::getId (void)getId65,950
-
-content/courseitem.h,169
-#define _C_COURSE_ITEM_H_C_COURSE_ITEM_H3,26
-class CCourseItemCCourseItem16,224
-        int   m_ItemId;m_ItemId19,257
-        string m_itemName;m_itemName20,281
-
-content/student.cpp,719
-CStudent::CStudent () {CStudent8,46
-CStudent::~CStudent () {~CStudent11,73
-void CStudent::setName (string& s1, string& s2) {setName14,101
-string CStudent::getName (void) {getName18,179
-void CStudent::setAccount (string& acc) {setAccount22,238
-string CStudent::getAccount (void) {getAccount26,308
-void CStudent::setOnLine (bool b) {setOnLine30,374
-bool CStudent::getOnLine (void) {getOnLine34,431
-void CStudent::setId(int id) {setId38,489
-int CStudent::getId() {getId42,538
-void CStudent::setSocket(int sock) {setSocket46,582
-int CStudent::getSocket() {getSocket50,643
-void CStudent::setPictureName (string name)setPictureName53,694
-string CStudent::getPictureName (void)getPictureName58,776
-
-content/room.h,724
-#define _C_ROOM_H_C_ROOM_H6,36
-class CRoomCRoom27,355
-	typedef map<int, CStudent*> STUDENTMAP;STUDENTMAP29,369
-    typedef list<CCourse*> COURSELIST;COURSELIST30,410
-    typedef list<CGame*> GAMELIST;GAMELIST31,449
-    CTeacher m_teacher;m_teacher61,1256
-    int m_room_id;m_room_id62,1280
-    int m_teacher_fd;m_teacher_fd63,1299
-    int m_white_fd;m_white_fd64,1321
-    string m_room_name;m_room_name65,1341
-    string m_class_name;m_class_name66,1365
-    string m_teacher_name;m_teacher_name67,1390
-    string m_white_board;m_white_board68,1417
-    STUDENTMAP m_student_map;m_student_map69,1443
-    COURSELIST m_course_list;m_course_list70,1473
-    GAMELIST m_game_list;m_game_list71,1503
-
-content/teacher.h,209
-#define _C_TEACHER_H_C_TEACHER_H7,43
-class CTeacherCTeacher22,259
-	string      m_TeacherName;m_TeacherName28,353
-    string      m_Account;m_Account29,381
-    int         m_SocketFd;m_SocketFd30,408
-
-content/student.h,406
-#define _C_STUDENT_H_C_STUDENT_H7,49
-class CStudentCStudent19,237
-	string      m_StuName;m_StuName22,266
-	string      m_AccountName;m_AccountName23,291
-	bool        m_onLine;m_onLine24,320
-    int         m_Id;m_Id25,344
-    int         m_Socket;m_Socket26,367
-    string      m_picture_name;m_picture_name27,394
-		m_StuName (s1+s2), m_AccountName (acc), m_onLine (line) {}m_onLine32,515
-
-content/Makefile,272
-CPP     = ccache g++CPP7,46
-CC      = ccache ccCC10,87
-CFLAGS  = -Wall -WerrorCFLAGS13,131
-CDEBUG  = -gCDEBUG16,186
-LINKS   = -lpthreadLINKS19,223
-OBJS    = student.o \OBJS22,254
-BIN	    = testBIN32,402
-INC	    = -I. -I..INC35,449
-LIB	    = -L.LIB38,506
-
-content/course.h,257
-#define _C_COURSE_H_C_COURSE_H7,47
-typedef list<CCourseItem*> COURSEITEMLIST;COURSEITEMLIST21,261
-class CCourseCCourse23,307
-    string m_name;m_name26,335
-    int m_course_id;m_course_id27,355
-    COURSEITEMLIST m_courseList;m_courseList28,377
-
-content/game.cpp,187
-CGame::CGame() {CGame3,19
-CGame::~CGame() {~CGame6,39
-void CGame::set_current_scence(int scence) {set_current_scence9,60
-int CGame::get_current_scence() {get_current_scence13,139
-
-content/grade.h,95
-#define _C_GRADE_H_C_GRADE_H7,45
-class cGradecGrade19,231
-    string m_name;m_name22,258
-
-content/grade.cpp,159
-cGrade::cGrade()cGrade8,49
-cGrade::~cGrade ()~cGrade12,75
-string cGrade::getName (void)getName16,103
-void cGrade::setName (string& sName)setName21,168
-
-content/LoginCheck.cpp,392
-LoginCheck::LoginCheck() {LoginCheck4,26
-LoginCheck::~LoginCheck() {~LoginCheck7,56
-void LoginCheck::check(Buf* pbuf) {check10,87
-int LoginCheck::login_teacher(int fd, struct sLogin login) {login_teacher53,1368
-int LoginCheck::login_student(int fd, struct sLogin login) {login_student91,2579
-int LoginCheck::login_whiteboard(int fd, struct sLogin login) {login_whiteboard144,4512
-
-content/room.cpp,1001
-CRoom::CRoom(int id, string class_name, string white_board) {CRoom7,46
-int CRoom::get_room_id() {get_room_id13,200
-void CRoom::set_teacher_fd(int fd) {set_teacher_fd17,256
-void CRoom::set_teacher_name(string name) {set_teacher_name21,323
-void CRoom::set_class_name(string name) {set_class_name25,401
-void CRoom::set_white_fd(int fd) {set_white_fd29,475
-void CRoom::add_student(int fd, CStudent* pstudent) {add_student33,538
-CStudent* CRoom::get_student_by_fd (int fd)get_student_by_fd38,726
-CTeacher* CRoom::get_teacher_by_fd (int fd)get_teacher_by_fd47,925
-CCourse* CRoom::get_course_by_name (string course_name)get_course_by_name55,1073
-CCourse* CRoom::get_course_by_id (int id)get_course_by_id65,1341
-void CRoom::add_course (CCourse* pCourse)add_course75,1584
-int CRoom::get_teacher_fd ()get_teacher_fd81,1705
-string CRoom::get_room_name ()get_room_name86,1775
-int CRoom::get_white_fd ()get_white_fd91,1846
-CRoom* CRoom::get_room_by_fd (int fd)get_room_by_fd96,1912
-
-content/roommanager.h,364
-#define _C_ROOMMANAGER_H_C_ROOMMANAGER_H7,52
-class CRoomManagerCRoomManager21,251
-    typedef map<int, CRoom*> ROOMMAP;ROOMMAP24,307
-	~CRoomManager () {};~CRoomManager28,396
-	CRoomManager () {}CRoomManager39,581
-    ROOMMAP m_room_map;m_room_map40,601
-	static CRoomManager* m_CRoomManager;m_CRoomManager41,625
-#define ROOMMANAGER ROOMMANAGER44,667
-
-content/LoginCheck.h,67
-#define LOGIN_H_LOGIN_H_2,17
-class LoginCheck{LoginCheck10,178
-
-content/game.h,110
-#define _GAME_H__GAME_H_2,17
-class CGame {CGame3,34
-        int m_current_scence;m_current_scence10,187
-
-ThreadPool.cpp,414
-ThreadPool::ThreadPool(int n) {ThreadPool3,25
-ThreadPool::~ThreadPool() {~ThreadPool7,89
-int ThreadPool::start() {start10,120
-int ThreadPool::stop() {stop21,386
-int ThreadPool::push_task(task* p) {push_task29,505
-int ThreadPool::getcount() {getcount33,585
-void* ThreadPool::thread(void* p) {thread38,687
-int ThreadPool::kill() {kill61,1261
-void ThreadPool::sighandle(int signo) {sighandle70,1465
 
 client.c,145
 #define SERV_IP SERV_IP9,170
@@ -451,1051 +592,8 @@ client.c,145
 #define CON_NUM CON_NUM11,222
 int main(int argc, char* argv[]){main14,244
 
-Makefile,294
-CPP=ccache g++ CPP1,0
-CC=ccache gccCC2,16
-CFLAGS=-Wall -Werror -gCFLAGS3,30
-LINKS	= -lpthread -lrt -lev -lglog -lmysqlcppconn -llua5.2LINKS4,54
-OBJS	= ThreadPool.o \OBJS6,114
-EXE=serverEXE33,723
-VPATH		 = .VPATH35,735
-INC=-I. -I./content -I./handlerINC37,748
-LIB=-L.LIB39,781
-
-test/database_unittest.cc,273
-#define SERV_IP SERV_IP12,208
-#define SERV_PORT SERV_PORT13,236
-#define CON_NUM CON_NUM14,260
-TEST(database, Basic) {TEST20,330
-TEST(database, pre) {TEST39,917
-TEST(database, xxx) {TEST52,1371
-void* xxx(void* p) {xxx70,1880
-TEST(database, yyy) {TEST91,2484
-
-test/tst_GetCourseDBCount.cpp,62
-#define   STR_MAX STR_MAX16,236
-int main (void)main18,261
-
-test/teacher.cpp,280
-#define SERV_IP SERV_IP14,234
-#define SERV_PORT SERV_PORT15,266
-int main(int argc, char* argv[]){main20,382
-void login(int fd) {login41,837
-void loginclassroom(int fd) {loginclassroom67,1650
-void send_CT_ShowSpriteAnimation(int fd) {send_CT_ShowSpriteAnimation84,2333
-
-test/x.sh,0
-
-test/tst_GetAllStudentInfo.cpp,62
-#define   STR_MAX STR_MAX16,236
-int main (void)main18,261
-
-test/student.cpp,317
-#define SERV_IP SERV_IP15,255
-#define SERV_PORT SERV_PORT16,287
-#define STUDENT_COUNT STUDENT_COUNT17,311
-int main(int argc, char* argv[]){main24,427
-void* teacher_thread(void* p) {teacher_thread43,895
-void* student_thread(void* p) {student_thread79,2034
-void set_clasroom(int fd) {set_clasroom120,3251
-
-test/white.cpp,206
-#define SERV_IP SERV_IP15,255
-#define SERV_PORT SERV_PORT16,287
-#define STUDENT_COUNT STUDENT_COUNT17,311
-int main(int argc, char* argv[]){main23,396
-void set_clasroom(int fd) {set_clasroom44,956
-
-test/gtest_main.cc,58
-GTEST_API_ int main(int argc, char **argv) {main34,1604
-
-test/tst_CT_GetCourseItemKeyInfoReq.cpp,62
-#define   STR_MAX STR_MAX14,234
-int main (void)main16,259
-
-test/libev_unittest.cc,69
-TEST(libev, ev_time) {TEST7,84
-TEST(libev, time_now) {TEST14,245
-
-test/Makefile,293
-CPP=ccache g++ CPP1,0
-CC=ccache gccCC2,16
-CFLAGS=-Wall -Werror -gCFLAGS3,30
-LINKS	= -lpthread -lrt -lev -lglog -lmysqlcppconn -llua5.2 -lgtestLINKS4,54
-OBJS	= twomapT_unittest.o \OBJS6,122
-EXE=test.outEXE38,925
-VPATH		 = ./../VPATH40,939
-INC=-I.\INC42,956
-LIB=-L.\LIB48,1054
-
-test/PoolT_unittest.cc,107
-TEST(poolT, Basic) {TEST6,66
-TEST(poolT, Constructor) {TEST14,220
-TEST(poolT, maxmalloc) {TEST19,301
-
-test/twomapT_unittest.cc,36
-TEST(twomapT, Negative) {TEST6,68
-
-test/test.cpp,317
-#define SERV_IP SERV_IP15,255
-#define SERV_PORT SERV_PORT16,287
-#define STUDENT_COUNT STUDENT_COUNT17,311
-int main(int argc, char* argv[]){main24,427
-void* teacher_thread(void* p) {teacher_thread42,879
-void* student_thread(void* p) {student_thread78,2018
-void set_clasroom(int fd) {set_clasroom119,3233
-
-test/Evloop_unittest.cc,185
-#define SERV_IP SERV_IP11,191
-#define SERV_PORT SERV_PORT12,219
-#define CON_NUM CON_NUM13,243
-TEST(Evloop, Basic) {TEST20,330
-void* client_thread(void* p){client_thread26,429
-
-Sock.h,31
-#define _SOCK_H__SOCK_H_2,17
-
-database.cpp,479
-DataBase* DataBase::pinstance = NULL;pinstance9,124
-bool DataBase::Init(string host, string user_name, string password, string database) {Init12,180
-DataBase::DataBase() {DataBase28,716
-DataBase::~DataBase() {~DataBase31,761
-Connection* DataBase::getConnection() {getConnection39,873
-Statement* DataBase::getStatement() {getStatement43,937
-PreparedStatement* DataBase::preStatement(string sql) {preStatement59,1227
-DataBase* DataBase::instance() {instance63,1330
-
-SQL.h,981
-#define _SQL_H__SQL_H_2,16
-#define SQL_SELECT_STU SQL_SELECT_STU4,33
-#define SQL_SELECT_COURSE SQL_SELECT_COURSE5,317
-#define SQL_SELECT_CLASS SQL_SELECT_CLASS6,398
-#define SQL_SELECT_CLASSROOM SQL_SELECT_CLASSROOM7,482
-#define SQL_SELECT_CLASSROOM1 SQL_SELECT_CLASSROOM18,588
-#define SQL_SELECT_TEACHER SQL_SELECT_TEACHER9,692
-#define SQL_SELECT_GRADE SQL_SELECT_GRADE10,761
-#define SQL_SELECT_ALLSTU SQL_SELECT_ALLSTU11,838
-#define SQL_SELECT_USED_COURSE SQL_SELECT_USED_COURSE13,1109
-#define SQL_SELECT_COURSE_DB SQL_SELECT_COURSE_DB15,1518
-#define SQL_SELECT_GRADE_DB SQL_SELECT_GRADE_DB17,1921
-#define SQL_SELECT_CLASS_DB SQL_SELECT_CLASS_DB18,1980
-#define SQL_SELECT_CLASSROOM_DB SQL_SELECT_CLASSROOM_DB19,2039
-#define SQL_SELECT_STUDENT_DB SQL_SELECT_STUDENT_DB20,2123
-#define SQL_SELECT_COURSEITEM_DB SQL_SELECT_COURSEITEM_DB21,2267
-#define SQL_SELECT_ROOM SQL_SELECT_ROOM23,2460
-#define SQL_SELECT_ITEM_KEYS SQL_SELECT_ITEM_KEYS25,2551
-
-protocol.h,17527
-#define _PROTOCOL_H_PROTOCOL_H2,20
-enum CommandTypeCommandType5,57
-    CT_Test = 1,CT_Test7,76
-    CT_ChangeScene = 100,CT_ChangeScene8,93
-    CT_Login = 150,      // 登录 (所有端)CT_Login10,120
-    CT_LoginResult,      // 登录结果 (所有端)CT_LoginResult11,167
-    CT_GetCourseDBCount, // 获得数据库中的课程信息数量 (教师端)CT_GetCourseDBCount12,220
-    CT_GetCourseDB,      // 获得数据库中的课程信息 (教师端)CT_GetCourseDB13,300
-    CT_SetCourseGroup,   // 设置开启的课程列表 (教师端)CT_SetCourseGroup14,374
-    CT_GetCourseGroup,      // 获得课程列表 (教师端和所有学生端)CT_GetCourseGroup15,442
-    CT_GetCourseItemCount,  // 获得课程列表的子项数量 (教师端)CT_GetCourseItemCount16,522
-    CT_GetCourseItem,    // 获得课程列表的子项 (教师端)CT_GetCourseItem17,599
-    CT_Logout,           // 登出 (所有端)CT_Logout18,667
-    CT_LogoutReuslt,     // 登出结果 (所有端)CT_LogoutReuslt19,714
-    CT_GetClassRoomDBCount, //获得教室班级数据库信息数量 (教师端)CT_GetClassRoomDBCount20,767
-    CT_GetClassRoomDB,   // 获得教室班级数据库信息 (教师端)CT_GetClassRoomDB21,849
-    CT_GetGradeDBCount,  // 获得教室年级数据库信息数量 (教师端)CT_GetGradeDBCount22,923
-    CT_GetGradeDB,       // 获得教室年级数据库信息 (教师端)CT_GetGradeDB23,1003
-    CT_GetClassDBCount,  // 获得班级信息数量 (教师端)CT_GetClassDBCount24,1077
-    CT_GetClassDB,       // 获得班级信息 (教师端)CT_GetClassDB25,1142
-    CT_LoginClassRoom,   // 进入教室  老師->服務器CT_LoginClassRoom26,1201
-    CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)CT_LogoutClassRoom27,1261
-    CT_GetStudentInfo,   // 获得学生列表 (所有端)CT_GetStudentInfo28,1332
-    CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)CT_GetAllStudentInfoCount29,1391
-    CT_GetAllStudentInfo,// 获得所有学生列表 (所有端)CT_GetAllStudentInfo30,1468
-    CT_LeaveEarly,       // 早退 (教师端)CT_LeaveEarly31,1533
-    ST_LeaveEarly,       // 早退通知给 (学生端)ST_LeaveEarly32,1580
-    CT_ConfirmLeaveEarly,// 早退确认 (学生端) *CT_ConfirmLeaveEarly33,1636
-    CT_GetTeacherInfo,   // 获得教师信息 (所有学生端和教师端)CT_GetTeacherInfo34,1691
-    CT_LockStudent,      // 锁定学生端 (教师端) *CT_LockStudent35,1768
-    ST_LockStudent,      // 锁定学生端 (学生端) *ST_LockStudent36,1826
-    CT_SelectedClassRoom,CT_SelectedClassRoom37,1884
-    CT_CourseFinished,      // 请求课程是否结束 (所有端)CT_CourseFinished38,1910
-    ST_CourseFinished,      // 服务请求课程是否结束ST_CourseFinished39,1978
-    CT_GetDBRecordFinished, // 请求所有数据库记录是否完成CT_GetDBRecordFinished40,2040
-    ST_GetDBRecordFinished, // 服务器回应数据库记录是否完成ST_GetDBRecordFinished41,2111
-    CT_GetCourseItemKeyInfoReq, // 教师端请求CourseItem的按键数据请求CT_GetCourseItemKeyInfoReq42,2185
-    CT_GetCourseItemKeyInfoRsp, // 教师端请求CourseItem的按键数据回应CT_GetCourseItemKeyInfoRsp43,2267
-    CT_Common_PlayorPause,CT_Common_PlayorPause45,2350
-    ST_Common_PlayorPause,ST_Common_PlayorPause46,2377
-    CT_Common_Resume,CT_Common_Resume49,2450
-    ST_Common_Resume,ST_Common_Resume50,2472
-    CT_Common_Stop,CT_Common_Stop51,2494
-    ST_Common_Stop,ST_Common_Stop52,2514
-    CT_ShowSpriteAnimation = 200,   // 串场动画 (教师端) *CT_ShowSpriteAnimation55,2561
-    ST_ShowSpriteAnimation,         // 显示串场动画 (白板端) *ST_ShowSpriteAnimation56,2627
-    CT_ShowSpriteControl = 300,     // 控场动画 (教师端) *CT_ShowSpriteControl58,2704
-    ST_ShowSpriteControl,           // 控场动画显示 (白板端) *ST_ShowSpriteControl59,2770
-    CT_ControlLevel,                // 控场级别 (教师端)CT_ControlLevel60,2842
-    ST_ControlLevel,                // 显示控场动画级别 (白板端)ST_ControlLevel61,2906
-    CT_Exercise_GameStart = 400,    // 暖身操环节开始 (教师端) *CT_Exercise_GameStart63,2983
-    ST_Exercise_GameStart,          // 暖身操开始播放 (白板端) *ST_Exercise_GameStart64,3058
-    CT_Exercise_Play,               // 暖身操播放 (教师端) *CT_Exercise_Play65,3133
-    ST_Exercise_Play,               // 暖身操播放 (白板端) *ST_Exercise_Play66,3202
-    CT_Exercise_Pause,              // 暖身操暂停 (教师端) *CT_Exercise_Pause67,3271
-    ST_Exercise_Pause,              // 暖身操暂停 (白板端) *ST_Exercise_Pause68,3340
-    CT_Exercise_Stop,               // 暖身操停止 (教师端) *CT_Exercise_Stop69,3409
-    ST_Exercise_Stop,               // 暖身操停止 (白板端) *ST_Exercise_Stop70,3478
-    CT_Exercise_GameEnd,            // 暖身操环节结束 (教师端) *CT_Exercise_GameEnd71,3547
-    ST_Exercise_GameEnd,            // 暖身操结束播放 (白板端) *ST_Exercise_GameEnd72,3622
-    CT_Cartoon_GameStart = 500,     // 动画片环节开始 (教师端) *CT_Cartoon_GameStart74,3698
-    ST_Cartoon_GameStart,           // 动画片开始 (白板端) *ST_Cartoon_GameStart75,3773
-    CT_Cartoon_Play,                // 动画片播放 (教师端) *CT_Cartoon_Play76,3842
-    ST_Cartoon_Play,                // 动画片播放 (白板端) *ST_Cartoon_Play77,3911
-    CT_Cartoon_Pause,               // 动画片暂停 (教师端) *CT_Cartoon_Pause78,3980
-    ST_Cartoon_Pause,               // 动画片暂停 (白板端) *ST_Cartoon_Pause79,4049
-    CT_Cartoon_Stop,                // 动画片停止 (教师端) *CT_Cartoon_Stop80,4118
-    ST_Cartoon_Stop,                // 动画片停止 (白板端) *ST_Cartoon_Stop81,4187
-    CT_Cartoon_GameEnd,             // 动画片环节结束 (教师端) *CT_Cartoon_GameEnd82,4256
-    ST_Cartoon_GameEnd,             // 动画片结束播放 (白板端) *ST_Cartoon_GameEnd83,4331
-    CT_BuildHouse_CaiHongXiaoWu = 600,  // 彩虹小屋文字 (教师端)CT_BuildHouse_CaiHongXiaoWu87,4433
-    ST_BuildHouse_CaiHongXiaoWu,        // 显示彩虹小屋文字 (白板端)ST_BuildHouse_CaiHongXiaoWu88,4507
-    CT_BuildHouse_CaiHongGu,            // 彩虹谷背景 (教师端) *CT_BuildHouse_CaiHongGu89,4587
-    ST_BuildHouse_CaiHongGu,            // 显示彩虹谷背景 (白板端) *ST_BuildHouse_CaiHongGu90,4660
-    CT_BuildHouse_XiaoGuaiWu,           // 小怪物图片 (教师端) *CT_BuildHouse_XiaoGuaiWu91,4739
-    ST_BuildHouse_XiaoGuaiWu,           // 显示小怪物图片 (白板端) *ST_BuildHouse_XiaoGuaiWu92,4812
-    CT_BuildHouse_MuBu,                 // 幕布 (教师端) *CT_BuildHouse_MuBu93,4891
-    ST_BuildHouse_MuBu,                 // 显示幕布 (白板端) *ST_BuildHouse_MuBu94,4955
-    CT_BuildHouse_OperatorDemo,         // 操作演示 (教师端) *CT_BuildHouse_OperatorDemo96,5026
-    ST_BuildHouse_OperatorDemo,         // 响应教师的操作演示 (白板端) *ST_BuildHouse_OperatorDemo97,5096
-    CT_BuildHouse_SingleMode,           // 单人模式 (教师端) *CT_BuildHouse_SingleMode98,5181
-    ST_BuildHouse_SingleMode,           // 响应所有学生的单人模式操作情况 (白板端) *ST_BuildHouse_SingleMode99,5251
-    CT_BuildHouse_GroupMode,            // 分组模式 (教师端) *CT_BuildHouse_GroupMode100,5354
-    ST_BuildHouse_GroupMode,            // 响应分组模式操作情况 (白板端) *ST_BuildHouse_GroupMode101,5424
-    CT_BuildHouse_SetStuGroupCount,     // 设置学生组信息数量 (教师端)CT_BuildHouse_SetStuGroupCount103,5513
-    CT_BuildHouse_SetStuGroup,          // 设置学生组信息 (教师端)CT_BuildHouse_SetStuGroup104,5596
-    CT_BuildHouse_GetStuGroupCount,     // 获得学生组信息数量 (所有客户端)CT_BuildHouse_GetStuGroupCount105,5673
-    CT_BuildHouse_GetStuGroup,          // 获得学生组信息 (所有客户端)CT_BuildHouse_GetStuGroup106,5762
-    CT_BuildHouse_GameStart,            // 造房子游戏开始 (教师端) *CT_BuildHouse_GameStart107,5845
-    ST_BuildHouse_GameStart,            // 同步所有(学生端和白板端) *ST_BuildHouse_GameStart108,5924
-    CT_BuildHouse_UpdatePos,            // 学生添加/移动/删除素材 (所有学生端) **CT_BuildHouse_UpdatePos110,6080
-    ST_BuildHouse_UpdatePos,            // 同步造房子进度 (白板端) **ST_BuildHouse_UpdatePos111,6177
-    CT_BuildHouse_GameEnd,              // 发起造房子游戏结束 (教师端) *CT_BuildHouse_GameEnd112,6257
-    ST_BuildHouse_GameEnd,              // 同步所有(学生端和白板端) *ST_BuildHouse_GameEnd113,6342
-    CT_BuildHouse_Save,                 // 发送创建好的房子到服务器 (所有学生端) ***CT_BuildHouse_Save114,6423
-    ST_BuildHouse_Show,                 // 发送创建好的房子到 (白板端)ST_BuildHouse_Show115,6525
-    CT_BuildHouse_EmailTibet,           // 启动邮件1 (教师端) *CT_BuildHouse_EmailTibet116,6608
-    ST_BuildHouse_EmailTibet,           // 显示邮件1信息 (白板端) *ST_BuildHouse_EmailTibet117,6679
-    CT_BuildHouse_EmailAmerica,         // 启动邮件2 (教师端) *CT_BuildHouse_EmailAmerica118,6756
-    ST_BuildHouse_EmailAmerica,         // 显示邮件2信息 (白板端) *ST_BuildHouse_EmailAmerica119,6827
-    CT_BuildHouse_Activation,           // 激活 (教师端) *CT_BuildHouse_Activation121,6905
-    ST_BuildHouse_Activation,           // 激活场景 (白板端) *ST_BuildHouse_Activation122,6969
-    CT_BuildHouse_Role,                 // 角色登场 (教师端) *CT_BuildHouse_Role123,7039
-    ST_BuildHouse_Role,                 // 角色登场 (白板端) *ST_BuildHouse_Role124,7109
-    CT_BuildHouse_Stamp,                // 盖章 (教师端) *CT_BuildHouse_Stamp125,7179
-    ST_BuildHouse_Stamp,                // 盖章 (白板端) *ST_BuildHouse_Stamp126,7243
-    CT_BuildHouse_SaveHouse,            // 盖章确认 (教师端) ***CT_BuildHouse_SaveHouse127,7307
-    CT_Puzzle_GameStart = 700,  // 点击拼图开始 (教师端)CT_Puzzle_GameStart131,7404
-    ST_Puzzle_GameStart,        // 发送拼图游戏开始信息 (学生端和白板端)ST_Puzzle_GameStart132,7470
-    CT_Puzzle_IconStatus,       // 获得拼图是否正确的状态 (学生端) *CT_Puzzle_IconStatus134,7647
-    ST_Puzzle_IconStatus,       // 发送拼图是否正确的状态 (白板端) *ST_Puzzle_IconStatus135,7730
-    CT_Puzzle_Play,             // 拼图播放 (学生端) *CT_Puzzle_Play136,7813
-    ST_Puzzle_Play,             // 拼图播放 (白板端) *ST_Puzzle_Play137,7875
-    CT_Puzzle_Pause,            // 拼图暂停 (学生端) *CT_Puzzle_Pause138,7937
-    ST_Puzzle_Pause,            // 拼图暂停 (白板端) *ST_Puzzle_Pause139,7999
-    CT_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (客户端) **CT_Puzzle_MovePic140,8061
-    ST_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (白板端) **ST_Puzzle_MovePic141,8145
-    CT_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (客户端) **CT_Puzzle_DeletePic142,8229
-    ST_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (白板端) **ST_Puzzle_DeletePic143,8313
-    CT_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (客户端) **CT_Puzzle_AddPic144,8397
-    ST_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (白板端) **ST_Puzzle_AddPic145,8481
-    CT_Puzzle_CalcScore,        // 拼图的结果 (教师端) &*CT_Puzzle_CalcScore146,8565
-    CT_Puzzle_EndGame,          // 结束拼图课程 (教师端) *CT_Puzzle_EndGame147,8631
-    ST_Puzzle_EndGame,          // 结束拼图课程 (白板端和所有学生端) *ST_Puzzle_EndGame148,8699
-    ST_Dynamic_MessageType = 10000,  // 要求所发送的学生信息从10000号开始ST_Dynamic_MessageType150,8786
-struct sDBRecordFinishedsDBRecordFinished156,8923
-    unsigned int iFlagFinished;iFlagFinished158,8950
-struct sDBCountsDBCount165,9048
-    int count;count167,9066
-enum mClientTypemClientType170,9085
-    MCT_STUDENT = 1,MCT_STUDENT172,9104
-    MCT_TEACHER,MCT_TEACHER173,9125
-    MCT_WHITEBOARD,MCT_WHITEBOARD174,9142
-struct sLoginsLogin177,9166
-    int type;   // 客户端的类型(学生,教师或白板)type179,9182
-    char username[20];username180,9244
-    char password[20];password181,9267
-enum mLoginOutResultmLoginOutResult187,9335
-    RES_SUCCEED = 1,RES_SUCCEED189,9358
-    RES_FAIL,RES_FAIL190,9379
-struct sLoginOutResultsLoginOutResult192,9396
-    int succeed;succeed194,9421
-    char message[50];message195,9438
-struct sLogoutsLogout201,9520
-    int type; // 客户端的类型(学生,教师或白板)type203,9537
-struct sCourseGroupsCourseGroup209,9644
-    char sGradeName[20];    // 服务器没有处理这个字段sGradeName211,9666
-    char sCourseGroupName[20];sCourseGroupName212,9731
-struct sGetCourseGroupsGetCourseGroup218,9822
-    char sCourseList[128];   // 动画片,暖身操,xxxx,sCourseList220,9847
-struct sGetCourseDBsGetCourseDB227,9995
-    char sGradeName[20];sGradeName229,10017
-    char sGroupName[20];sGroupName230,10042
-    char sCourseName[20];sCourseName231,10067
-    int  iLanguage;iLanguage232,10093
-    int  iArt;iArt233,10113
-    int  iCommunity;iCommunity234,10128
-    int  iHealth;iHealth235,10149
-    int  iScience;iScience236,10167
-struct sGetGradeDBsGetGradeDB252,10795
-    char sGradeName[20];sGradeName254,10816
-struct sGetClassDBsGetClassDB266,11057
-    char sClassName[20];sClassName268,11078
-struct sGetClassRoomDBsGetClassRoomDB281,11340
-    char sClassRoomName[20];sClassRoomName283,11365
-typedef struct sSelectedClassRoom{sSelectedClassRoom296,11596
-    unsigned int classroom_id;classroom_id297,11631
-    mClientType client_type;client_type298,11662
-}TSelectedClassRoom;TSelectedClassRoom299,11691
-struct sGetCourseItemsGetCourseItem301,11713
-    char sCourseName[20];sCourseName303,11737
-struct sCourseItemsCourseItem309,11824
-    char sCourseName[20];sCourseName311,11845
-    char sItemName[20];sItemName312,11871
-struct sLoginOutClassRoomsLoginOutClassRoom328,12438
-    int  type;type330,12466
-    char sTeacherName[20];sTeacherName331,12481
-    char sClassName[20];sClassName332,12508
-    char sClassRoomName[20];sClassRoomName333,12533
-struct sGetStudentDetailInfosGetStudentDetailInfo340,12685
-    char sNumber[20];sNumber342,12716
-    char sFirstName[20];sFirstName343,12738
-    char sLastName[20];sLastName344,12763
-    char sSex[2];sSex345,12787
-    char sSchoolName[20];sSchoolName346,12805
-    char sGradeName[20];sGradeName347,12831
-    char sClassName[20];sClassName348,12856
-    char sAccount[20];sAccount349,12881
-    char birthday[20];birthday350,12904
-    char stFirstName[20];stFirstName351,12927
-    char stLastName[20];stLastName352,12953
-    int  iPicture_id;iPicture_id353,12978
-struct sGetAllStudentInfosGetAllStudentInfo366,14369
-    int iStudentId;iStudentId368,14397
-    char sPicName[128];sPicName369,14417
-struct sLeaveEarly // LeaveEarly / ConfirmLeaveEarlysLeaveEarly381,14781
-    int student_id;student_id387,14952
-enum ePuzzleTypeePuzzleType390,14976
-    PT_SQUARE = 1,  // 方块PT_SQUARE392,14995
-    PT_CIRCLE,      // 圆形PT_CIRCLE393,15025
-struct sPuzzleGameStartsPuzzleGameStart396,15059
-    char type;type398,15085
-    char size;  // 20/12size399,15100
-struct sGetTeacherInfosGetTeacherInfo411,15351
-    char sTeacherName[20];sTeacherName413,15376
-struct sControlLevelsControlLevel419,15466
-    int level;  // VALUE: 0 (待机), 1, 2, 3, 4 (下一节)level421,15489
-struct sBuildHouseCaiHongXiaoWusBuildHouseCaiHongXiaoWu428,15658
-    char sText[2];sText430,15692
-struct sBuildHouseSetStuGroupsBuildHouseSetStuGroup437,15865
-    int  iGroupIndex;iGroupIndex439,15897
-    int  iStudentCount;iStudentCount440,15919
-struct sBuildHouseStudentListsBuildHouseStudentList442,15946
-    char sStudentName[10];sStudentName444,15978
-enum ePuzzleIconStatusePuzzleIconStatus451,16215
-    PIS_OK = 1,PIS_OK453,16240
-    PIS_ERR,PIS_ERR454,16256
-    PIS_WAIT,PIS_WAIT455,16269
-struct sPuzzleIconStatussPuzzleIconStatus457,16286
-    int status;status459,16313
-enum ePuzzleActionTypePicePuzzleActionTypePic468,16476
-    AP_MOVE = 1,AP_MOVE470,16504
-    AP_DELETE,AP_DELETE471,16521
-    AP_ADD,AP_ADD472,16536
-struct sPuzzleUpdatePicsPuzzleUpdatePic475,16552
-    int action_type;action_type477,16578
-    int pic_idx; // 某张拼图块pic_idx478,16599
-    int x, y;x479,16635
-    int x, y;y479,16635
-typedef struct sSubmitDatasSubmitData484,16674
-	unsigned int cLen;          //数据长度cLen486,16703
-	enum CommandType cType;     //数据编号cType487,16747
-	void *cData() {             //指向数据的指针cData488,16791
-}MSG_HEAD;MSG_HEAD491,16867
-typedef struct _stCT_GetCourseItemKeyInfoReq{_stCT_GetCourseItemKeyInfoReq493,16879
-    unsigned int course_item_id;course_item_id494,16925
-}GetCourseItemKeyInfoReq;GetCourseItemKeyInfoReq495,16958
-typedef struct _stCT_GetCourseItemKeyInfoRsp{_stCT_GetCourseItemKeyInfoRsp497,16985
-    char keys[512];keys498,17031
-}GetCourseItemKeyInfoRsp;GetCourseItemKeyInfoRsp499,17051
-#define MSG_HEAD_LEN MSG_HEAD_LEN501,17078
-
-Buf.h,569
-#define _BUF_H__BUF_H_2,16
-class Buf {Buf6,54
-    Buf(size_t inSize = 5120) {Buf8,74
-    ~Buf(){~Buf13,168
-    void* ptr() {ptr20,275
-    size_t setsize(size_t in) {setsize24,321
-    size_t maxsize() {maxsize28,387
-    size_t size() {size32,439
-    void reset() {reset36,488
-    int getfd() {getfd40,549
-    void setfd(int fd) {setfd43,593
-    int getid() {getid47,643
-    void setid(int id) {setid50,687
-    void* ptr_;ptr_54,745
-    size_t size_;size_55,761
-    size_t used_;used_56,779
-    int fd_;fd_57,797
-    int id_;id_58,810
-
-PoolT.h,364
-#define _POOLT_H__POOLT_H_7,73
-class PoolT {PoolT22,305
-    PoolT(int n = 1000) {PoolT28,434
-    ~PoolT() {~PoolT38,658
-    TYPE* malloc() {malloc51,951
-    int free(TYPE* i) {free64,1202
-    int size() {size73,1357
-    int used() {used80,1448
-    queue<TYPE*> queue_;queue_86,1552
-    MutexLock lock_;lock_87,1577
-    int size_;size_88,1598
-
-Single.h,287
-#define _GLOBAL_DATA_H__GLOBAL_DATA_H_2,24
-class Single {Single9,165
-        QueueT<Buf*> recvqueue;recvqueue13,252
-        QueueT<Buf*> sendqueue;sendqueue14,284
-        PoolT<Buf> bufpool;bufpool15,316
-        static class Single* p_;p_19,376
-#define SINGLE SINGLE21,412
-
-task.h,185
-#define _TASK_H__TASK_H_2,17
-class task{task10,134
-        task():autorelease(true){task12,158
-        virtual ~task(){}~task14,202
-        bool autorelease;autorelease17,307
-
-Evloop.cpp,860
-struct ev_loop* Evloop::loop = NULL;loop3,21
-struct ev_io_info Evloop::ioarray[MAXFD];ioarray4,58
-AtomicT<int> Evloop::clientcount;clientcount5,100
-Evloop::Evloop(string ip, int port) {Evloop7,135
-Evloop::~Evloop() {~Evloop19,417
-int Evloop::startlisten() {startlisten23,462
-int Evloop::work() {work39,1011
-void Evloop::accept_cb(struct ev_loop *loop, ev_io *w, int revents) {accept_cb66,1579
-void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {recv_cb89,2232
-void Evloop::setnonblock(int fd) {setnonblock122,3189
-void Evloop::setreuseaddr(int fd)setreuseaddr126,3285
-void Evloop::setnodelay (int fd)setnodelay132,3414
-void Evloop::closefd(int fd) {closefd138,3548
-void Evloop::time_cb(struct ev_loop* loop, struct ev_timer *timer, int revents) {time_cb147,3794
-int Evloop::getClientCount() {getClientCount161,4258
-
-RecvTask.cpp,481
-RecvTask::RecvTask() {RecvTask4,47
-RecvTask::~RecvTask() {~RecvTask7,73
-void login_check (Buf* buf)login_check10,100
-void process_scene (Buf* buf)process_scene16,194
-void getDBRecordCount (Buf* buf, int iCase)getDBRecordCount33,574
-void getDBRecord (Buf* buf, int iCase)getDBRecord38,635
-void handle_selected_class(Buf* p) {handle_selected_class43,691
-void handle_show_sprite_animation (Buf* p)handle_show_sprite_animation62,1272
-int RecvTask::work ()work82,1819
-
-config.lua,0
-
-AtomicT.h,983
-#define _ATOMICT_H__ATOMICT_H_5,47
-class AtomicT {AtomicT11,153
-        AtomicT(){AtomicT13,181
-        AtomicT(TYPE a){AtomicT16,234
-        ~AtomicT(){~AtomicT19,293
-        TYPE value() {value22,324
-        TYPE operator+= (TYPE a){operator +=27,432
-        TYPE operator-= (TYPE a){operator -=32,556
-        TYPE operator++ (void){operator ++40,736
-        TYPE operator++ (int){operator ++48,912
-        TYPE operator-- (void){operator --53,1030
-        TYPE operator-- (int){operator --58,1149
-        AtomicT<TYPE>& operator= (TYPE a){operator =63,1267
-        bool operator== (TYPE a){operator ==70,1471
-        bool operator!= (TYPE a){operator !=75,1595
-        bool operator> (TYPE a){operator >80,1719
-        bool operator>= (TYPE a){operator >=85,1841
-        bool operator< (TYPE a){operator <90,1965
-        bool operator<= (TYPE a){operator <=95,2087
-        TYPE value_;value_101,2224
-        MutexLock lock_;lock_102,2245
-
-SendTask.cpp,109
-SendTask::SendTask() {SendTask2,22
-SendTask::~SendTask() {~SendTask5,48
-int SendTask::work() {work8,75
-
-ProcessManager.cpp,345
-ProcessManager::ProcessManager() { ProcessManager2,28
-ProcessManager::~ProcessManager() {~ProcessManager6,100
-int ProcessManager::process_logic(int argc, char** argv) {process_logic9,139
-void ProcessManager::sig_term(int signo) {sig_term68,1710
-int ProcessManager::run() {run77,1866
-bool ProcessManager::lock(int mode) {lock111,2761
-
-Config.h,485
-#define _CONFIG_H__CONFIG_H_2,19
-class Config {Config8,123
-        string db_host;db_host13,248
-        string db_username;db_username14,272
-        string db_password;db_password15,300
-        string db_database;db_database16,328
-        string server_ip;server_ip17,356
-        int server_port;server_port18,382
-        int school_id;school_id19,407
-        int game_count;game_count20,430
-        static class Config* p_;p_23,485
-#define CONFIG CONFIG25,521
-
-RecvTask.h,82
-#define RECVTASK_H_RECVTASK_H_2,20
-class RecvTask: public task{RecvTask16,295
-
-Config.cpp,200
-Config* Config::p_ = NULL;p_2,20
-Config* Config::instance() {instance3,47
-Config::Config(){Config10,150
-Config::~Config(){~Config13,175
-void Config::readconfig(string file){readconfig16,197
-
-database.cpp,479
-DataBase* DataBase::pinstance = NULL;pinstance9,124
-bool DataBase::Init(string host, string user_name, string password, string database) {Init12,180
-DataBase::DataBase() {DataBase28,716
-DataBase::~DataBase() {~DataBase31,761
-Connection* DataBase::getConnection() {getConnection39,873
-Statement* DataBase::getStatement() {getStatement43,937
-PreparedStatement* DataBase::preStatement(string sql) {preStatement59,1227
-DataBase* DataBase::instance() {instance63,1330
-
-Evloop.cpp,860
-struct ev_loop* Evloop::loop = NULL;loop3,21
-struct ev_io_info Evloop::ioarray[MAXFD];ioarray4,58
-AtomicT<int> Evloop::clientcount;clientcount5,100
-Evloop::Evloop(string ip, int port) {Evloop7,135
-Evloop::~Evloop() {~Evloop19,417
-int Evloop::startlisten() {startlisten23,462
-int Evloop::work() {work39,1011
-void Evloop::accept_cb(struct ev_loop *loop, ev_io *w, int revents) {accept_cb66,1579
-void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {recv_cb89,2232
-void Evloop::setnonblock(int fd) {setnonblock122,3189
-void Evloop::setreuseaddr(int fd)setreuseaddr126,3285
-void Evloop::setnodelay (int fd)setnodelay132,3414
-void Evloop::closefd(int fd) {closefd138,3548
-void Evloop::time_cb(struct ev_loop* loop, struct ev_timer *timer, int revents) {time_cb147,3794
-int Evloop::getClientCount() {getClientCount161,4258
-
-main.cpp,45
-int main(int argc, char* argv[]){main9,130
-
-ProcessManager.cpp,345
-ProcessManager::ProcessManager() { ProcessManager2,28
-ProcessManager::~ProcessManager() {~ProcessManager6,100
-int ProcessManager::process_logic(int argc, char** argv) {process_logic9,139
-void ProcessManager::sig_term(int signo) {sig_term68,1710
-int ProcessManager::run() {run77,1866
-bool ProcessManager::lock(int mode) {lock111,2761
-
-RecvTask.cpp,481
-RecvTask::RecvTask() {RecvTask4,47
-RecvTask::~RecvTask() {~RecvTask7,73
-void login_check (Buf* buf)login_check10,100
-void process_scene (Buf* buf)process_scene16,194
-void getDBRecordCount (Buf* buf, int iCase)getDBRecordCount33,574
-void getDBRecord (Buf* buf, int iCase)getDBRecord38,635
-void handle_selected_class(Buf* p) {handle_selected_class43,691
-void handle_show_sprite_animation (Buf* p)handle_show_sprite_animation62,1272
-int RecvTask::work ()work82,1819
-
-SendTask.cpp,109
-SendTask::SendTask() {SendTask2,22
-SendTask::~SendTask() {~SendTask5,48
-int SendTask::work() {work8,75
-
-Single.cpp,144
-Single* Single::p_ = NULL;p_2,20
-Single* Single::instance() {instance3,47
-Single::Single(){Single10,150
-Single::~Single(){~Single13,175
-
-ThreadPool.cpp,414
-ThreadPool::ThreadPool(int n) {ThreadPool3,25
-ThreadPool::~ThreadPool() {~ThreadPool7,89
-int ThreadPool::start() {start10,120
-int ThreadPool::stop() {stop21,386
-int ThreadPool::push_task(task* p) {push_task29,505
-int ThreadPool::getcount() {getcount33,585
-void* ThreadPool::thread(void* p) {thread38,687
-int ThreadPool::kill() {kill61,1261
-void ThreadPool::sighandle(int signo) {sighandle70,1465
-
-AtomicT.h,983
-#define _ATOMICT_H__ATOMICT_H_5,47
-class AtomicT {AtomicT11,153
-        AtomicT(){AtomicT13,181
-        AtomicT(TYPE a){AtomicT16,234
-        ~AtomicT(){~AtomicT19,293
-        TYPE value() {value22,324
-        TYPE operator+= (TYPE a){operator +=27,432
-        TYPE operator-= (TYPE a){operator -=32,556
-        TYPE operator++ (void){operator ++40,736
-        TYPE operator++ (int){operator ++48,912
-        TYPE operator-- (void){operator --53,1030
-        TYPE operator-- (int){operator --58,1149
-        AtomicT<TYPE>& operator= (TYPE a){operator =63,1267
-        bool operator== (TYPE a){operator ==70,1471
-        bool operator!= (TYPE a){operator !=75,1595
-        bool operator> (TYPE a){operator >80,1719
-        bool operator>= (TYPE a){operator >=85,1841
-        bool operator< (TYPE a){operator <90,1965
-        bool operator<= (TYPE a){operator <=95,2087
-        TYPE value_;value_101,2224
-        MutexLock lock_;lock_102,2245
-
-Buf.h,569
-#define _BUF_H__BUF_H_2,16
-class Buf {Buf6,54
-    Buf(size_t inSize = 5120) {Buf8,74
-    ~Buf(){~Buf13,168
-    void* ptr() {ptr20,275
-    size_t setsize(size_t in) {setsize24,321
-    size_t maxsize() {maxsize28,387
-    size_t size() {size32,439
-    void reset() {reset36,488
-    int getfd() {getfd40,549
-    void setfd(int fd) {setfd43,593
-    int getid() {getid47,643
-    void setid(int id) {setid50,687
-    void* ptr_;ptr_54,745
-    size_t size_;size_55,761
-    size_t used_;used_56,779
-    int fd_;fd_57,797
-    int id_;id_58,810
-
-Config.h,485
-#define _CONFIG_H__CONFIG_H_2,19
-class Config {Config8,123
-        string db_host;db_host13,248
-        string db_username;db_username14,272
-        string db_password;db_password15,300
-        string db_database;db_database16,328
-        string server_ip;server_ip17,356
-        int server_port;server_port18,382
-        int school_id;school_id19,407
-        int game_count;game_count20,430
-        static class Config* p_;p_23,485
-#define CONFIG CONFIG25,521
-
-database.h,472
-#define _DATABASE_H__DATABASE_H_7,66
-class DataBase {DataBase29,486
-        MutexLock m_mutex;m_mutex59,1345
-        Driver* m_pDriver;m_pDriver62,1405
-        Connection* m_pConn;m_pConn63,1432
-        string m_host;m_host64,1461
-        string m_user_name;m_user_name65,1484
-        string m_password;m_password66,1512
-        string m_database;m_database67,1539
-        static DataBase *pinstance;pinstance68,1566
-#define DATABASE DATABASE70,1605
-
-Evloop.h,632
-#define EVLOOP_H_EVLOOP_H_6,52
-#define SERVADDR SERVADDR27,462
-#define SERVPORT SERVPORT28,491
-#define MAXFD MAXFD29,513
-#define TIMEOUT TIMEOUT30,533
-typedef struct ev_io_info{ev_io_info32,553
-    struct ev_io* io;io33,580
-    ev_tstamp lasttime;lasttime34,602
-}ev_in_info;ev_in_info35,626
-class Evloop: public task{Evloop41,686
-        static struct ev_loop* loop;loop72,1692
-        static struct ev_io_info ioarray[MAXFD];ioarray75,1809
-        static AtomicT<int> clientcount;clientcount81,1904
-        int listenfd_;listenfd_84,2001
-        int port_;port_85,2024
-        string ip_;ip_86,2043
-
-Mutex.h,1003
-#define _MUTEX_LOCK_H__MUTEX_LOCK_H_2,23
-class MutexLock{MutexLock8,115
-        MutexLock() {MutexLock10,144
-        ~MutexLock() { ~MutexLock14,224
-        void lock() { lock18,303
-        void unlock() { unlock22,378
-        pthread_mutex_t* getPthreadMutex() { getPthreadMutex26,457
-        pthread_mutex_t mutex_;mutex_32,647
-class MutexLockGuard{MutexLockGuard38,716
-        explicit MutexLockGuard(MutexLock& mutex) : mutex_(mutex) { MutexLockGuard40,750
-        ~MutexLockGuard() { ~MutexLockGuard43,856
-        MutexLock& mutex_;mutex_49,1050
-class Condition{Condition56,1132
-        Condition(MutexLock& m):mutex_(m){Condition58,1161
-        int wait(){wait62,1261
-        int wait(time_t t){wait67,1379
-        void notify(){notify74,1620
-        void notifyall(){notifyall78,1696
-        ~Condition(){~Condition82,1778
-        MutexLock& mutex_;mutex_87,1905
-        pthread_cond_t pcond_;pcond_88,1932
-#define MutexLockGuard(MutexLockGuard90,1966
-
-PoolT.h,364
-#define _POOLT_H__POOLT_H_7,73
-class PoolT {PoolT22,305
-    PoolT(int n = 1000) {PoolT28,434
-    ~PoolT() {~PoolT38,658
-    TYPE* malloc() {malloc51,951
-    int free(TYPE* i) {free64,1202
-    int size() {size73,1357
-    int used() {used80,1448
-    queue<TYPE*> queue_;queue_86,1552
-    MutexLock lock_;lock_87,1577
-    int size_;size_88,1598
-
-ProcessManager.h,412
-#define _PROCESSMAMAGER_H__PROCESSMAMAGER_H_2,27
-#define CONFIGFILE CONFIGFILE21,377
-  LOCK_WAIT   = LOCK_EX,            /**<阻塞锁*/LOCK_WAIT23,418
-  LOCK_NOWAIT = LOCK_EX | LOCK_NB,  /**<非阻塞锁*/LOCK_NOWAIT24,470
-  UNLOCK      = LOCK_UN             /**<解锁*/UNLOCK25,525
-class ProcessManagerProcessManager28,578
-    ThreadPool* thrpool_;thrpool_38,790
-    int lockfd_;lockfd_39,816
-
-protocol.h,17527
-#define _PROTOCOL_H_PROTOCOL_H2,20
-enum CommandTypeCommandType5,57
-    CT_Test = 1,CT_Test7,76
-    CT_ChangeScene = 100,CT_ChangeScene8,93
-    CT_Login = 150,      // 登录 (所有端)CT_Login10,120
-    CT_LoginResult,      // 登录结果 (所有端)CT_LoginResult11,167
-    CT_GetCourseDBCount, // 获得数据库中的课程信息数量 (教师端)CT_GetCourseDBCount12,220
-    CT_GetCourseDB,      // 获得数据库中的课程信息 (教师端)CT_GetCourseDB13,300
-    CT_SetCourseGroup,   // 设置开启的课程列表 (教师端)CT_SetCourseGroup14,374
-    CT_GetCourseGroup,      // 获得课程列表 (教师端和所有学生端)CT_GetCourseGroup15,442
-    CT_GetCourseItemCount,  // 获得课程列表的子项数量 (教师端)CT_GetCourseItemCount16,522
-    CT_GetCourseItem,    // 获得课程列表的子项 (教师端)CT_GetCourseItem17,599
-    CT_Logout,           // 登出 (所有端)CT_Logout18,667
-    CT_LogoutReuslt,     // 登出结果 (所有端)CT_LogoutReuslt19,714
-    CT_GetClassRoomDBCount, //获得教室班级数据库信息数量 (教师端)CT_GetClassRoomDBCount20,767
-    CT_GetClassRoomDB,   // 获得教室班级数据库信息 (教师端)CT_GetClassRoomDB21,849
-    CT_GetGradeDBCount,  // 获得教室年级数据库信息数量 (教师端)CT_GetGradeDBCount22,923
-    CT_GetGradeDB,       // 获得教室年级数据库信息 (教师端)CT_GetGradeDB23,1003
-    CT_GetClassDBCount,  // 获得班级信息数量 (教师端)CT_GetClassDBCount24,1077
-    CT_GetClassDB,       // 获得班级信息 (教师端)CT_GetClassDB25,1142
-    CT_LoginClassRoom,   // 进入教室  老師->服務器CT_LoginClassRoom26,1201
-    CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)CT_LogoutClassRoom27,1261
-    CT_GetStudentInfo,   // 获得学生列表 (所有端)CT_GetStudentInfo28,1332
-    CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)CT_GetAllStudentInfoCount29,1391
-    CT_GetAllStudentInfo,// 获得所有学生列表 (所有端)CT_GetAllStudentInfo30,1468
-    CT_LeaveEarly,       // 早退 (教师端)CT_LeaveEarly31,1533
-    ST_LeaveEarly,       // 早退通知给 (学生端)ST_LeaveEarly32,1580
-    CT_ConfirmLeaveEarly,// 早退确认 (学生端) *CT_ConfirmLeaveEarly33,1636
-    CT_GetTeacherInfo,   // 获得教师信息 (所有学生端和教师端)CT_GetTeacherInfo34,1691
-    CT_LockStudent,      // 锁定学生端 (教师端) *CT_LockStudent35,1768
-    ST_LockStudent,      // 锁定学生端 (学生端) *ST_LockStudent36,1826
-    CT_SelectedClassRoom,CT_SelectedClassRoom37,1884
-    CT_CourseFinished,      // 请求课程是否结束 (所有端)CT_CourseFinished38,1910
-    ST_CourseFinished,      // 服务请求课程是否结束ST_CourseFinished39,1978
-    CT_GetDBRecordFinished, // 请求所有数据库记录是否完成CT_GetDBRecordFinished40,2040
-    ST_GetDBRecordFinished, // 服务器回应数据库记录是否完成ST_GetDBRecordFinished41,2111
-    CT_GetCourseItemKeyInfoReq, // 教师端请求CourseItem的按键数据请求CT_GetCourseItemKeyInfoReq42,2185
-    CT_GetCourseItemKeyInfoRsp, // 教师端请求CourseItem的按键数据回应CT_GetCourseItemKeyInfoRsp43,2267
-    CT_Common_PlayorPause,CT_Common_PlayorPause45,2350
-    ST_Common_PlayorPause,ST_Common_PlayorPause46,2377
-    CT_Common_Resume,CT_Common_Resume49,2450
-    ST_Common_Resume,ST_Common_Resume50,2472
-    CT_Common_Stop,CT_Common_Stop51,2494
-    ST_Common_Stop,ST_Common_Stop52,2514
-    CT_ShowSpriteAnimation = 200,   // 串场动画 (教师端) *CT_ShowSpriteAnimation55,2561
-    ST_ShowSpriteAnimation,         // 显示串场动画 (白板端) *ST_ShowSpriteAnimation56,2627
-    CT_ShowSpriteControl = 300,     // 控场动画 (教师端) *CT_ShowSpriteControl58,2704
-    ST_ShowSpriteControl,           // 控场动画显示 (白板端) *ST_ShowSpriteControl59,2770
-    CT_ControlLevel,                // 控场级别 (教师端)CT_ControlLevel60,2842
-    ST_ControlLevel,                // 显示控场动画级别 (白板端)ST_ControlLevel61,2906
-    CT_Exercise_GameStart = 400,    // 暖身操环节开始 (教师端) *CT_Exercise_GameStart63,2983
-    ST_Exercise_GameStart,          // 暖身操开始播放 (白板端) *ST_Exercise_GameStart64,3058
-    CT_Exercise_Play,               // 暖身操播放 (教师端) *CT_Exercise_Play65,3133
-    ST_Exercise_Play,               // 暖身操播放 (白板端) *ST_Exercise_Play66,3202
-    CT_Exercise_Pause,              // 暖身操暂停 (教师端) *CT_Exercise_Pause67,3271
-    ST_Exercise_Pause,              // 暖身操暂停 (白板端) *ST_Exercise_Pause68,3340
-    CT_Exercise_Stop,               // 暖身操停止 (教师端) *CT_Exercise_Stop69,3409
-    ST_Exercise_Stop,               // 暖身操停止 (白板端) *ST_Exercise_Stop70,3478
-    CT_Exercise_GameEnd,            // 暖身操环节结束 (教师端) *CT_Exercise_GameEnd71,3547
-    ST_Exercise_GameEnd,            // 暖身操结束播放 (白板端) *ST_Exercise_GameEnd72,3622
-    CT_Cartoon_GameStart = 500,     // 动画片环节开始 (教师端) *CT_Cartoon_GameStart74,3698
-    ST_Cartoon_GameStart,           // 动画片开始 (白板端) *ST_Cartoon_GameStart75,3773
-    CT_Cartoon_Play,                // 动画片播放 (教师端) *CT_Cartoon_Play76,3842
-    ST_Cartoon_Play,                // 动画片播放 (白板端) *ST_Cartoon_Play77,3911
-    CT_Cartoon_Pause,               // 动画片暂停 (教师端) *CT_Cartoon_Pause78,3980
-    ST_Cartoon_Pause,               // 动画片暂停 (白板端) *ST_Cartoon_Pause79,4049
-    CT_Cartoon_Stop,                // 动画片停止 (教师端) *CT_Cartoon_Stop80,4118
-    ST_Cartoon_Stop,                // 动画片停止 (白板端) *ST_Cartoon_Stop81,4187
-    CT_Cartoon_GameEnd,             // 动画片环节结束 (教师端) *CT_Cartoon_GameEnd82,4256
-    ST_Cartoon_GameEnd,             // 动画片结束播放 (白板端) *ST_Cartoon_GameEnd83,4331
-    CT_BuildHouse_CaiHongXiaoWu = 600,  // 彩虹小屋文字 (教师端)CT_BuildHouse_CaiHongXiaoWu87,4433
-    ST_BuildHouse_CaiHongXiaoWu,        // 显示彩虹小屋文字 (白板端)ST_BuildHouse_CaiHongXiaoWu88,4507
-    CT_BuildHouse_CaiHongGu,            // 彩虹谷背景 (教师端) *CT_BuildHouse_CaiHongGu89,4587
-    ST_BuildHouse_CaiHongGu,            // 显示彩虹谷背景 (白板端) *ST_BuildHouse_CaiHongGu90,4660
-    CT_BuildHouse_XiaoGuaiWu,           // 小怪物图片 (教师端) *CT_BuildHouse_XiaoGuaiWu91,4739
-    ST_BuildHouse_XiaoGuaiWu,           // 显示小怪物图片 (白板端) *ST_BuildHouse_XiaoGuaiWu92,4812
-    CT_BuildHouse_MuBu,                 // 幕布 (教师端) *CT_BuildHouse_MuBu93,4891
-    ST_BuildHouse_MuBu,                 // 显示幕布 (白板端) *ST_BuildHouse_MuBu94,4955
-    CT_BuildHouse_OperatorDemo,         // 操作演示 (教师端) *CT_BuildHouse_OperatorDemo96,5026
-    ST_BuildHouse_OperatorDemo,         // 响应教师的操作演示 (白板端) *ST_BuildHouse_OperatorDemo97,5096
-    CT_BuildHouse_SingleMode,           // 单人模式 (教师端) *CT_BuildHouse_SingleMode98,5181
-    ST_BuildHouse_SingleMode,           // 响应所有学生的单人模式操作情况 (白板端) *ST_BuildHouse_SingleMode99,5251
-    CT_BuildHouse_GroupMode,            // 分组模式 (教师端) *CT_BuildHouse_GroupMode100,5354
-    ST_BuildHouse_GroupMode,            // 响应分组模式操作情况 (白板端) *ST_BuildHouse_GroupMode101,5424
-    CT_BuildHouse_SetStuGroupCount,     // 设置学生组信息数量 (教师端)CT_BuildHouse_SetStuGroupCount103,5513
-    CT_BuildHouse_SetStuGroup,          // 设置学生组信息 (教师端)CT_BuildHouse_SetStuGroup104,5596
-    CT_BuildHouse_GetStuGroupCount,     // 获得学生组信息数量 (所有客户端)CT_BuildHouse_GetStuGroupCount105,5673
-    CT_BuildHouse_GetStuGroup,          // 获得学生组信息 (所有客户端)CT_BuildHouse_GetStuGroup106,5762
-    CT_BuildHouse_GameStart,            // 造房子游戏开始 (教师端) *CT_BuildHouse_GameStart107,5845
-    ST_BuildHouse_GameStart,            // 同步所有(学生端和白板端) *ST_BuildHouse_GameStart108,5924
-    CT_BuildHouse_UpdatePos,            // 学生添加/移动/删除素材 (所有学生端) **CT_BuildHouse_UpdatePos110,6080
-    ST_BuildHouse_UpdatePos,            // 同步造房子进度 (白板端) **ST_BuildHouse_UpdatePos111,6177
-    CT_BuildHouse_GameEnd,              // 发起造房子游戏结束 (教师端) *CT_BuildHouse_GameEnd112,6257
-    ST_BuildHouse_GameEnd,              // 同步所有(学生端和白板端) *ST_BuildHouse_GameEnd113,6342
-    CT_BuildHouse_Save,                 // 发送创建好的房子到服务器 (所有学生端) ***CT_BuildHouse_Save114,6423
-    ST_BuildHouse_Show,                 // 发送创建好的房子到 (白板端)ST_BuildHouse_Show115,6525
-    CT_BuildHouse_EmailTibet,           // 启动邮件1 (教师端) *CT_BuildHouse_EmailTibet116,6608
-    ST_BuildHouse_EmailTibet,           // 显示邮件1信息 (白板端) *ST_BuildHouse_EmailTibet117,6679
-    CT_BuildHouse_EmailAmerica,         // 启动邮件2 (教师端) *CT_BuildHouse_EmailAmerica118,6756
-    ST_BuildHouse_EmailAmerica,         // 显示邮件2信息 (白板端) *ST_BuildHouse_EmailAmerica119,6827
-    CT_BuildHouse_Activation,           // 激活 (教师端) *CT_BuildHouse_Activation121,6905
-    ST_BuildHouse_Activation,           // 激活场景 (白板端) *ST_BuildHouse_Activation122,6969
-    CT_BuildHouse_Role,                 // 角色登场 (教师端) *CT_BuildHouse_Role123,7039
-    ST_BuildHouse_Role,                 // 角色登场 (白板端) *ST_BuildHouse_Role124,7109
-    CT_BuildHouse_Stamp,                // 盖章 (教师端) *CT_BuildHouse_Stamp125,7179
-    ST_BuildHouse_Stamp,                // 盖章 (白板端) *ST_BuildHouse_Stamp126,7243
-    CT_BuildHouse_SaveHouse,            // 盖章确认 (教师端) ***CT_BuildHouse_SaveHouse127,7307
-    CT_Puzzle_GameStart = 700,  // 点击拼图开始 (教师端)CT_Puzzle_GameStart131,7404
-    ST_Puzzle_GameStart,        // 发送拼图游戏开始信息 (学生端和白板端)ST_Puzzle_GameStart132,7470
-    CT_Puzzle_IconStatus,       // 获得拼图是否正确的状态 (学生端) *CT_Puzzle_IconStatus134,7647
-    ST_Puzzle_IconStatus,       // 发送拼图是否正确的状态 (白板端) *ST_Puzzle_IconStatus135,7730
-    CT_Puzzle_Play,             // 拼图播放 (学生端) *CT_Puzzle_Play136,7813
-    ST_Puzzle_Play,             // 拼图播放 (白板端) *ST_Puzzle_Play137,7875
-    CT_Puzzle_Pause,            // 拼图暂停 (学生端) *CT_Puzzle_Pause138,7937
-    ST_Puzzle_Pause,            // 拼图暂停 (白板端) *ST_Puzzle_Pause139,7999
-    CT_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (客户端) **CT_Puzzle_MovePic140,8061
-    ST_Puzzle_MovePic,          // 拼图区中移动某一拼图块 (白板端) **ST_Puzzle_MovePic141,8145
-    CT_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (客户端) **CT_Puzzle_DeletePic142,8229
-    ST_Puzzle_DeletePic,        // 拼图区中删除某一拼图块 (白板端) **ST_Puzzle_DeletePic143,8313
-    CT_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (客户端) **CT_Puzzle_AddPic144,8397
-    ST_Puzzle_AddPic,           // 拼图区中添加某一拼图块 (白板端) **ST_Puzzle_AddPic145,8481
-    CT_Puzzle_CalcScore,        // 拼图的结果 (教师端) &*CT_Puzzle_CalcScore146,8565
-    CT_Puzzle_EndGame,          // 结束拼图课程 (教师端) *CT_Puzzle_EndGame147,8631
-    ST_Puzzle_EndGame,          // 结束拼图课程 (白板端和所有学生端) *ST_Puzzle_EndGame148,8699
-    ST_Dynamic_MessageType = 10000,  // 要求所发送的学生信息从10000号开始ST_Dynamic_MessageType150,8786
-struct sDBRecordFinishedsDBRecordFinished156,8923
-    unsigned int iFlagFinished;iFlagFinished158,8950
-struct sDBCountsDBCount165,9048
-    int count;count167,9066
-enum mClientTypemClientType170,9085
-    MCT_STUDENT = 1,MCT_STUDENT172,9104
-    MCT_TEACHER,MCT_TEACHER173,9125
-    MCT_WHITEBOARD,MCT_WHITEBOARD174,9142
-struct sLoginsLogin177,9166
-    int type;   // 客户端的类型(学生,教师或白板)type179,9182
-    char username[20];username180,9244
-    char password[20];password181,9267
-enum mLoginOutResultmLoginOutResult187,9335
-    RES_SUCCEED = 1,RES_SUCCEED189,9358
-    RES_FAIL,RES_FAIL190,9379
-struct sLoginOutResultsLoginOutResult192,9396
-    int succeed;succeed194,9421
-    char message[50];message195,9438
-struct sLogoutsLogout201,9520
-    int type; // 客户端的类型(学生,教师或白板)type203,9537
-struct sCourseGroupsCourseGroup209,9644
-    char sGradeName[20];    // 服务器没有处理这个字段sGradeName211,9666
-    char sCourseGroupName[20];sCourseGroupName212,9731
-struct sGetCourseGroupsGetCourseGroup218,9822
-    char sCourseList[128];   // 动画片,暖身操,xxxx,sCourseList220,9847
-struct sGetCourseDBsGetCourseDB227,9995
-    char sGradeName[20];sGradeName229,10017
-    char sGroupName[20];sGroupName230,10042
-    char sCourseName[20];sCourseName231,10067
-    int  iLanguage;iLanguage232,10093
-    int  iArt;iArt233,10113
-    int  iCommunity;iCommunity234,10128
-    int  iHealth;iHealth235,10149
-    int  iScience;iScience236,10167
-struct sGetGradeDBsGetGradeDB252,10795
-    char sGradeName[20];sGradeName254,10816
-struct sGetClassDBsGetClassDB266,11057
-    char sClassName[20];sClassName268,11078
-struct sGetClassRoomDBsGetClassRoomDB281,11340
-    char sClassRoomName[20];sClassRoomName283,11365
-typedef struct sSelectedClassRoom{sSelectedClassRoom296,11596
-    unsigned int classroom_id;classroom_id297,11631
-    mClientType client_type;client_type298,11662
-}TSelectedClassRoom;TSelectedClassRoom299,11691
-struct sGetCourseItemsGetCourseItem301,11713
-    char sCourseName[20];sCourseName303,11737
-struct sCourseItemsCourseItem309,11824
-    char sCourseName[20];sCourseName311,11845
-    char sItemName[20];sItemName312,11871
-struct sLoginOutClassRoomsLoginOutClassRoom328,12438
-    int  type;type330,12466
-    char sTeacherName[20];sTeacherName331,12481
-    char sClassName[20];sClassName332,12508
-    char sClassRoomName[20];sClassRoomName333,12533
-struct sGetStudentDetailInfosGetStudentDetailInfo340,12685
-    char sNumber[20];sNumber342,12716
-    char sFirstName[20];sFirstName343,12738
-    char sLastName[20];sLastName344,12763
-    char sSex[2];sSex345,12787
-    char sSchoolName[20];sSchoolName346,12805
-    char sGradeName[20];sGradeName347,12831
-    char sClassName[20];sClassName348,12856
-    char sAccount[20];sAccount349,12881
-    char birthday[20];birthday350,12904
-    char stFirstName[20];stFirstName351,12927
-    char stLastName[20];stLastName352,12953
-    int  iPicture_id;iPicture_id353,12978
-struct sGetAllStudentInfosGetAllStudentInfo366,14369
-    int iStudentId;iStudentId368,14397
-    char sPicName[128];sPicName369,14417
-struct sLeaveEarly // LeaveEarly / ConfirmLeaveEarlysLeaveEarly381,14781
-    int student_id;student_id387,14952
-enum ePuzzleTypeePuzzleType390,14976
-    PT_SQUARE = 1,  // 方块PT_SQUARE392,14995
-    PT_CIRCLE,      // 圆形PT_CIRCLE393,15025
-struct sPuzzleGameStartsPuzzleGameStart396,15059
-    char type;type398,15085
-    char size;  // 20/12size399,15100
-struct sGetTeacherInfosGetTeacherInfo411,15351
-    char sTeacherName[20];sTeacherName413,15376
-struct sControlLevelsControlLevel419,15466
-    int level;  // VALUE: 0 (待机), 1, 2, 3, 4 (下一节)level421,15489
-struct sBuildHouseCaiHongXiaoWusBuildHouseCaiHongXiaoWu428,15658
-    char sText[2];sText430,15692
-struct sBuildHouseSetStuGroupsBuildHouseSetStuGroup437,15865
-    int  iGroupIndex;iGroupIndex439,15897
-    int  iStudentCount;iStudentCount440,15919
-struct sBuildHouseStudentListsBuildHouseStudentList442,15946
-    char sStudentName[10];sStudentName444,15978
-enum ePuzzleIconStatusePuzzleIconStatus451,16215
-    PIS_OK = 1,PIS_OK453,16240
-    PIS_ERR,PIS_ERR454,16256
-    PIS_WAIT,PIS_WAIT455,16269
-struct sPuzzleIconStatussPuzzleIconStatus457,16286
-    int status;status459,16313
-enum ePuzzleActionTypePicePuzzleActionTypePic468,16476
-    AP_MOVE = 1,AP_MOVE470,16504
-    AP_DELETE,AP_DELETE471,16521
-    AP_ADD,AP_ADD472,16536
-struct sPuzzleUpdatePicsPuzzleUpdatePic475,16552
-    int action_type;action_type477,16578
-    int pic_idx; // 某张拼图块pic_idx478,16599
-    int x, y;x479,16635
-    int x, y;y479,16635
-typedef struct sSubmitDatasSubmitData484,16674
-	unsigned int cLen;          //数据长度cLen486,16703
-	enum CommandType cType;     //数据编号cType487,16747
-	void *cData() {             //指向数据的指针cData488,16791
-}MSG_HEAD;MSG_HEAD491,16867
-typedef struct _stCT_GetCourseItemKeyInfoReq{_stCT_GetCourseItemKeyInfoReq493,16879
-    unsigned int course_item_id;course_item_id494,16925
-}GetCourseItemKeyInfoReq;GetCourseItemKeyInfoReq495,16958
-typedef struct _stCT_GetCourseItemKeyInfoRsp{_stCT_GetCourseItemKeyInfoRsp497,16985
-    char keys[512];keys498,17031
-}GetCourseItemKeyInfoRsp;GetCourseItemKeyInfoRsp499,17051
-#define MSG_HEAD_LEN MSG_HEAD_LEN501,17078
-
-QueueT.h,391
-#define _QUEUET_H__QUEUET_H_7,74
-class QueueT {QueueT21,296
-    QueueT() {QueueT26,363
-    ~QueueT() {~QueueT33,512
-    int dequeue(TYPE& out, unsigned int timeout) {dequeue44,787
-    int enqueue(TYPE t) {enqueue65,1370
-    size_t size() {size82,1775
-    pthread_mutex_t m_mutex;m_mutex91,1967
-    pthread_cond_t m_con;m_con93,2014
-    queue<TYPE> m_queue;m_queue95,2055
-
-RecvTask.h,82
-#define RECVTASK_H_RECVTASK_H_2,20
-class RecvTask: public task{RecvTask16,295
-
-SendTask.h,82
-#define SENDTASK_H_SENDTASK_H_2,20
-class SendTask: public task{SendTask15,268
-
-Single.h,287
-#define _GLOBAL_DATA_H__GLOBAL_DATA_H_2,24
-class Single {Single9,165
-        QueueT<Buf*> recvqueue;recvqueue13,252
-        QueueT<Buf*> sendqueue;sendqueue14,284
-        PoolT<Buf> bufpool;bufpool15,316
-        static class Single* p_;p_19,376
-#define SINGLE SINGLE21,412
-
-Sock.h,31
-#define _SOCK_H__SOCK_H_2,17
-
-SQL.h,981
-#define _SQL_H__SQL_H_2,16
-#define SQL_SELECT_STU SQL_SELECT_STU4,33
-#define SQL_SELECT_COURSE SQL_SELECT_COURSE5,317
-#define SQL_SELECT_CLASS SQL_SELECT_CLASS6,398
-#define SQL_SELECT_CLASSROOM SQL_SELECT_CLASSROOM7,482
-#define SQL_SELECT_CLASSROOM1 SQL_SELECT_CLASSROOM18,588
-#define SQL_SELECT_TEACHER SQL_SELECT_TEACHER9,692
-#define SQL_SELECT_GRADE SQL_SELECT_GRADE10,761
-#define SQL_SELECT_ALLSTU SQL_SELECT_ALLSTU11,838
-#define SQL_SELECT_USED_COURSE SQL_SELECT_USED_COURSE13,1109
-#define SQL_SELECT_COURSE_DB SQL_SELECT_COURSE_DB15,1518
-#define SQL_SELECT_GRADE_DB SQL_SELECT_GRADE_DB17,1921
-#define SQL_SELECT_CLASS_DB SQL_SELECT_CLASS_DB18,1980
-#define SQL_SELECT_CLASSROOM_DB SQL_SELECT_CLASSROOM_DB19,2039
-#define SQL_SELECT_STUDENT_DB SQL_SELECT_STUDENT_DB20,2123
-#define SQL_SELECT_COURSEITEM_DB SQL_SELECT_COURSEITEM_DB21,2267
-#define SQL_SELECT_ROOM SQL_SELECT_ROOM23,2460
-#define SQL_SELECT_ITEM_KEYS SQL_SELECT_ITEM_KEYS25,2551
-
-task.h,185
-#define _TASK_H__TASK_H_2,17
-class task{task10,134
-        task():autorelease(true){task12,158
-        virtual ~task(){}~task14,202
-        bool autorelease;autorelease17,307
-
-ThreadPool.h,343
-#define _THREADPOOL_H__THREADPOOL_H_2,23
-class ThreadPool{ThreadPool15,249
-        list<pthread_t> threads_;threads_28,562
-        QueueT<task*> TaskQueue_;TaskQueue_29,596
-        AtomicT<int> state_;state_30,630
-        AtomicT<int> free_;free_31,659
-        int count;count32,687
-        MutexLock ListLock_;ListLock_33,706
-
-twomapT.h,392
-#define TWOMAP_H_TWOMAP_H_2,18
-class twomapT{twomapT8,127
-  twomapT(){};twomapT10,152
-  ~twomapT(){};~twomapT11,167
-  void insert(T1 k, T2 v) {insert12,183
-  T2 value(T1 k) {value20,357
-  T1 key(T2 v) {key27,466
-void delkey(T1 k) {delkey33,566
-  void delvalue(T2 v) {delvalue39,686
-  map<T1, T2> kv_;kv_47,818
-  map<T2, T1> vk_;vk_48,837
-  MutexLock lock_;lock_49,856
+Sock.c,140
+ssize_t send_n(int fd,send_n3,19
+ssize_t recv_n(int fd,recv_n34,684
+int send_v(int fd,send_v64,1352
+int recv_v(int fd,recv_v89,1845

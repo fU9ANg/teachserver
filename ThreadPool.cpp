@@ -1,8 +1,8 @@
 #include "ThreadPool.h"
 
-ThreadPool::ThreadPool(int n) {
+ThreadPool::ThreadPool(int n):
+    free_(0) {
     count = n;
-    free_ = 0;
 }
 ThreadPool::~ThreadPool() {
 }
@@ -60,7 +60,7 @@ void* ThreadPool::thread(void* p) {
 
 int ThreadPool::kill() {
     MutexLockGuard gard(this->ListLock_);
-    while(0 != threads_.size()) {
+    while(!threads_.empty()) {
         pthread_kill(threads_.front(), SIGRTMIN);
         threads_.pop_front();
     }

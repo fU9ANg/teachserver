@@ -24,6 +24,10 @@ void Config::readconfig(string file){
   }   
   //初始化
   ret = lua_pcall(lua,0,0,0);
+  if ( 0 != ret) {
+    lua_close(lua);
+    return;
+  }
   //数据库地址
   lua_getglobal(lua,"db_host");
   db_host = lua_tostring(lua, -1);

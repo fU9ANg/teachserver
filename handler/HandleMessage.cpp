@@ -460,7 +460,10 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
             Buf* p = SINGLE->bufpool.malloc ();
             MSG_HEAD* phead = (MSG_HEAD*)p->ptr();
             struct sDBRecordFinished finished;
-            finished.iFlagFinished = 1;
+            if (iCase == 5)
+                finished.iFlagFinished = 10000;
+            else
+                finished.iFlagFinished = 1;
 
             phead->cLen = sizeof (MSG_HEAD) + sizeof (struct sDBRecordFinished);
             phead->cType = ST_GetDBRecordFinished;
@@ -470,8 +473,6 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
             SINGLE->sendqueue.enqueue (p);
         } while (0);
 #endif
-        delete pstmt;
-        delete prst;
     }
     catch(SQLException e){
         LOG(ERROR) << e.what() << std::endl;

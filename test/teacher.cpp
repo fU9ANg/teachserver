@@ -29,10 +29,22 @@ int main(int argc, char* argv[]){
 
     //login(cntFd);
     loginclassroom(cntFd);
-    sleep(3);
-    send_CT_ShowSpriteAnimation(cntFd);
-    sleep(100);
+ //   sleep(3);
+//    send_CT_ShowSpriteAnimation(cntFd);
+  //  sleep(100);
 
+    char buf[1024] = {0};
+    while(true) {
+        memset(buf, 0x00, sizeof(buf));
+        recv(cntFd, buf, 1024, 0);
+        MSG_HEAD* p_head = (MSG_HEAD*)buf;
+        printf("CType = [%d]\n", p_head->cType);
+        if (p_head->cType == ST_SendStudentStatus) {
+            TSendStudentStatusReq req;
+            memcpy(&req, p_head->cData(), sizeof(req));
+            printf("id = %08x   status = %08x\n", req.student_id, req.status);
+        }
+    }
 
     close(cntFd);
     return 0;

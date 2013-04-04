@@ -8,6 +8,8 @@ public:
     Buf(size_t inSize = 5120) {
         size_ = inSize;
         ptr_ = malloc(size_);
+        fd_ = 0;
+        id_ = 0;
     };
 
     ~Buf(){

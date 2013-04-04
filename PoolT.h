@@ -37,7 +37,7 @@ public:
      */
     ~PoolT() {
         MutexLockGuard guard(lock_);
-        while (0 != queue_.size()) {
+        while (!queue_.empty()) {
             TYPE* p = this->queue_.front();
             this->queue_.pop();
             delete p;
@@ -50,7 +50,7 @@ public:
      */
     TYPE* malloc() {
         MutexLockGuard guard(lock_);
-        if (0 == queue_.size()) {
+        if (queue_.empty()) {
             return NULL;
         }
         TYPE* p = queue_.front();

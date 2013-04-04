@@ -1,6 +1,7 @@
 #include "ProcessManager.h"
 ProcessManager::ProcessManager() { 
-  thrpool_ = new ThreadPool(10);
+    thrpool_ = new ThreadPool(10);
+    lockfd_ = 0;
 }
 
 ProcessManager::~ProcessManager() {
@@ -31,7 +32,7 @@ int ProcessManager::process_logic(int argc, char** argv) {
       } 
     case 'd':
       //初始化日志 
-      system("mkdir -p logs");
+      assert( 0 == system("mkdir -p logs"));
       google::InitGoogleLogging(argv[0]);
       google::SetLogDestination(google::INFO, "./logs/info");
       google::SetLogDestination(google::WARNING, "./logs/warning");
@@ -54,7 +55,7 @@ int ProcessManager::process_logic(int argc, char** argv) {
         printf("No process!\n");
       } else {
         printf("Find process! stopping...\n");
-        system("cat .lock|xargs kill -15");
+        assert(0 == system("cat .lock|xargs kill -15"));
       }  
       printf("stop\n");
       break;
@@ -124,8 +125,11 @@ bool ProcessManager::lock(int mode) {
     close(lockfd_);
   }
   else {
-    ftruncate(lockfd_, 0); 
-    write(lockfd_, szPid, strlen(szPid));
+    if ( -1 == ftruncate(lockfd_, 0) ) {
+        if ( 0>= write(lockfd_, szPid, strlen(szPid))) {
+            printf("write pid file error!\n");
+        }
+    }
   }
   return true;
 }
