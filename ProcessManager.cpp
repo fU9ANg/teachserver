@@ -1,3 +1,7 @@
+/**
+ * @ingroup framework
+ * @{
+ */
 #include "ProcessManager.h"
 ProcessManager::ProcessManager() { 
     thrpool_ = new ThreadPool(10);
@@ -14,7 +18,7 @@ int ProcessManager::process_logic(int argc, char** argv) {
   signal(SIGQUIT, SIG_IGN);
   signal(SIGTERM, sig_term);
 
-  int opt = getopt(argc, argv, "uds");
+  int opt = getopt(argc, argv, "udsv");
   if ( -1 == opt) {
     printf("argv error\n");
     return -1;
@@ -49,8 +53,7 @@ int ProcessManager::process_logic(int argc, char** argv) {
       this->run();
       break;
     case 'u':
-      if (true == lock(LOCK_NOWAIT))
-      {   
+      if (true == lock(LOCK_NOWAIT)) {   
         lock(UNLOCK);
         printf("No process!\n");
       } else {
@@ -59,6 +62,8 @@ int ProcessManager::process_logic(int argc, char** argv) {
       }  
       printf("stop\n");
       break;
+    case 'v':
+      printf("compiled at %s,%s\n",__DATE__,__TIME__);
     default:
       break;
   }
@@ -106,9 +111,6 @@ int ProcessManager::run() {
   return 0;
 }
 
-/**
- * @brief 文件锁
- */
 bool ProcessManager::lock(int mode) {
   char szPid[32] = {0};
   snprintf(szPid, 32, "%ld", (long)getpid());
@@ -133,3 +135,4 @@ bool ProcessManager::lock(int mode) {
   }
   return true;
 }
+///@}

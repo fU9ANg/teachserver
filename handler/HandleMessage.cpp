@@ -268,7 +268,8 @@ bool CHandleMessage::postDBRecordCount (Buf* p, int iCase)
             else if (iCase == 6)
                 head->cType = CT_GetCourseItemCount;
 
-            memcpy (head->cData(), &dbCount, sizeof (dbCount));
+            //memcpy (head->cData(), &dbCount, sizeof (dbCount));
+            memcpy ((char *)p->ptr() + MSG_HEAD_LEN, &dbCount, sizeof (struct sDBCount));
 
             p->setsize (head->cLen);
             SINGLE->sendqueue.enqueue (p);

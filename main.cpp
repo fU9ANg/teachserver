@@ -1,3 +1,7 @@
+/**
+ * @ingroup framework
+ * @{
+ */
 #include <stdio.h>
 #include "ThreadPool.h"
 #include "AtomicT.h"
@@ -12,3 +16,4 @@ int main(int argc, char* argv[]){
     delete x;
     return 0;
 }
+///@}

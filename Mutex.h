@@ -1,6 +1,9 @@
+/**
+ * @addtogroup framework
+ * @{
+ */
 #ifndef _MUTEX_LOCK_H_
 #define _MUTEX_LOCK_H_
-
 #include <pthread.h>
 /**
  * @class MutexLock
@@ -90,3 +93,4 @@ class Condition{
 };
 #define MutexLockGuard(x) static_assert(false, "missing mutex guard var name")
 #endif
+///@}

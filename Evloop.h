@@ -1,5 +1,5 @@
 /**
- * @ingroup net net
+ * @addtogroup framework
  * @{
  */
 #ifndef EVLOOP_H_

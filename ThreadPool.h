@@ -1,3 +1,7 @@
+/**
+ * @ingroup framework
+ * @{
+ */
 #ifndef _THREADPOOL_H_
 #define _THREADPOOL_H_
 #include <pthread.h>
@@ -8,6 +12,7 @@
 #include "task.h"
 #include "AtomicT.h"
 #include "Mutex.h"
+
 /**
  * @class ThreadPool
  * @brief 线程池
@@ -33,3 +38,4 @@ class ThreadPool{
         MutexLock ListLock_;
 };
 #endif
+///@}

@@ -40,6 +40,7 @@ public:
     int  get_room_id();
     void set_teacher_fd(int fd);
     void set_teacher_name(string name);
+    string get_teacher_name ();
     void set_class_name(string name);
     void set_white_fd(int fd);
     void add_student(int fd, CStudent* pstudent);

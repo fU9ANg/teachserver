@@ -26,4 +26,6 @@
 
 #define SQL_SELECT_STUDENT_DETAILINFO "SELECT s.number, s.last_name, s.first_name, s.sex, sc.school_name, g.grade_name, c.class_name, s.account, s.password, s.birthday, t.first_name AS tfirst_name, t.last_name AS tlas_name, s.picture_id FROM student AS s, school AS sc, grade AS g, class AS c, teacher AS t WHERE t.teacher_id = s.class_teacher_id AND sc.school_id = s.school_id AND g.grade_id = s.grade_id AND c.class_id = s.class_id AND s.student_id=? AND s.student_name=?"
 
+#define SQL_SELECT_TEACHER_DETAILINFO "SELECT t.first_name, t.last_name, t.account, r.path AS pic_name FROM teacher as t, resource as r WHERE r.resource_id=t.picture_id"
+
 #endif

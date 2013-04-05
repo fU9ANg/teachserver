@@ -412,6 +412,11 @@ INSERT INTO `resource` VALUES (1032,4,'小朋友',32,'denglu/student32.png');
 INSERT INTO `resource` VALUES (1033,4,'小朋友',32,'denglu/student33.png');
 INSERT INTO `resource` VALUES (1034,4,'小朋友',32,'denglu/student34.png');
 INSERT INTO `resource` VALUES (1035,4,'小朋友',32,'denglu/student35.png');
+
+INSERT INTO `resource` VALUES (2001,4,'教师'  ,32,'denglu/teacher01.png');
+INSERT INTO `resource` VALUES (2002,4,'教师'  ,32,'denglu/teacher02.png');
+INSERT INTO `resource` VALUES (2003,4,'教师'  ,32,'denglu/teacher03.png');
+
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,9 +586,9 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (1,'张','三','女','张三','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,132112);
-INSERT INTO `teacher` VALUES (2,'李','四','男','李四','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,132112);
-INSERT INTO `teacher` VALUES (3,'王','五','男','王五','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,132112);
+INSERT INTO `teacher` VALUES (1,'张','三','女','张三','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,2001);
+INSERT INTO `teacher` VALUES (2,'李','四','男','李四','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,2002);
+INSERT INTO `teacher` VALUES (3,'王','五','男','王五','e14b4e10a3107f50a07362d74e856218',1,'1989-12-30',1,1,1,2003);
 UPDATE teacher SET password = "123456";
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;

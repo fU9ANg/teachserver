@@ -1,8 +1,4 @@
-
 #include "SendTask.h"
-#include "Single.h"
-#include "Buf.h"
-
 SendTask::SendTask() {
 }
 

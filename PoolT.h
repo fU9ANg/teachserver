@@ -1,6 +1,7 @@
 /**
  * @author  liuyuncheng
  * @version  1.0
+ * @addtogroup framework
  * @{
  */
 #ifndef _POOLT_H_

@@ -1,3 +1,7 @@
+/**
+ * @addtogroup framework
+ * @{
+ */
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 #include <stdio.h>
@@ -5,10 +9,18 @@
 
 #include <lua5.2/lua.hpp>
 using namespace std;
+
+/**
+ * @class 配置文件类
+ */
 class Config {
     public:
         ~Config();
         static class Config* instance();
+        /**
+         * @brief 读取配置文件
+         * @param file 配置文件路径
+         */
         void readconfig(string file);
         string db_host;
         string db_username;
@@ -24,3 +36,4 @@ class Config {
 };
 #define CONFIG Config::instance()
 #endif
+///@}

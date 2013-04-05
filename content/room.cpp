@@ -20,6 +20,11 @@ void CRoom::set_teacher_name(string name) {
     m_teacher_name = name;
 }
 
+string CRoom::get_teacher_name ()
+{
+    return this->m_teacher_name;
+}
+
 void CRoom::set_class_name(string name) {
     m_class_name = name;
 }

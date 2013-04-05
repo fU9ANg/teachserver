@@ -432,7 +432,49 @@ void CHandleMessage::handleConfirmLeaveEarly (Buf* p)
 */
 void CHandleMessage::handleGetTeacherInfo (Buf* p)
 {
-    //todo:
+    if (p == NULL) return;
+
+    cout << "process: CT_GetTeacherInfo" << endl;
+
+    struct sGetTeacherInfo ti;
+    memset (&ti, 0x00, sizeof (ti));
+    MSG_HEAD* head = (MSG_HEAD*) p->ptr();
+
+    if (head->cType == CT_GetTeacherInfo)
+    {
+        try {
+            MutexLockGuard guard (DATABASE->m_mutex);
+            CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+            string teaname = room->get_teacher_name ();
+            cout << "get teacher info - name: " << teaname << endl;
+            PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_TEACHER_DETAILINFO);
+
+            pstmt->setString (1, teaname.c_str());
+            ResultSet* prst = pstmt->executeQuery ();
+
+            while (prst->next())
+            {
+                //if (room != NULL)
+                {
+
+                    strcpy (ti.sTeacherName, prst->getString ("account").c_str());
+                    strcpy (ti.sPicName, prst->getString ("pic_name").c_str());
+                    cout << "account: " << ti.sTeacherName << " " << prst->getString ("account") << endl;
+                    cout << "pic_name: " << ti.sPicName << " " << prst->getString ("pic_name") << endl;
+
+                }
+            }
+
+            postMessage (p, ST_GetTeacherInfo, &ti, sizeof (sGetTeacherInfo));
+            delete pstmt;
+            delete prst;
+        }
+        catch (SQLException e) {
+            cout << e.what() << endl;
+        }
+    }
+
+    return;
 }
 
 /*
@@ -525,10 +567,11 @@ void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {
     string keys_info;
 
     GetCourseItemKeyInfoRsp rsp;
-
+    memset (&rsp, 0x00, sizeof (rsp));
     try {
         MutexLockGuard guard (DATABASE->m_mutex);
         PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_ITEM_KEYS);
+        cout << "Req: " << *(int*)p_head->cData();
         pstmt->setInt(1, *(int*)p_head->cData());
         ResultSet* rst = pstmt->executeQuery();
         while(rst->next()) {
@@ -626,6 +669,27 @@ void CHandleMessage::handleCommonStop (Buf * p)
 
     if (head->cType == CT_Common_Stop) {
         postTeacherToWhite (p, ST_Common_Stop);
+    }
+
+    return;
+}
+
+/*
+====================
+ CT_Scene_End
+ ST_Scene_End
+====================
+*/
+void CHandleMessage::handleSceneEnd (Buf* p)
+{
+    if (p == NULL)  return;
+
+    cout << "process: CT_Scene_End" << endl;
+
+    MSG_HEAD* head = (MSG_HEAD*) p->ptr();
+    sSceneEnd* se = (sSceneEnd*) ((char*)p->ptr() + MSG_HEAD_LEN);
+    if (head->cType == CT_Scene_End) {
+        postMessage (p, ST_Scene_End, se, head->cLen - MSG_HEAD_LEN);
     }
 
     return;

@@ -72,7 +72,8 @@ int LoginCheck::login_teacher(int fd, struct sLogin login) {
     }catch (SQLException e) {
     }
 
-    if ((strcmp (login.password, strpwd.c_str()) == 0) && (!strlen (login.password))) {
+    if ( 0 == strncmp(login.password, strpwd.c_str(), strlen (login.password)) && \
+            strlen(login.password) > 0) {
         printf("teacher: login success!\n"); // ADD student_name to CLASS
         return 0;
     }
@@ -108,7 +109,7 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
         LOG(ERROR) << e.what() <<endl;
     }
 
-    if ( 0 == strncmp(login.password, strpwd.c_str(), strpwd.size())) {
+    if ( 0 == strncmp(login.password, strpwd.c_str(), strlen(login.password))) {
         printf("student: login success!\n"); // ADD student_name to CLASS
 
         CRoom* pRoom = ROOMMANAGER->get_room_by_fd (fd);

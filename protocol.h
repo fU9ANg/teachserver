@@ -33,6 +33,7 @@ enum CommandType
     ST_LeaveEarly,       // 早退通知给 (学生端)
     CT_ConfirmLeaveEarly,// 早退确认 (学生端) *
     CT_GetTeacherInfo,   // 获得教师信息 (所有学生端和教师端)
+    ST_GetTeacherInfo,
     CT_LockStudent,      // 锁定学生端 (教师端) *
     ST_LockStudent,      // 锁定学生端 (学生端) *
     CT_SelectedClassRoom,
@@ -149,6 +150,8 @@ enum CommandType
     CT_Puzzle_EndGame,          // 结束拼图课程 (教师端) *
     ST_Puzzle_EndGame,          // 结束拼图课程 (白板端和所有学生端) *
 
+    CT_Scene_End,
+    ST_Scene_End,
     ST_Dynamic_MessageType = 10000,  // 要求所发送的学生信息从10000号开始
 };
 
@@ -162,6 +165,15 @@ struct sDBRecordFinished
 /*
     CT_GetDBRecordFinished,
     ST_GetDBRecordFinished,
+*/
+
+struct sSceneEnd
+{
+    int type;
+};
+/*
+    CT_Scene_End,
+    ST_Scene_End,
 */
 
 struct sDBCount
@@ -435,6 +447,7 @@ struct sPuzzleGameStart
 struct sGetTeacherInfo
 {
     char sTeacherName[20];
+    char sPicName[128];
 };
 /*
 | len | CT_GetTeacherInfo | struct sGetTeacherInfo |

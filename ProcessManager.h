@@ -1,3 +1,7 @@
+/**
+ * @ingroup framework
+ * @{
+ */
 #ifndef _PROCESSMAMAGER_H_
 #define _PROCESSMAMAGER_H_
 #include <signal.h>
@@ -19,6 +23,7 @@
 #include "HandleMessage.h"
 
 #define CONFIGFILE "./config.lua"
+
 enum {
   LOCK_WAIT   = LOCK_EX,            /**<阻塞锁*/
   LOCK_NOWAIT = LOCK_EX | LOCK_NB,  /**<非阻塞锁*/
@@ -30,12 +35,31 @@ class ProcessManager
   public:
     ProcessManager();
     ~ProcessManager();
+    /**
+     * @brief 启动逻辑
+     * @param argc 参数个数
+     * @param argv 参数数组指针
+     */
     int process_logic(int argc, char** argv);
+
+    /**
+     * @brief 主循环
+     */
     int run();
+
+    /**
+     * @brief 信号处理函数
+     * @param signo 信号
+     */
     static void sig_term(int signo);
   private:
+    /**
+     * @brief 文件锁
+     * @param mode 加锁方式
+     */
     bool lock(int mode);
-    ThreadPool* thrpool_;
-    int lockfd_;
+    ThreadPool* thrpool_;   /**线程池*/
+    int lockfd_;            /**文件锁句柄*/
 };
 #endif
+///@}
