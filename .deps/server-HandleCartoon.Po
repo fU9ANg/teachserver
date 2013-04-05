@@ -15,8 +15,9 @@ server-HandleCartoon.o: handler/HandleCartoon.cpp handler/HandleMessage.h \
  /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h \
- /usr/include/c++/4.7/cstdlib /usr/include/stdlib.h \
- /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/stdio.h \
+ /usr/include/i386-linux-gnu/bits/stdio2.h /usr/include/c++/4.7/cstdlib \
+ /usr/include/stdlib.h /usr/include/i386-linux-gnu/bits/waitflags.h \
  /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
  /usr/include/i386-linux-gnu/bits/endian.h \
  /usr/include/i386-linux-gnu/bits/byteswap.h /usr/include/xlocale.h \
@@ -25,9 +26,11 @@ server-HandleCartoon.o: handler/HandleCartoon.cpp handler/HandleMessage.h \
  /usr/include/i386-linux-gnu/bits/select.h \
  /usr/include/i386-linux-gnu/bits/sigset.h \
  /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/bits/select2.h \
  /usr/include/i386-linux-gnu/sys/sysmacros.h \
  /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
- /usr/include/c++/4.7/list /usr/include/c++/4.7/bits/stl_algobase.h \
+ /usr/include/i386-linux-gnu/bits/stdlib.h /usr/include/c++/4.7/list \
+ /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/bits/functexcept.h \
  /usr/include/c++/4.7/bits/exception_defines.h \
  /usr/include/c++/4.7/bits/cpp_type_traits.h \
@@ -74,6 +77,7 @@ server-HandleCartoon.o: handler/HandleCartoon.cpp handler/HandleMessage.h \
  /usr/include/c++/4.7/iosfwd /usr/include/c++/4.7/bits/stringfwd.h \
  /usr/include/c++/4.7/bits/postypes.h /usr/include/c++/4.7/cwchar \
  /usr/include/i386-linux-gnu/bits/wchar.h \
+ /usr/include/i386-linux-gnu/bits/wchar2.h \
  /usr/include/c++/4.7/bits/char_traits.h \
  /usr/include/c++/4.7/bits/localefwd.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++locale.h \
@@ -101,7 +105,8 @@ server-HandleCartoon.o: handler/HandleCartoon.cpp handler/HandleMessage.h \
  /usr/include/c++/4.7/bits/basic_ios.tcc \
  /usr/include/c++/4.7/bits/ostream.tcc /usr/include/c++/4.7/istream \
  /usr/include/c++/4.7/bits/istream.tcc PoolT.h Buf.h \
- /usr/include/string.h twomapT.h Buf.h SQL.h handler/MSGHANDLE
+ /usr/include/string.h /usr/include/i386-linux-gnu/bits/string3.h \
+ twomapT.h Buf.h SQL.h handler/MSGHANDLE
 
 handler/HandleMessage.h:
 
@@ -145,6 +150,10 @@ handler/HandleMessage.h:
 
 /usr/include/i386-linux-gnu/bits/sys_errlist.h:
 
+/usr/include/i386-linux-gnu/bits/stdio.h:
+
+/usr/include/i386-linux-gnu/bits/stdio2.h:
+
 /usr/include/c++/4.7/cstdlib:
 
 /usr/include/stdlib.h:
@@ -173,11 +182,15 @@ handler/HandleMessage.h:
 
 /usr/include/i386-linux-gnu/bits/time.h:
 
+/usr/include/i386-linux-gnu/bits/select2.h:
+
 /usr/include/i386-linux-gnu/sys/sysmacros.h:
 
 /usr/include/i386-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
+
+/usr/include/i386-linux-gnu/bits/stdlib.h:
 
 /usr/include/c++/4.7/list:
 
@@ -311,6 +324,8 @@ QueueT.h:
 
 /usr/include/i386-linux-gnu/bits/wchar.h:
 
+/usr/include/i386-linux-gnu/bits/wchar2.h:
+
 /usr/include/c++/4.7/bits/char_traits.h:
 
 /usr/include/c++/4.7/bits/localefwd.h:
@@ -384,6 +399,8 @@ PoolT.h:
 Buf.h:
 
 /usr/include/string.h:
+
+/usr/include/i386-linux-gnu/bits/string3.h:
 
 twomapT.h:
 

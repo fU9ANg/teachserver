@@ -17,7 +17,9 @@ server-ThreadPool.o: ThreadPool.cpp ThreadPool.h /usr/include/pthread.h \
  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
  /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
- /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/c++/4.7/list \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h \
+ /usr/include/i386-linux-gnu/bits/stdio.h \
+ /usr/include/i386-linux-gnu/bits/stdio2.h /usr/include/c++/4.7/list \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -73,6 +75,7 @@ server-ThreadPool.o: ThreadPool.cpp ThreadPool.h /usr/include/pthread.h \
  /usr/include/c++/4.7/iosfwd /usr/include/c++/4.7/bits/stringfwd.h \
  /usr/include/c++/4.7/bits/postypes.h /usr/include/c++/4.7/cwchar \
  /usr/include/i386-linux-gnu/bits/wchar.h \
+ /usr/include/i386-linux-gnu/bits/wchar2.h \
  /usr/include/c++/4.7/bits/char_traits.h \
  /usr/include/c++/4.7/bits/localefwd.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++locale.h \
@@ -104,14 +107,17 @@ server-ThreadPool.o: ThreadPool.cpp ThreadPool.h /usr/include/pthread.h \
  /usr/include/i386-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
  /usr/include/i386-linux-gnu/asm/errno.h /usr/include/asm-generic/errno.h \
  /usr/include/asm-generic/errno-base.h /usr/include/string.h \
- /usr/include/c++/4.7/sstream /usr/include/c++/4.7/bits/sstream.tcc \
- /usr/include/unistd.h /usr/include/i386-linux-gnu/bits/posix_opt.h \
+ /usr/include/i386-linux-gnu/bits/string3.h /usr/include/c++/4.7/sstream \
+ /usr/include/c++/4.7/bits/sstream.tcc /usr/include/unistd.h \
+ /usr/include/i386-linux-gnu/bits/posix_opt.h \
  /usr/include/i386-linux-gnu/bits/environments.h \
  /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/i386-linux-gnu/bits/unistd.h \
  /usr/lib/gcc/i686-linux-gnu/4.7/include/stdint.h /usr/include/stdint.h \
  /usr/include/i386-linux-gnu/sys/types.h \
  /usr/include/i386-linux-gnu/sys/select.h \
  /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/select2.h \
  /usr/include/i386-linux-gnu/sys/sysmacros.h /usr/include/inttypes.h \
  /usr/include/glog/log_severity.h /usr/include/glog/vlog_is_on.h \
  database.h /usr/include/mysql_connection.h \
@@ -133,6 +139,7 @@ server-ThreadPool.o: ThreadPool.cpp ThreadPool.h /usr/include/pthread.h \
  /usr/include/c++/4.7/cstdlib /usr/include/stdlib.h \
  /usr/include/i386-linux-gnu/bits/waitflags.h \
  /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
+ /usr/include/i386-linux-gnu/bits/stdlib.h \
  /usr/include/boost/config/posix_features.hpp \
  /usr/include/boost/config/suffix.hpp \
  /usr/include/boost/detail/workaround.hpp \
@@ -598,6 +605,10 @@ ThreadPool.h:
 
 /usr/include/i386-linux-gnu/bits/sys_errlist.h:
 
+/usr/include/i386-linux-gnu/bits/stdio.h:
+
+/usr/include/i386-linux-gnu/bits/stdio2.h:
+
 /usr/include/c++/4.7/list:
 
 /usr/include/c++/4.7/bits/stl_algobase.h:
@@ -740,6 +751,8 @@ QueueT.h:
 
 /usr/include/i386-linux-gnu/bits/wchar.h:
 
+/usr/include/i386-linux-gnu/bits/wchar2.h:
+
 /usr/include/c++/4.7/bits/char_traits.h:
 
 /usr/include/c++/4.7/bits/localefwd.h:
@@ -828,6 +841,8 @@ task.h:
 
 /usr/include/string.h:
 
+/usr/include/i386-linux-gnu/bits/string3.h:
+
 /usr/include/c++/4.7/sstream:
 
 /usr/include/c++/4.7/bits/sstream.tcc:
@@ -842,6 +857,8 @@ task.h:
 
 /usr/include/getopt.h:
 
+/usr/include/i386-linux-gnu/bits/unistd.h:
+
 /usr/lib/gcc/i686-linux-gnu/4.7/include/stdint.h:
 
 /usr/include/stdint.h:
@@ -851,6 +868,8 @@ task.h:
 /usr/include/i386-linux-gnu/sys/select.h:
 
 /usr/include/i386-linux-gnu/bits/select.h:
+
+/usr/include/i386-linux-gnu/bits/select2.h:
 
 /usr/include/i386-linux-gnu/sys/sysmacros.h:
 
@@ -915,6 +934,8 @@ database.h:
 /usr/include/i386-linux-gnu/bits/waitstatus.h:
 
 /usr/include/alloca.h:
+
+/usr/include/i386-linux-gnu/bits/stdlib.h:
 
 /usr/include/boost/config/posix_features.hpp:
 

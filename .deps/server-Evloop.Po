@@ -16,6 +16,7 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/i386-linux-gnu/bits/select.h \
  /usr/include/i386-linux-gnu/bits/sigset.h \
  /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/bits/select2.h \
  /usr/include/i386-linux-gnu/sys/sysmacros.h \
  /usr/include/i386-linux-gnu/bits/pthreadtypes.h \
  /usr/include/i386-linux-gnu/bits/uio.h \
@@ -24,14 +25,16 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/i386-linux-gnu/asm/socket.h \
  /usr/include/asm-generic/socket.h \
  /usr/include/i386-linux-gnu/asm/sockios.h \
- /usr/include/asm-generic/sockios.h /usr/include/netinet/in.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/i386-linux-gnu/bits/socket2.h /usr/include/netinet/in.h \
  /usr/lib/gcc/i686-linux-gnu/4.7/include/stdint.h /usr/include/stdint.h \
  /usr/include/i386-linux-gnu/bits/wchar.h \
  /usr/include/i386-linux-gnu/bits/in.h /usr/include/arpa/inet.h \
  /usr/include/unistd.h /usr/include/i386-linux-gnu/bits/posix_opt.h \
  /usr/include/i386-linux-gnu/bits/environments.h \
  /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
- /usr/include/string.h /usr/include/xlocale.h \
+ /usr/include/i386-linux-gnu/bits/unistd.h /usr/include/string.h \
+ /usr/include/xlocale.h /usr/include/i386-linux-gnu/bits/string3.h \
  /usr/include/i386-linux-gnu/sys/epoll.h \
  /usr/include/i386-linux-gnu/sys/errno.h /usr/include/errno.h \
  /usr/include/i386-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
@@ -39,7 +42,8 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/asm-generic/errno-base.h \
  /usr/include/i386-linux-gnu/sys/fcntl.h /usr/include/fcntl.h \
  /usr/include/i386-linux-gnu/bits/fcntl.h \
- /usr/include/i386-linux-gnu/bits/stat.h /usr/include/c++/4.7/list \
+ /usr/include/i386-linux-gnu/bits/stat.h \
+ /usr/include/i386-linux-gnu/bits/fcntl2.h /usr/include/c++/4.7/list \
  /usr/include/c++/4.7/bits/stl_algobase.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++config.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/os_defines.h \
@@ -87,8 +91,8 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/c++/4.7/bits/postypes.h /usr/include/c++/4.7/cwchar \
  /usr/include/wchar.h /usr/include/stdio.h \
  /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h \
- /usr/include/c++/4.7/ostream /usr/include/c++/4.7/ios \
- /usr/include/c++/4.7/bits/char_traits.h \
+ /usr/include/i386-linux-gnu/bits/wchar2.h /usr/include/c++/4.7/ostream \
+ /usr/include/c++/4.7/ios /usr/include/c++/4.7/bits/char_traits.h \
  /usr/include/c++/4.7/bits/localefwd.h \
  /usr/include/c++/4.7/i686-linux-gnu/bits/c++locale.h \
  /usr/include/c++/4.7/clocale /usr/include/locale.h \
@@ -144,6 +148,7 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/c++/4.7/cstdlib /usr/include/stdlib.h \
  /usr/include/i386-linux-gnu/bits/waitflags.h \
  /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/alloca.h \
+ /usr/include/i386-linux-gnu/bits/stdlib.h \
  /usr/include/boost/config/posix_features.hpp \
  /usr/include/boost/config/suffix.hpp \
  /usr/include/boost/detail/workaround.hpp \
@@ -550,11 +555,12 @@ server-Evloop.o: Evloop.cpp Evloop.h \
  /usr/include/cppconn/prepared_statement.h \
  /usr/include/cppconn/statement.h Config.h /usr/include/libio.h \
  /usr/include/_G_config.h /usr/include/i386-linux-gnu/bits/sys_errlist.h \
- /usr/include/lua5.2/lua.hpp /usr/include/lua5.2/lua.h \
- /usr/include/lua5.2/luaconf.h /usr/include/lua5.2/lualib.h \
- /usr/include/lua5.2/lauxlib.h protocol.h Single.h AtomicT.h QueueT.h \
- /usr/include/c++/4.7/queue /usr/include/c++/4.7/deque \
- /usr/include/c++/4.7/bits/stl_deque.h \
+ /usr/include/i386-linux-gnu/bits/stdio.h \
+ /usr/include/i386-linux-gnu/bits/stdio2.h /usr/include/lua5.2/lua.hpp \
+ /usr/include/lua5.2/lua.h /usr/include/lua5.2/luaconf.h \
+ /usr/include/lua5.2/lualib.h /usr/include/lua5.2/lauxlib.h protocol.h \
+ Single.h AtomicT.h QueueT.h /usr/include/c++/4.7/queue \
+ /usr/include/c++/4.7/deque /usr/include/c++/4.7/bits/stl_deque.h \
  /usr/include/c++/4.7/bits/deque.tcc \
  /usr/include/c++/4.7/bits/stl_queue.h PoolT.h Buf.h twomapT.h Sock.h \
  content/roommanager.h /usr/include/c++/4.7/cstdio \
@@ -605,6 +611,8 @@ Evloop.h:
 
 /usr/include/i386-linux-gnu/bits/time.h:
 
+/usr/include/i386-linux-gnu/bits/select2.h:
+
 /usr/include/i386-linux-gnu/sys/sysmacros.h:
 
 /usr/include/i386-linux-gnu/bits/pthreadtypes.h:
@@ -622,6 +630,8 @@ Evloop.h:
 /usr/include/i386-linux-gnu/asm/sockios.h:
 
 /usr/include/asm-generic/sockios.h:
+
+/usr/include/i386-linux-gnu/bits/socket2.h:
 
 /usr/include/netinet/in.h:
 
@@ -645,9 +655,13 @@ Evloop.h:
 
 /usr/include/getopt.h:
 
+/usr/include/i386-linux-gnu/bits/unistd.h:
+
 /usr/include/string.h:
 
 /usr/include/xlocale.h:
+
+/usr/include/i386-linux-gnu/bits/string3.h:
 
 /usr/include/i386-linux-gnu/sys/epoll.h:
 
@@ -672,6 +686,8 @@ Evloop.h:
 /usr/include/i386-linux-gnu/bits/fcntl.h:
 
 /usr/include/i386-linux-gnu/bits/stat.h:
+
+/usr/include/i386-linux-gnu/bits/fcntl2.h:
 
 /usr/include/c++/4.7/list:
 
@@ -800,6 +816,8 @@ task.h:
 /usr/include/stdio.h:
 
 /usr/lib/gcc/i686-linux-gnu/4.7/include/stdarg.h:
+
+/usr/include/i386-linux-gnu/bits/wchar2.h:
 
 /usr/include/c++/4.7/ostream:
 
@@ -958,6 +976,8 @@ database.h:
 /usr/include/i386-linux-gnu/bits/waitstatus.h:
 
 /usr/include/alloca.h:
+
+/usr/include/i386-linux-gnu/bits/stdlib.h:
 
 /usr/include/boost/config/posix_features.hpp:
 
@@ -1844,6 +1864,10 @@ Config.h:
 /usr/include/_G_config.h:
 
 /usr/include/i386-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/i386-linux-gnu/bits/stdio.h:
+
+/usr/include/i386-linux-gnu/bits/stdio2.h:
 
 /usr/include/lua5.2/lua.hpp:
 
