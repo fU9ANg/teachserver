@@ -28,6 +28,19 @@ void CHandleMessage::handleTest (Buf* p)
 void CHandleMessage::handleChangeScene (Buf* p)
 {
     printf ("change scene: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
+////测试使用!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#if 1
+    MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
+    p_head->cLen = sizeof(MSG_HEAD) + sizeof(int);
+    int* p_int = (int*)p_head->cData();
+    if ( *p_int == 1) {
+        *p_int = 3;
+        p->setsize(p_head->cLen);
+
+        SINGLE->sendqueue.enqueue(p);
+        printf("send change scence!\n");
+    }
+#endif
 }
 
 /*
@@ -314,46 +327,55 @@ void CHandleMessage::handleLogoutClassRoom (Buf* p)
 */
 void CHandleMessage::handleGetStudentDetailInfo (Buf* p)
 {
-    cout << "CT_GetStudentDetailInfo" << endl;
+    cout << "...CT_GetStudentDetailInfo" << endl;
     
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
 
     if (head->cType == CT_GetStudentDetailInfo)
     {
+        cout << "CT_GetStudentDetailInfo..." << endl;
         try {
+            sStudentDetail* sd = (sStudentDetail*) ((char*)((MSG_HEAD*)p->ptr()) + MSG_HEAD_LEN);
+            cout << "stu_id:" << sd->iStudentId << ", stu_name:" << sd->sStudentName << endl;
+
             MutexLockGuard guard (DATABASE->m_mutex);
             PreparedStatement* pstmt = NULL;
             struct sGetStudentDetailInfo detail_info;
 
             pstmt = DATABASE->preStatement (SQL_SELECT_STUDENT_DETAILINFO);
-            sSetStudentDetail* sd = (sSetStudentDetail*) ((char*)((MSG_HEAD*)p->ptr()) + MSG_HEAD_LEN);
-            pstmt->setString (1, sd->sStudentName);
             pstmt->setInt (1, sd->iStudentId);
-
+            pstmt->setString (2, sd->sStudentName);
             ResultSet* prst = pstmt->executeQuery();
             while (prst->next()) {
                 memset (&detail_info, 0x00, sizeof (detail_info));
                 strcpy (detail_info.sNumber, prst->getString ("number").c_str());
-                strcpy (detail_info.sFirstName, prst->getString ("first_name").c_str());
                 strcpy (detail_info.sLastName, prst->getString ("last_name").c_str());
+                strcpy (detail_info.sFirstName, prst->getString ("first_name").c_str());
                 strcpy (detail_info.sSex, prst->getString ("sex").c_str());
                 strcpy (detail_info.sSchoolName, prst->getString ("school_name").c_str());
                 strcpy (detail_info.sGradeName, prst->getString ("grade_name").c_str());
                 strcpy (detail_info.sClassName, prst->getString ("class_name").c_str());
                 strcpy (detail_info.sAccount, prst->getString ("account").c_str());
-                strcpy (detail_info.birthday, prst->getString ("birthday").c_str());
-                strcpy (detail_info.stFirstName, prst->getString ("tfirst_name").c_str());
-                strcpy (detail_info.stLastName, prst->getString ("tlast_name").c_str());
+                strcpy (detail_info.stFirstName, prst->getString ("tf_name").c_str());
+                strcpy (detail_info.stLastName, prst->getString ("tl_name").c_str());
                 detail_info.iPicture_id = prst->getInt ("picture_id");
+#if 0
+                strcpy (detail_info.birthday, prst->getString ("birthday").c_str());
+                cout << "6666" << endl;
+                cout << " number:" << detail_info.sNumber << endl
+                     << " class_name:" << detail_info.sClassName << endl
+                     << " sex:" << detail_info.sSex << endl;
+#endif
             }
+            CHandleMessage::postMessage (p, ST_GetStudentDetailInfo, (void*)&detail_info, sizeof (detail_info));
             delete pstmt;
             delete prst;
-            CHandleMessage::postMessage (p, ST_GetStudentDetailInfo, (void*)&detail_info, sizeof (detail_info));
         }
         catch (SQLException e) {
             LOG(ERROR) << e.what() << endl;
         }
     }
+
     return;
 }
 
@@ -411,7 +433,8 @@ void CHandleMessage::handleLeaveEarly (Buf* p)
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
 
     if (head->cType == CT_LeaveEarly) {
-        CHandleMessage::postTeacherToStudent (p, ST_LeaveEarly, ((sLeaveEarly*)((char*)p->ptr() + MSG_HEAD_LEN))->student_id);
+        CHandleMessage::postTeacherToStudent (p, ST_LeaveEarly, \
+            ((sLeaveEarly*)((char*)p->ptr() + MSG_HEAD_LEN))->student_id);
     }
 }
 
@@ -444,8 +467,13 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
     {
         try {
             MutexLockGuard guard (DATABASE->m_mutex);
+            #ifdef _TEACHER_NOLOGIN
+            string teaname("张三");
+            #else
             CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+            if (room == NULL) return;
             string teaname = room->get_teacher_name ();
+            #endif
             cout << "get teacher info - name: " << teaname << endl;
             PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_TEACHER_DETAILINFO);
 
@@ -454,7 +482,10 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
 
             while (prst->next())
             {
-                //if (room != NULL)
+                #ifdef _TEACHER_NOLOGIN
+                #else
+                if (room != NULL)
+                #endif
                 {
 
                     strcpy (ti.sTeacherName, prst->getString ("account").c_str());
@@ -473,7 +504,6 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
             cout << e.what() << endl;
         }
     }
-
     return;
 }
 
@@ -508,12 +538,16 @@ void CHandleMessage::handleSelectedClassRoom (Buf* p)
     //todo:
     TSelectedClassRoom* pp = (TSelectedClassRoom*)((char*)p->ptr() + sizeof(MSG_HEAD));
 
-    //CClass* pclass = CLASSMANAGER->get_class(pp->classroom_id);
     CRoom* proom = ROOMMANAGER->get_room(pp->classroom_id);
     if (MCT_STUDENT == pp->client_type) {
         CStudent* pstudent = new CStudent();
+        if (ROOMMANAGER->get_room_by_fd (p->getfd()))
+        {
+            printf ("student fd exist in the room\n");
+            return;
+        }
         proom->add_student(p->getfd(), pstudent);
-        printf("add a student[%d][%p]\n", p->getfd(), pstudent);
+        printf("student login room[%d] fd = [%d]\n", pp->classroom_id, p->getfd());
     }
     if (MCT_WHITEBOARD == pp->client_type) {
         printf("white board login classroom[%d]", proom->get_room_id());
