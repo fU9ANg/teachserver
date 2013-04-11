@@ -16,7 +16,17 @@
 */
 void CHandleMessage::handleBuildHouse_CaiHongXiaoWu (Buf* p)
 {
-    //todo:
+    if (p == NULL)
+        return;
+
+    cout << "process: CT_BuildHouse_CaiHongXiaoWu" << endl;
+    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
+
+    if (head->cType == CT_BuildHouse_CaiHongXiaoWu) {
+        CHandleMessage::postTeacherToWhite (p, ST_BuildHouse_CaiHongXiaoWu);
+    }
+
+    return;
 }
 
 /*

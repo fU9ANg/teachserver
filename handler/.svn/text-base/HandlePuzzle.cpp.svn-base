@@ -17,6 +17,9 @@
 void CHandleMessage::handlePuzzle_GameStart (Buf* p)
 {
     //todo:
+    CHandleMessage::postTeacherToAllStudent(p, ST_Puzzle_GameStart);
+    printf("send  Puzzle_GameStart to students!\n");
+    return;
 }
 
 /*
@@ -176,5 +179,71 @@ void CHandleMessage::handlePuzzle_EndGame (Buf* p)
     }
 
     return;
+#endif
+}
+
+void CHandleMessage::handlePuzzle_GetPic(Buf* p)
+{
+#if 0
+    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
+
+    head->cType = CT_Puzzle_GetPic;
+    int fd = open("~/pic/p3.png", O_WRONLY|O_CREAT);
+    size_t piclen = read(fd, (char*)head->cData() ,102400000);
+    close(fd);
+    head->cLen = piclen + sizeof(MSG_HEAD);
+    CHandleMessage::postTeacherToAllStudent (p, ST_Puzzle_EndGame);
+#else
+    int fd = -1;
+    MSG_HEAD* head;
+    Buf* pp;
+    unsigned int type;
+    unsigned int index;
+
+    if ((fd = open ("~/pic/p3.png", O_WRONLY)) < 0) {
+        cout << "ERROR: open() function for open picture." <<endl;
+        return;
+    }
+
+    while (1) {
+        if ((pp = SINGLE->bufpool.malloc ()) != NULL)
+        {
+            index = 0;
+            head = (MSG_HEAD*) pp->ptr();
+            size_t picLen = read (fd, (char*) head->cData(), 1000);
+            if (picLen == 0)
+            {
+                cout << "send picture data finished." << endl;
+                break;
+            }
+            head->cLen = picLen + MSG_HEAD_LEN;
+            type = 1000 + index++;
+            memcpy (&(head->cType), &type, sizeof (unsigned int));
+            pp->setsize (head->cLen);
+            pp->setfd (p->getfd());
+            SINGLE->sendqueue.enqueue (pp);
+        }
+        else
+        {
+            cout << "out of memory\n" << endl;
+            return;
+        }
+    }
+#if 1
+        do {
+            cout << "send picture data finished flags -----------" << endl;
+            Buf* ppp = SINGLE->bufpool.malloc ();
+            MSG_HEAD* phead = (MSG_HEAD*)ppp->ptr();
+            struct sDBRecordFinished finished;
+            finished.iFlagFinished = 1;
+
+            phead->cLen = sizeof (MSG_HEAD) + sizeof (struct sDBRecordFinished);
+            phead->cType = ST_GetDBRecordFinished;
+            memcpy (((char*)ppp->ptr()) + MSG_HEAD_LEN, &finished, sizeof (struct sDBRecordFinished));
+            ppp->setfd (p->getfd());
+            ppp->setsize (phead->cLen);
+            SINGLE->sendqueue.enqueue (ppp);
+        } while (0);
+#endif
 #endif
 }

@@ -34,14 +34,6 @@ void CRoom::set_white_fd(int fd) {
 }
 
 void CRoom::add_student(int fd, CStudent* pstudent) {
-    STUDENTMAP::iterator iter = m_student_map.find(fd);
-
-    if (iter != m_student_map.end()) {
-        printf("fd [%d] is exist in the room!", fd);
-        delete iter->second;
-        m_student_map.erase(fd);
-    }
-
     m_student_map.insert(pair<int, CStudent*>(fd, pstudent));
     printf("%d:%d---------------%p\n",m_room_id, fd, pstudent);
 }
@@ -61,7 +53,7 @@ void CRoom::del_student(int fd) {
 
         TSendStudentStatusReq body;
         body.student_id = it->second->getId();
-        body.status = eCS_OFFLINE;//0xFFFFFFFF;
+        body.status = 0xFFFFFFFF;
         memcpy(p_head->cData(), &body, sizeof(body));
 
         p->setsize(p_head->cLen);

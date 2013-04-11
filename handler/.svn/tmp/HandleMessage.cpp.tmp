@@ -21,7 +21,6 @@ HANDLEMAP CHandleMessage::m_HandleMap;
 */
 bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
 {
-    cout << "postMessage.........." << endl;
     if (p == NULL)
         return false;
 
@@ -58,8 +57,8 @@ bool CHandleMessage::postTeacherToWhite (Buf* p, enum CommandType iCommandType)
         return false;
     }  
     proom->set_teacher_fd(p->getfd());                                                                                                                                       
-    proom->set_teacher_name("教师A");
-    proom->set_class_name("一班");
+    proom->set_teacher_name("xxxx");
+    proom->set_class_name("A教师");
     printf("Teacher login class room [%d] success!\n", proom->get_room_id());
 #endif
 
@@ -131,12 +130,10 @@ bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandT
     CRoom* pc = ROOMMANAGER->get_room_by_fd (p->getfd());
     if (pc != NULL) {
 
-        int i = 0;
         CRoom::STUDENTMAP::iterator it;
         for (it = pc->m_student_map.begin(); \
              it != pc->m_student_map.end (); ++it)
         {
-            i++;
             pbuf = SINGLE->bufpool.malloc ();
             if (pbuf != NULL) {
                 MSG_HEAD* head = (MSG_HEAD*)pbuf->ptr();
@@ -158,12 +155,9 @@ bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandT
                 return false;
             }
         }
-        if ( 0 == i ) {
-            printf("send to %d students!\n", i);
-        }
     }
     else {
-        cout << __FILE__ << ":" <<__FUNCTION__<< ":" << __LINE__<<"Error: not found 'teacher_fd' in Room" << endl;
+        cout << "Error: not found 'teacher_fd' in Room" << endl;
         p->reset();
         SINGLE->bufpool.free(p);
         return false;

@@ -50,6 +50,7 @@ void CStudent::setSocket(int sock) {
 int CStudent::getSocket() {
     return m_Socket;
 }
+
 void CStudent::setPictureName (string name)
 {
     this->m_picture_name = name;
@@ -58,4 +59,14 @@ void CStudent::setPictureName (string name)
 string CStudent::getPictureName (void)
 {
     return this->m_picture_name;
+}
+
+eClientStatus CStudent::getStudentStatus (void)
+{
+    return m_current_status;
+}
+
+void CStudent::setStudentStatus (eClientStatus ess)
+{
+    m_current_status = ess;
 }

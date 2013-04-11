@@ -28,19 +28,6 @@ void CHandleMessage::handleTest (Buf* p)
 void CHandleMessage::handleChangeScene (Buf* p)
 {
     printf ("change scene: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
-////测试使用!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#if 1
-    MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
-    p_head->cLen = sizeof(MSG_HEAD) + sizeof(int);
-    int* p_int = (int*)p_head->cData();
-    if ( *p_int == 1) {
-        *p_int = 3;
-        p->setsize(p_head->cLen);
-
-        SINGLE->sendqueue.enqueue(p);
-        printf("send change scence!\n");
-    }
-#endif
 }
 
 /*
@@ -111,7 +98,7 @@ void CHandleMessage::handleSetCourseGroup (Buf* p)
             if (room != NULL)
             {
                 CCourse* course = new CCourse ();
-                /*if (course != NULL)*/{
+                if (course != NULL) {
                     cout << "course_id: " << prst->getInt ("course_id") << endl;
                     cout << "course_name: " << prst->getString ("course_name") << endl;
                     course->setId (prst->getInt ("course_id"));
@@ -128,8 +115,8 @@ void CHandleMessage::handleSetCourseGroup (Buf* p)
         cout << e.what() << endl;
     }
 
-    // select record of coruseitem from database, not 
-    // from item_list of course get information (record)
+    // add item of course to room
+    // todo
 }
 
 /*
@@ -311,13 +298,7 @@ void CHandleMessage::handleLoginClassRoom (Buf* p)
 */
 void CHandleMessage::handleLogoutClassRoom (Buf* p)
 {
-    CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
-    if (room != NULL) {
-        if (room->get_teacher_by_fd (p->getfd ())) {
-            room->reset ();
-        }
-    }
-    return;
+    //todo:
 }
 
 /*
@@ -325,58 +306,9 @@ void CHandleMessage::handleLogoutClassRoom (Buf* p)
  获得学生信息 (所有端)
 =====================
 */
-void CHandleMessage::handleGetStudentDetailInfo (Buf* p)
+void CHandleMessage::handleGetStudentInfo (Buf* p)
 {
-    cout << "...CT_GetStudentDetailInfo" << endl;
-    
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_GetStudentDetailInfo)
-    {
-        cout << "CT_GetStudentDetailInfo..." << endl;
-        try {
-            sStudentDetail* sd = (sStudentDetail*) ((char*)((MSG_HEAD*)p->ptr()) + MSG_HEAD_LEN);
-            cout << "stu_id:" << sd->iStudentId << ", stu_name:" << sd->sStudentName << endl;
-
-            MutexLockGuard guard (DATABASE->m_mutex);
-            PreparedStatement* pstmt = NULL;
-            struct sGetStudentDetailInfo detail_info;
-
-            pstmt = DATABASE->preStatement (SQL_SELECT_STUDENT_DETAILINFO);
-            pstmt->setInt (1, sd->iStudentId);
-            pstmt->setString (2, sd->sStudentName);
-            ResultSet* prst = pstmt->executeQuery();
-            while (prst->next()) {
-                memset (&detail_info, 0x00, sizeof (detail_info));
-                strcpy (detail_info.sNumber, prst->getString ("number").c_str());
-                strcpy (detail_info.sLastName, prst->getString ("last_name").c_str());
-                strcpy (detail_info.sFirstName, prst->getString ("first_name").c_str());
-                strcpy (detail_info.sSex, prst->getString ("sex").c_str());
-                strcpy (detail_info.sSchoolName, prst->getString ("school_name").c_str());
-                strcpy (detail_info.sGradeName, prst->getString ("grade_name").c_str());
-                strcpy (detail_info.sClassName, prst->getString ("class_name").c_str());
-                strcpy (detail_info.sAccount, prst->getString ("account").c_str());
-                strcpy (detail_info.stFirstName, prst->getString ("tf_name").c_str());
-                strcpy (detail_info.stLastName, prst->getString ("tl_name").c_str());
-                detail_info.iPicture_id = prst->getInt ("picture_id");
-#if 0
-                strcpy (detail_info.birthday, prst->getString ("birthday").c_str());
-                cout << "6666" << endl;
-                cout << " number:" << detail_info.sNumber << endl
-                     << " class_name:" << detail_info.sClassName << endl
-                     << " sex:" << detail_info.sSex << endl;
-#endif
-            }
-            CHandleMessage::postMessage (p, ST_GetStudentDetailInfo, (void*)&detail_info, sizeof (detail_info));
-            delete pstmt;
-            delete prst;
-        }
-        catch (SQLException e) {
-            LOG(ERROR) << e.what() << endl;
-        }
-    }
-
-    return;
+    //todo:
 }
 
 /*
@@ -409,33 +341,7 @@ void CHandleMessage::handleGetAllStudentInfo (Buf* p)
 */
 void CHandleMessage::handleLeaveEarly (Buf* p)
 {
-    cout << "CT_LeaveEarly" << endl;
-    if (NULL != p)
-        return;
-
-/*
-    CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
-    if (room != NULL) {
-        Teacher* teacher = room->get_teacher_by_fd (p->getfd());
-        if (teacher != NULL) {
-            STUDENTMAP::iterator it;
-            for (it = room->m_student_map.begin(); \
-                 it != room->m_student_map.end (); ++it) {
-                if (it->second->getId() == ((sLeaveEarly*)((char *) p->ptr()) + MSG_HEAD_LEN)->student_id) {
-                }
-            }
-        }
-    }
-
-    return;
     //todo:
-*/
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_LeaveEarly) {
-        CHandleMessage::postTeacherToStudent (p, ST_LeaveEarly, \
-            ((sLeaveEarly*)((char*)p->ptr() + MSG_HEAD_LEN))->student_id);
-    }
 }
 
 /*
@@ -455,56 +361,7 @@ void CHandleMessage::handleConfirmLeaveEarly (Buf* p)
 */
 void CHandleMessage::handleGetTeacherInfo (Buf* p)
 {
-    if (p == NULL) return;
-
-    cout << "process: CT_GetTeacherInfo" << endl;
-
-    struct sGetTeacherInfo ti;
-    memset (&ti, 0x00, sizeof (ti));
-    MSG_HEAD* head = (MSG_HEAD*) p->ptr();
-
-    if (head->cType == CT_GetTeacherInfo)
-    {
-        try {
-            MutexLockGuard guard (DATABASE->m_mutex);
-            #ifdef _TEACHER_NOLOGIN
-            string teaname("张三");
-            #else
-            CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
-            if (room == NULL) return;
-            string teaname = room->get_teacher_name ();
-            #endif
-            cout << "get teacher info - name: " << teaname << endl;
-            PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_TEACHER_DETAILINFO);
-
-            pstmt->setString (1, teaname.c_str());
-            ResultSet* prst = pstmt->executeQuery ();
-
-            while (prst->next())
-            {
-                #ifdef _TEACHER_NOLOGIN
-                #else
-                if (room != NULL)
-                #endif
-                {
-
-                    strcpy (ti.sTeacherName, prst->getString ("account").c_str());
-                    strcpy (ti.sPicName, prst->getString ("pic_name").c_str());
-                    cout << "account: " << ti.sTeacherName << " " << prst->getString ("account") << endl;
-                    cout << "pic_name: " << ti.sPicName << " " << prst->getString ("pic_name") << endl;
-
-                }
-            }
-
-            postMessage (p, ST_GetTeacherInfo, &ti, sizeof (sGetTeacherInfo));
-            delete pstmt;
-            delete prst;
-        }
-        catch (SQLException e) {
-            cout << e.what() << endl;
-        }
-    }
-    return;
+    //todo:
 }
 
 /*
@@ -538,16 +395,12 @@ void CHandleMessage::handleSelectedClassRoom (Buf* p)
     //todo:
     TSelectedClassRoom* pp = (TSelectedClassRoom*)((char*)p->ptr() + sizeof(MSG_HEAD));
 
+    //CClass* pclass = CLASSMANAGER->get_class(pp->classroom_id);
     CRoom* proom = ROOMMANAGER->get_room(pp->classroom_id);
     if (MCT_STUDENT == pp->client_type) {
         CStudent* pstudent = new CStudent();
-        if (ROOMMANAGER->get_room_by_fd (p->getfd()))
-        {
-            printf ("student fd exist in the room\n");
-            return;
-        }
         proom->add_student(p->getfd(), pstudent);
-        printf("student login room[%d] fd = [%d]\n", pp->classroom_id, p->getfd());
+        printf("add a student[%d][%p]\n", p->getfd(), pstudent);
     }
     if (MCT_WHITEBOARD == pp->client_type) {
         printf("white board login classroom[%d]", proom->get_room_id());
@@ -601,11 +454,10 @@ void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {
     string keys_info;
 
     GetCourseItemKeyInfoRsp rsp;
-    memset (&rsp, 0x00, sizeof (rsp));
+
     try {
         MutexLockGuard guard (DATABASE->m_mutex);
         PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_ITEM_KEYS);
-        cout << "Req: " << *(int*)p_head->cData();
         pstmt->setInt(1, *(int*)p_head->cData());
         ResultSet* rst = pstmt->executeQuery();
         while(rst->next()) {
@@ -625,106 +477,4 @@ void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {
     memcpy(p_head->cData(), &rsp, sizeof(rsp));
     p->setsize(p_head->cLen);
     SINGLE->sendqueue.enqueue(p);
-
-#if 0
-    do {
-        cout << "send finished flags handleGetCourseItemKeyInfoReq -----------" << endl;
-        Buf* pbuf = SINGLE->bufpool.malloc();
-        MSG_HEAD* phead = (MSG_HEAD*)pbuf->ptr();
-        sDBRecordFinished finished;
-        finished.iFlagFinished = CT_GetCourseItemKeyInfoRsp;
-
-        phead->cType = CT_GetCourseItemKeyInfoRsp;
-        phead->cLen = sizeof (MSG_HEAD) + sizeof (sDBRecordFinished);
-
-        memcpy (((char*)pbuf->ptr()) + MSG_HEAD_LEN, &finished, sizeof (sDBRecordFinished));
-        pbuf->setfd (p->getfd());
-        pbuf->setsize (phead->cLen);
-        SINGLE->sendqueue.enqueue (pbuf);
-    } while (0);
-#endif /////////
-}
-
-/*
-=====================
- CT_Common_PlayorPause (通用的播放暂停处理)
- ST_Common_PlayorPause (通用的播放暂停处理)
-=====================
-*/
-void CHandleMessage::handleCommonPlayorPause (Buf* p)
-{
-    if (p == NULL)
-        return;
-
-    cout << "process: CT_Common_PlayorPause" << endl;
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_Common_PlayorPause) {
-        postTeacherToWhite (p, CT_Common_PlayorPause);
-    }
-
-    return;
-}
-
-/*
-=====================
- CT_Common_Resume
- ST_Common_Resume
-=====================
-*/
-void CHandleMessage::handleCommonResume (Buf* p)
-{
-    if (p == NULL)
-        return;
-
-    cout << "process: CT_Common_Resume" << endl;
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_Common_Resume) {
-        postTeacherToWhite (p, ST_Common_Resume);
-    }
-
-    return;
-}
-
-/*
-=====================
- CT_Common_Stop
- ST_Common_Stop
-=====================
-*/
-void CHandleMessage::handleCommonStop (Buf * p)
-{
-    if (p == NULL)
-        return;
-
-    cout << "process: CT_Common_Stop" << endl;
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_Common_Stop) {
-        postTeacherToWhite (p, ST_Common_Stop);
-    }
-
-    return;
-}
-
-/*
-====================
- CT_Scene_End
- ST_Scene_End
-====================
-*/
-void CHandleMessage::handleSceneEnd (Buf* p)
-{
-    if (p == NULL)  return;
-
-    cout << "process: CT_Scene_End" << endl;
-
-    MSG_HEAD* head = (MSG_HEAD*) p->ptr();
-    sSceneEnd* se = (sSceneEnd*) ((char*)p->ptr() + MSG_HEAD_LEN);
-    if (head->cType == CT_Scene_End) {
-        postMessage (p, ST_Scene_End, se, head->cLen - MSG_HEAD_LEN);
-    }
-
-    return;
 }

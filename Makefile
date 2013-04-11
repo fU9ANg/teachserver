@@ -50,24 +50,19 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_server_OBJECTS = server-main.$(OBJEXT) server-Single.$(OBJEXT) \
-	server-Config.$(OBJEXT) server-HandleMessage.$(OBJEXT) \
-	server-HandleBuildHouse.$(OBJEXT) \
-	server-HandleExercise.$(OBJEXT) server-HandlePuzzle.$(OBJEXT) \
-	server-HandleCartoon.$(OBJEXT) server-HandleSprite.$(OBJEXT) \
-	server-HandleClassRoom.$(OBJEXT) server-teacher.$(OBJEXT) \
-	server-courseitem.$(OBJEXT) server-roommanager.$(OBJEXT) \
-	server-course.$(OBJEXT) server-student.$(OBJEXT) \
-	server-game.$(OBJEXT) server-grade.$(OBJEXT) \
-	server-LoginCheck.$(OBJEXT) server-room.$(OBJEXT) \
-	server-ThreadPool.$(OBJEXT) server-database.$(OBJEXT) \
-	server-Evloop.$(OBJEXT) server-RecvTask.$(OBJEXT) \
-	server-SendTask.$(OBJEXT) server-ProcessManager.$(OBJEXT) \
-	server-Sock.$(OBJEXT)
+am_server_OBJECTS = main.$(OBJEXT) Single.$(OBJEXT) Config.$(OBJEXT) \
+	HandleMessage.$(OBJEXT) HandleBuildHouse.$(OBJEXT) \
+	HandleExercise.$(OBJEXT) HandlePuzzle.$(OBJEXT) \
+	HandleCartoon.$(OBJEXT) HandleSprite.$(OBJEXT) \
+	HandleClassRoom.$(OBJEXT) teacher.$(OBJEXT) \
+	courseitem.$(OBJEXT) roommanager.$(OBJEXT) course.$(OBJEXT) \
+	student.$(OBJEXT) game.$(OBJEXT) grade.$(OBJEXT) \
+	LoginCheck.$(OBJEXT) room.$(OBJEXT) ThreadPool.$(OBJEXT) \
+	database.$(OBJEXT) Evloop.$(OBJEXT) RecvTask.$(OBJEXT) \
+	SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) Sock.$(OBJEXT) \
+	makehouse.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_DEPENDENCIES =
-server_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(server_LDFLAGS) \
-	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -100,11 +95,11 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/fu9ang/teachserver/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/fu9ang/github/teachserver/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /home/fu9ang/teachserver/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/fu9ang/teachserver/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/fu9ang/teachserver/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/fu9ang/github/teachserver/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/fu9ang/github/teachserver/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/fu9ang/github/teachserver/missing --run automake-1.11
 AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -132,7 +127,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/fu9ang/teachserver/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/fu9ang/github/teachserver/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = main
@@ -147,10 +142,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/fu9ang/teachserver
-abs_srcdir = /home/fu9ang/teachserver
-abs_top_builddir = /home/fu9ang/teachserver
-abs_top_srcdir = /home/fu9ang/teachserver
+abs_builddir = /home/fu9ang/github/teachserver
+abs_srcdir = /home/fu9ang/github/teachserver
+abs_top_builddir = /home/fu9ang/github/teachserver
+abs_top_srcdir = /home/fu9ang/github/teachserver
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -170,7 +165,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/fu9ang/teachserver/install-sh
+install_sh = ${SHELL} /home/fu9ang/github/teachserver/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -193,10 +188,10 @@ top_srcdir = .
 AUTOMAKE_OPTIONS = gnu
 INCLUDES = -I./handler -I./content
 server_LDADD = -lglog -lpthread -llua5.2 -lev -ldl -lrt -lmysqlcppconn
-server_LDFLAGS = -g -Wall -Werror
-server_CFLAGS = -g -Wall -Werror
-server_CPPFLAGS = -g -Wall -Werror
-server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h ./Evloop.h ./SendTask.h ./ProcessManager.h ./Config.cpp ./Mutex.h ./handler/HandleMessage.cpp ./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp ./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp ./handler/HandleSprite.cpp ./handler/HandleMessage.h ./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h ./database.h ./content/teacher.cpp ./content/courseitem.cpp ./content/roommanager.cpp ./content/course.cpp ./content/courseitem.h ./content/student.cpp ./content/room.h ./content/teacher.h ./content/student.h ./content/course.h ./content/game.cpp ./content/grade.h ./content/grade.cpp ./content/LoginCheck.cpp ./content/room.cpp ./content/roommanager.h ./content/LoginCheck.h ./content/game.h ./ThreadPool.cpp ./Sock.h ./database.cpp ./SQL.h ./protocol.h ./Buf.h ./PoolT.h ./Single.h ./task.h ./Evloop.cpp ./RecvTask.cpp ./AtomicT.h ./SendTask.cpp ./ProcessManager.cpp ./Config.h ./RecvTask.h ./Sock.c
+#server_LDFLAGS = -g -Wall -Werror
+#server_CFLAGS = -g -Wall -Werror
+#server_CPPFLAGS= -g -Wall -Werror
+server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h ./Evloop.h ./SendTask.h ./ProcessManager.h ./Config.cpp ./Mutex.h ./handler/HandleMessage.cpp ./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp ./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp ./handler/HandleSprite.cpp ./handler/HandleMessage.h ./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h ./database.h ./content/teacher.cpp ./content/courseitem.cpp ./content/roommanager.cpp ./content/course.cpp ./content/courseitem.h ./content/student.cpp ./content/room.h ./content/teacher.h ./content/student.h ./content/course.h ./content/game.cpp ./content/grade.h ./content/grade.cpp ./content/LoginCheck.cpp ./content/room.cpp ./content/roommanager.h ./content/LoginCheck.h ./content/game.h ./ThreadPool.cpp ./Sock.h ./database.cpp ./SQL.h ./protocol.h ./Buf.h ./PoolT.h ./Single.h ./task.h ./Evloop.cpp ./RecvTask.cpp ./AtomicT.h ./SendTask.cpp ./ProcessManager.cpp ./Config.h ./RecvTask.h ./Sock.c ./content/makehouse.cpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -290,7 +285,7 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 server$(EXEEXT): $(server_OBJECTS) $(server_DEPENDENCIES) $(EXTRA_server_DEPENDENCIES) 
 	@rm -f server$(EXEEXT)
-	$(server_LINK) $(server_OBJECTS) $(server_LDADD) $(LIBS)
+	$(CXXLINK) $(server_OBJECTS) $(server_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -298,32 +293,33 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/server-Config.Po
-include ./$(DEPDIR)/server-Evloop.Po
-include ./$(DEPDIR)/server-HandleBuildHouse.Po
-include ./$(DEPDIR)/server-HandleCartoon.Po
-include ./$(DEPDIR)/server-HandleClassRoom.Po
-include ./$(DEPDIR)/server-HandleExercise.Po
-include ./$(DEPDIR)/server-HandleMessage.Po
-include ./$(DEPDIR)/server-HandlePuzzle.Po
-include ./$(DEPDIR)/server-HandleSprite.Po
-include ./$(DEPDIR)/server-LoginCheck.Po
-include ./$(DEPDIR)/server-ProcessManager.Po
-include ./$(DEPDIR)/server-RecvTask.Po
-include ./$(DEPDIR)/server-SendTask.Po
-include ./$(DEPDIR)/server-Single.Po
-include ./$(DEPDIR)/server-Sock.Po
-include ./$(DEPDIR)/server-ThreadPool.Po
-include ./$(DEPDIR)/server-course.Po
-include ./$(DEPDIR)/server-courseitem.Po
-include ./$(DEPDIR)/server-database.Po
-include ./$(DEPDIR)/server-game.Po
-include ./$(DEPDIR)/server-grade.Po
-include ./$(DEPDIR)/server-main.Po
-include ./$(DEPDIR)/server-room.Po
-include ./$(DEPDIR)/server-roommanager.Po
-include ./$(DEPDIR)/server-student.Po
-include ./$(DEPDIR)/server-teacher.Po
+include ./$(DEPDIR)/Config.Po
+include ./$(DEPDIR)/Evloop.Po
+include ./$(DEPDIR)/HandleBuildHouse.Po
+include ./$(DEPDIR)/HandleCartoon.Po
+include ./$(DEPDIR)/HandleClassRoom.Po
+include ./$(DEPDIR)/HandleExercise.Po
+include ./$(DEPDIR)/HandleMessage.Po
+include ./$(DEPDIR)/HandlePuzzle.Po
+include ./$(DEPDIR)/HandleSprite.Po
+include ./$(DEPDIR)/LoginCheck.Po
+include ./$(DEPDIR)/ProcessManager.Po
+include ./$(DEPDIR)/RecvTask.Po
+include ./$(DEPDIR)/SendTask.Po
+include ./$(DEPDIR)/Single.Po
+include ./$(DEPDIR)/Sock.Po
+include ./$(DEPDIR)/ThreadPool.Po
+include ./$(DEPDIR)/course.Po
+include ./$(DEPDIR)/courseitem.Po
+include ./$(DEPDIR)/database.Po
+include ./$(DEPDIR)/game.Po
+include ./$(DEPDIR)/grade.Po
+include ./$(DEPDIR)/main.Po
+include ./$(DEPDIR)/makehouse.Po
+include ./$(DEPDIR)/room.Po
+include ./$(DEPDIR)/roommanager.Po
+include ./$(DEPDIR)/student.Po
+include ./$(DEPDIR)/teacher.Po
 
 .c.o:
 	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -339,19 +335,19 @@ include ./$(DEPDIR)/server-teacher.Po
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
-server-Sock.o: ./Sock.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(server_CFLAGS) $(CFLAGS) -MT server-Sock.o -MD -MP -MF $(DEPDIR)/server-Sock.Tpo -c -o server-Sock.o `test -f './Sock.c' || echo '$(srcdir)/'`./Sock.c
-	$(am__mv) $(DEPDIR)/server-Sock.Tpo $(DEPDIR)/server-Sock.Po
-#	source='./Sock.c' object='server-Sock.o' libtool=no \
+Sock.o: ./Sock.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Sock.o -MD -MP -MF $(DEPDIR)/Sock.Tpo -c -o Sock.o `test -f './Sock.c' || echo '$(srcdir)/'`./Sock.c
+	$(am__mv) $(DEPDIR)/Sock.Tpo $(DEPDIR)/Sock.Po
+#	source='./Sock.c' object='Sock.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(server_CFLAGS) $(CFLAGS) -c -o server-Sock.o `test -f './Sock.c' || echo '$(srcdir)/'`./Sock.c
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Sock.o `test -f './Sock.c' || echo '$(srcdir)/'`./Sock.c
 
-server-Sock.obj: ./Sock.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(server_CFLAGS) $(CFLAGS) -MT server-Sock.obj -MD -MP -MF $(DEPDIR)/server-Sock.Tpo -c -o server-Sock.obj `if test -f './Sock.c'; then $(CYGPATH_W) './Sock.c'; else $(CYGPATH_W) '$(srcdir)/./Sock.c'; fi`
-	$(am__mv) $(DEPDIR)/server-Sock.Tpo $(DEPDIR)/server-Sock.Po
-#	source='./Sock.c' object='server-Sock.obj' libtool=no \
+Sock.obj: ./Sock.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Sock.obj -MD -MP -MF $(DEPDIR)/Sock.Tpo -c -o Sock.obj `if test -f './Sock.c'; then $(CYGPATH_W) './Sock.c'; else $(CYGPATH_W) '$(srcdir)/./Sock.c'; fi`
+	$(am__mv) $(DEPDIR)/Sock.Tpo $(DEPDIR)/Sock.Po
+#	source='./Sock.c' object='Sock.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(server_CFLAGS) $(CFLAGS) -c -o server-Sock.obj `if test -f './Sock.c'; then $(CYGPATH_W) './Sock.c'; else $(CYGPATH_W) '$(srcdir)/./Sock.c'; fi`
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Sock.obj `if test -f './Sock.c'; then $(CYGPATH_W) './Sock.c'; else $(CYGPATH_W) '$(srcdir)/./Sock.c'; fi`
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -367,355 +363,369 @@ server-Sock.obj: ./Sock.c
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-server-main.o: ./main.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-main.o -MD -MP -MF $(DEPDIR)/server-main.Tpo -c -o server-main.o `test -f './main.cpp' || echo '$(srcdir)/'`./main.cpp
-	$(am__mv) $(DEPDIR)/server-main.Tpo $(DEPDIR)/server-main.Po
-#	source='./main.cpp' object='server-main.o' libtool=no \
+main.o: ./main.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main.o -MD -MP -MF $(DEPDIR)/main.Tpo -c -o main.o `test -f './main.cpp' || echo '$(srcdir)/'`./main.cpp
+	$(am__mv) $(DEPDIR)/main.Tpo $(DEPDIR)/main.Po
+#	source='./main.cpp' object='main.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-main.o `test -f './main.cpp' || echo '$(srcdir)/'`./main.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main.o `test -f './main.cpp' || echo '$(srcdir)/'`./main.cpp
 
-server-main.obj: ./main.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-main.obj -MD -MP -MF $(DEPDIR)/server-main.Tpo -c -o server-main.obj `if test -f './main.cpp'; then $(CYGPATH_W) './main.cpp'; else $(CYGPATH_W) '$(srcdir)/./main.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-main.Tpo $(DEPDIR)/server-main.Po
-#	source='./main.cpp' object='server-main.obj' libtool=no \
+main.obj: ./main.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main.obj -MD -MP -MF $(DEPDIR)/main.Tpo -c -o main.obj `if test -f './main.cpp'; then $(CYGPATH_W) './main.cpp'; else $(CYGPATH_W) '$(srcdir)/./main.cpp'; fi`
+	$(am__mv) $(DEPDIR)/main.Tpo $(DEPDIR)/main.Po
+#	source='./main.cpp' object='main.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-main.obj `if test -f './main.cpp'; then $(CYGPATH_W) './main.cpp'; else $(CYGPATH_W) '$(srcdir)/./main.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main.obj `if test -f './main.cpp'; then $(CYGPATH_W) './main.cpp'; else $(CYGPATH_W) '$(srcdir)/./main.cpp'; fi`
 
-server-Single.o: ./Single.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Single.o -MD -MP -MF $(DEPDIR)/server-Single.Tpo -c -o server-Single.o `test -f './Single.cpp' || echo '$(srcdir)/'`./Single.cpp
-	$(am__mv) $(DEPDIR)/server-Single.Tpo $(DEPDIR)/server-Single.Po
-#	source='./Single.cpp' object='server-Single.o' libtool=no \
+Single.o: ./Single.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Single.o -MD -MP -MF $(DEPDIR)/Single.Tpo -c -o Single.o `test -f './Single.cpp' || echo '$(srcdir)/'`./Single.cpp
+	$(am__mv) $(DEPDIR)/Single.Tpo $(DEPDIR)/Single.Po
+#	source='./Single.cpp' object='Single.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Single.o `test -f './Single.cpp' || echo '$(srcdir)/'`./Single.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Single.o `test -f './Single.cpp' || echo '$(srcdir)/'`./Single.cpp
 
-server-Single.obj: ./Single.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Single.obj -MD -MP -MF $(DEPDIR)/server-Single.Tpo -c -o server-Single.obj `if test -f './Single.cpp'; then $(CYGPATH_W) './Single.cpp'; else $(CYGPATH_W) '$(srcdir)/./Single.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-Single.Tpo $(DEPDIR)/server-Single.Po
-#	source='./Single.cpp' object='server-Single.obj' libtool=no \
+Single.obj: ./Single.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Single.obj -MD -MP -MF $(DEPDIR)/Single.Tpo -c -o Single.obj `if test -f './Single.cpp'; then $(CYGPATH_W) './Single.cpp'; else $(CYGPATH_W) '$(srcdir)/./Single.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Single.Tpo $(DEPDIR)/Single.Po
+#	source='./Single.cpp' object='Single.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Single.obj `if test -f './Single.cpp'; then $(CYGPATH_W) './Single.cpp'; else $(CYGPATH_W) '$(srcdir)/./Single.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Single.obj `if test -f './Single.cpp'; then $(CYGPATH_W) './Single.cpp'; else $(CYGPATH_W) '$(srcdir)/./Single.cpp'; fi`
 
-server-Config.o: ./Config.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Config.o -MD -MP -MF $(DEPDIR)/server-Config.Tpo -c -o server-Config.o `test -f './Config.cpp' || echo '$(srcdir)/'`./Config.cpp
-	$(am__mv) $(DEPDIR)/server-Config.Tpo $(DEPDIR)/server-Config.Po
-#	source='./Config.cpp' object='server-Config.o' libtool=no \
+Config.o: ./Config.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.o -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.o `test -f './Config.cpp' || echo '$(srcdir)/'`./Config.cpp
+	$(am__mv) $(DEPDIR)/Config.Tpo $(DEPDIR)/Config.Po
+#	source='./Config.cpp' object='Config.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Config.o `test -f './Config.cpp' || echo '$(srcdir)/'`./Config.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.o `test -f './Config.cpp' || echo '$(srcdir)/'`./Config.cpp
 
-server-Config.obj: ./Config.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Config.obj -MD -MP -MF $(DEPDIR)/server-Config.Tpo -c -o server-Config.obj `if test -f './Config.cpp'; then $(CYGPATH_W) './Config.cpp'; else $(CYGPATH_W) '$(srcdir)/./Config.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-Config.Tpo $(DEPDIR)/server-Config.Po
-#	source='./Config.cpp' object='server-Config.obj' libtool=no \
+Config.obj: ./Config.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.obj -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.obj `if test -f './Config.cpp'; then $(CYGPATH_W) './Config.cpp'; else $(CYGPATH_W) '$(srcdir)/./Config.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Config.Tpo $(DEPDIR)/Config.Po
+#	source='./Config.cpp' object='Config.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Config.obj `if test -f './Config.cpp'; then $(CYGPATH_W) './Config.cpp'; else $(CYGPATH_W) '$(srcdir)/./Config.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.obj `if test -f './Config.cpp'; then $(CYGPATH_W) './Config.cpp'; else $(CYGPATH_W) '$(srcdir)/./Config.cpp'; fi`
 
-server-HandleMessage.o: ./handler/HandleMessage.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleMessage.o -MD -MP -MF $(DEPDIR)/server-HandleMessage.Tpo -c -o server-HandleMessage.o `test -f './handler/HandleMessage.cpp' || echo '$(srcdir)/'`./handler/HandleMessage.cpp
-	$(am__mv) $(DEPDIR)/server-HandleMessage.Tpo $(DEPDIR)/server-HandleMessage.Po
-#	source='./handler/HandleMessage.cpp' object='server-HandleMessage.o' libtool=no \
+HandleMessage.o: ./handler/HandleMessage.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleMessage.o -MD -MP -MF $(DEPDIR)/HandleMessage.Tpo -c -o HandleMessage.o `test -f './handler/HandleMessage.cpp' || echo '$(srcdir)/'`./handler/HandleMessage.cpp
+	$(am__mv) $(DEPDIR)/HandleMessage.Tpo $(DEPDIR)/HandleMessage.Po
+#	source='./handler/HandleMessage.cpp' object='HandleMessage.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleMessage.o `test -f './handler/HandleMessage.cpp' || echo '$(srcdir)/'`./handler/HandleMessage.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleMessage.o `test -f './handler/HandleMessage.cpp' || echo '$(srcdir)/'`./handler/HandleMessage.cpp
 
-server-HandleMessage.obj: ./handler/HandleMessage.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleMessage.obj -MD -MP -MF $(DEPDIR)/server-HandleMessage.Tpo -c -o server-HandleMessage.obj `if test -f './handler/HandleMessage.cpp'; then $(CYGPATH_W) './handler/HandleMessage.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleMessage.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleMessage.Tpo $(DEPDIR)/server-HandleMessage.Po
-#	source='./handler/HandleMessage.cpp' object='server-HandleMessage.obj' libtool=no \
+HandleMessage.obj: ./handler/HandleMessage.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleMessage.obj -MD -MP -MF $(DEPDIR)/HandleMessage.Tpo -c -o HandleMessage.obj `if test -f './handler/HandleMessage.cpp'; then $(CYGPATH_W) './handler/HandleMessage.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleMessage.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleMessage.Tpo $(DEPDIR)/HandleMessage.Po
+#	source='./handler/HandleMessage.cpp' object='HandleMessage.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleMessage.obj `if test -f './handler/HandleMessage.cpp'; then $(CYGPATH_W) './handler/HandleMessage.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleMessage.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleMessage.obj `if test -f './handler/HandleMessage.cpp'; then $(CYGPATH_W) './handler/HandleMessage.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleMessage.cpp'; fi`
 
-server-HandleBuildHouse.o: ./handler/HandleBuildHouse.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleBuildHouse.o -MD -MP -MF $(DEPDIR)/server-HandleBuildHouse.Tpo -c -o server-HandleBuildHouse.o `test -f './handler/HandleBuildHouse.cpp' || echo '$(srcdir)/'`./handler/HandleBuildHouse.cpp
-	$(am__mv) $(DEPDIR)/server-HandleBuildHouse.Tpo $(DEPDIR)/server-HandleBuildHouse.Po
-#	source='./handler/HandleBuildHouse.cpp' object='server-HandleBuildHouse.o' libtool=no \
+HandleBuildHouse.o: ./handler/HandleBuildHouse.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleBuildHouse.o -MD -MP -MF $(DEPDIR)/HandleBuildHouse.Tpo -c -o HandleBuildHouse.o `test -f './handler/HandleBuildHouse.cpp' || echo '$(srcdir)/'`./handler/HandleBuildHouse.cpp
+	$(am__mv) $(DEPDIR)/HandleBuildHouse.Tpo $(DEPDIR)/HandleBuildHouse.Po
+#	source='./handler/HandleBuildHouse.cpp' object='HandleBuildHouse.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleBuildHouse.o `test -f './handler/HandleBuildHouse.cpp' || echo '$(srcdir)/'`./handler/HandleBuildHouse.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleBuildHouse.o `test -f './handler/HandleBuildHouse.cpp' || echo '$(srcdir)/'`./handler/HandleBuildHouse.cpp
 
-server-HandleBuildHouse.obj: ./handler/HandleBuildHouse.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleBuildHouse.obj -MD -MP -MF $(DEPDIR)/server-HandleBuildHouse.Tpo -c -o server-HandleBuildHouse.obj `if test -f './handler/HandleBuildHouse.cpp'; then $(CYGPATH_W) './handler/HandleBuildHouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleBuildHouse.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleBuildHouse.Tpo $(DEPDIR)/server-HandleBuildHouse.Po
-#	source='./handler/HandleBuildHouse.cpp' object='server-HandleBuildHouse.obj' libtool=no \
+HandleBuildHouse.obj: ./handler/HandleBuildHouse.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleBuildHouse.obj -MD -MP -MF $(DEPDIR)/HandleBuildHouse.Tpo -c -o HandleBuildHouse.obj `if test -f './handler/HandleBuildHouse.cpp'; then $(CYGPATH_W) './handler/HandleBuildHouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleBuildHouse.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleBuildHouse.Tpo $(DEPDIR)/HandleBuildHouse.Po
+#	source='./handler/HandleBuildHouse.cpp' object='HandleBuildHouse.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleBuildHouse.obj `if test -f './handler/HandleBuildHouse.cpp'; then $(CYGPATH_W) './handler/HandleBuildHouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleBuildHouse.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleBuildHouse.obj `if test -f './handler/HandleBuildHouse.cpp'; then $(CYGPATH_W) './handler/HandleBuildHouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleBuildHouse.cpp'; fi`
 
-server-HandleExercise.o: ./handler/HandleExercise.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleExercise.o -MD -MP -MF $(DEPDIR)/server-HandleExercise.Tpo -c -o server-HandleExercise.o `test -f './handler/HandleExercise.cpp' || echo '$(srcdir)/'`./handler/HandleExercise.cpp
-	$(am__mv) $(DEPDIR)/server-HandleExercise.Tpo $(DEPDIR)/server-HandleExercise.Po
-#	source='./handler/HandleExercise.cpp' object='server-HandleExercise.o' libtool=no \
+HandleExercise.o: ./handler/HandleExercise.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleExercise.o -MD -MP -MF $(DEPDIR)/HandleExercise.Tpo -c -o HandleExercise.o `test -f './handler/HandleExercise.cpp' || echo '$(srcdir)/'`./handler/HandleExercise.cpp
+	$(am__mv) $(DEPDIR)/HandleExercise.Tpo $(DEPDIR)/HandleExercise.Po
+#	source='./handler/HandleExercise.cpp' object='HandleExercise.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleExercise.o `test -f './handler/HandleExercise.cpp' || echo '$(srcdir)/'`./handler/HandleExercise.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleExercise.o `test -f './handler/HandleExercise.cpp' || echo '$(srcdir)/'`./handler/HandleExercise.cpp
 
-server-HandleExercise.obj: ./handler/HandleExercise.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleExercise.obj -MD -MP -MF $(DEPDIR)/server-HandleExercise.Tpo -c -o server-HandleExercise.obj `if test -f './handler/HandleExercise.cpp'; then $(CYGPATH_W) './handler/HandleExercise.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleExercise.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleExercise.Tpo $(DEPDIR)/server-HandleExercise.Po
-#	source='./handler/HandleExercise.cpp' object='server-HandleExercise.obj' libtool=no \
+HandleExercise.obj: ./handler/HandleExercise.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleExercise.obj -MD -MP -MF $(DEPDIR)/HandleExercise.Tpo -c -o HandleExercise.obj `if test -f './handler/HandleExercise.cpp'; then $(CYGPATH_W) './handler/HandleExercise.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleExercise.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleExercise.Tpo $(DEPDIR)/HandleExercise.Po
+#	source='./handler/HandleExercise.cpp' object='HandleExercise.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleExercise.obj `if test -f './handler/HandleExercise.cpp'; then $(CYGPATH_W) './handler/HandleExercise.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleExercise.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleExercise.obj `if test -f './handler/HandleExercise.cpp'; then $(CYGPATH_W) './handler/HandleExercise.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleExercise.cpp'; fi`
 
-server-HandlePuzzle.o: ./handler/HandlePuzzle.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandlePuzzle.o -MD -MP -MF $(DEPDIR)/server-HandlePuzzle.Tpo -c -o server-HandlePuzzle.o `test -f './handler/HandlePuzzle.cpp' || echo '$(srcdir)/'`./handler/HandlePuzzle.cpp
-	$(am__mv) $(DEPDIR)/server-HandlePuzzle.Tpo $(DEPDIR)/server-HandlePuzzle.Po
-#	source='./handler/HandlePuzzle.cpp' object='server-HandlePuzzle.o' libtool=no \
+HandlePuzzle.o: ./handler/HandlePuzzle.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandlePuzzle.o -MD -MP -MF $(DEPDIR)/HandlePuzzle.Tpo -c -o HandlePuzzle.o `test -f './handler/HandlePuzzle.cpp' || echo '$(srcdir)/'`./handler/HandlePuzzle.cpp
+	$(am__mv) $(DEPDIR)/HandlePuzzle.Tpo $(DEPDIR)/HandlePuzzle.Po
+#	source='./handler/HandlePuzzle.cpp' object='HandlePuzzle.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandlePuzzle.o `test -f './handler/HandlePuzzle.cpp' || echo '$(srcdir)/'`./handler/HandlePuzzle.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandlePuzzle.o `test -f './handler/HandlePuzzle.cpp' || echo '$(srcdir)/'`./handler/HandlePuzzle.cpp
 
-server-HandlePuzzle.obj: ./handler/HandlePuzzle.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandlePuzzle.obj -MD -MP -MF $(DEPDIR)/server-HandlePuzzle.Tpo -c -o server-HandlePuzzle.obj `if test -f './handler/HandlePuzzle.cpp'; then $(CYGPATH_W) './handler/HandlePuzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandlePuzzle.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandlePuzzle.Tpo $(DEPDIR)/server-HandlePuzzle.Po
-#	source='./handler/HandlePuzzle.cpp' object='server-HandlePuzzle.obj' libtool=no \
+HandlePuzzle.obj: ./handler/HandlePuzzle.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandlePuzzle.obj -MD -MP -MF $(DEPDIR)/HandlePuzzle.Tpo -c -o HandlePuzzle.obj `if test -f './handler/HandlePuzzle.cpp'; then $(CYGPATH_W) './handler/HandlePuzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandlePuzzle.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandlePuzzle.Tpo $(DEPDIR)/HandlePuzzle.Po
+#	source='./handler/HandlePuzzle.cpp' object='HandlePuzzle.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandlePuzzle.obj `if test -f './handler/HandlePuzzle.cpp'; then $(CYGPATH_W) './handler/HandlePuzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandlePuzzle.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandlePuzzle.obj `if test -f './handler/HandlePuzzle.cpp'; then $(CYGPATH_W) './handler/HandlePuzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandlePuzzle.cpp'; fi`
 
-server-HandleCartoon.o: ./handler/HandleCartoon.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleCartoon.o -MD -MP -MF $(DEPDIR)/server-HandleCartoon.Tpo -c -o server-HandleCartoon.o `test -f './handler/HandleCartoon.cpp' || echo '$(srcdir)/'`./handler/HandleCartoon.cpp
-	$(am__mv) $(DEPDIR)/server-HandleCartoon.Tpo $(DEPDIR)/server-HandleCartoon.Po
-#	source='./handler/HandleCartoon.cpp' object='server-HandleCartoon.o' libtool=no \
+HandleCartoon.o: ./handler/HandleCartoon.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleCartoon.o -MD -MP -MF $(DEPDIR)/HandleCartoon.Tpo -c -o HandleCartoon.o `test -f './handler/HandleCartoon.cpp' || echo '$(srcdir)/'`./handler/HandleCartoon.cpp
+	$(am__mv) $(DEPDIR)/HandleCartoon.Tpo $(DEPDIR)/HandleCartoon.Po
+#	source='./handler/HandleCartoon.cpp' object='HandleCartoon.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleCartoon.o `test -f './handler/HandleCartoon.cpp' || echo '$(srcdir)/'`./handler/HandleCartoon.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleCartoon.o `test -f './handler/HandleCartoon.cpp' || echo '$(srcdir)/'`./handler/HandleCartoon.cpp
 
-server-HandleCartoon.obj: ./handler/HandleCartoon.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleCartoon.obj -MD -MP -MF $(DEPDIR)/server-HandleCartoon.Tpo -c -o server-HandleCartoon.obj `if test -f './handler/HandleCartoon.cpp'; then $(CYGPATH_W) './handler/HandleCartoon.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleCartoon.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleCartoon.Tpo $(DEPDIR)/server-HandleCartoon.Po
-#	source='./handler/HandleCartoon.cpp' object='server-HandleCartoon.obj' libtool=no \
+HandleCartoon.obj: ./handler/HandleCartoon.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleCartoon.obj -MD -MP -MF $(DEPDIR)/HandleCartoon.Tpo -c -o HandleCartoon.obj `if test -f './handler/HandleCartoon.cpp'; then $(CYGPATH_W) './handler/HandleCartoon.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleCartoon.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleCartoon.Tpo $(DEPDIR)/HandleCartoon.Po
+#	source='./handler/HandleCartoon.cpp' object='HandleCartoon.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleCartoon.obj `if test -f './handler/HandleCartoon.cpp'; then $(CYGPATH_W) './handler/HandleCartoon.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleCartoon.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleCartoon.obj `if test -f './handler/HandleCartoon.cpp'; then $(CYGPATH_W) './handler/HandleCartoon.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleCartoon.cpp'; fi`
 
-server-HandleSprite.o: ./handler/HandleSprite.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleSprite.o -MD -MP -MF $(DEPDIR)/server-HandleSprite.Tpo -c -o server-HandleSprite.o `test -f './handler/HandleSprite.cpp' || echo '$(srcdir)/'`./handler/HandleSprite.cpp
-	$(am__mv) $(DEPDIR)/server-HandleSprite.Tpo $(DEPDIR)/server-HandleSprite.Po
-#	source='./handler/HandleSprite.cpp' object='server-HandleSprite.o' libtool=no \
+HandleSprite.o: ./handler/HandleSprite.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleSprite.o -MD -MP -MF $(DEPDIR)/HandleSprite.Tpo -c -o HandleSprite.o `test -f './handler/HandleSprite.cpp' || echo '$(srcdir)/'`./handler/HandleSprite.cpp
+	$(am__mv) $(DEPDIR)/HandleSprite.Tpo $(DEPDIR)/HandleSprite.Po
+#	source='./handler/HandleSprite.cpp' object='HandleSprite.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleSprite.o `test -f './handler/HandleSprite.cpp' || echo '$(srcdir)/'`./handler/HandleSprite.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleSprite.o `test -f './handler/HandleSprite.cpp' || echo '$(srcdir)/'`./handler/HandleSprite.cpp
 
-server-HandleSprite.obj: ./handler/HandleSprite.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleSprite.obj -MD -MP -MF $(DEPDIR)/server-HandleSprite.Tpo -c -o server-HandleSprite.obj `if test -f './handler/HandleSprite.cpp'; then $(CYGPATH_W) './handler/HandleSprite.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleSprite.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleSprite.Tpo $(DEPDIR)/server-HandleSprite.Po
-#	source='./handler/HandleSprite.cpp' object='server-HandleSprite.obj' libtool=no \
+HandleSprite.obj: ./handler/HandleSprite.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleSprite.obj -MD -MP -MF $(DEPDIR)/HandleSprite.Tpo -c -o HandleSprite.obj `if test -f './handler/HandleSprite.cpp'; then $(CYGPATH_W) './handler/HandleSprite.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleSprite.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleSprite.Tpo $(DEPDIR)/HandleSprite.Po
+#	source='./handler/HandleSprite.cpp' object='HandleSprite.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleSprite.obj `if test -f './handler/HandleSprite.cpp'; then $(CYGPATH_W) './handler/HandleSprite.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleSprite.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleSprite.obj `if test -f './handler/HandleSprite.cpp'; then $(CYGPATH_W) './handler/HandleSprite.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleSprite.cpp'; fi`
 
-server-HandleClassRoom.o: ./handler/HandleClassRoom.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleClassRoom.o -MD -MP -MF $(DEPDIR)/server-HandleClassRoom.Tpo -c -o server-HandleClassRoom.o `test -f './handler/HandleClassRoom.cpp' || echo '$(srcdir)/'`./handler/HandleClassRoom.cpp
-	$(am__mv) $(DEPDIR)/server-HandleClassRoom.Tpo $(DEPDIR)/server-HandleClassRoom.Po
-#	source='./handler/HandleClassRoom.cpp' object='server-HandleClassRoom.o' libtool=no \
+HandleClassRoom.o: ./handler/HandleClassRoom.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleClassRoom.o -MD -MP -MF $(DEPDIR)/HandleClassRoom.Tpo -c -o HandleClassRoom.o `test -f './handler/HandleClassRoom.cpp' || echo '$(srcdir)/'`./handler/HandleClassRoom.cpp
+	$(am__mv) $(DEPDIR)/HandleClassRoom.Tpo $(DEPDIR)/HandleClassRoom.Po
+#	source='./handler/HandleClassRoom.cpp' object='HandleClassRoom.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleClassRoom.o `test -f './handler/HandleClassRoom.cpp' || echo '$(srcdir)/'`./handler/HandleClassRoom.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleClassRoom.o `test -f './handler/HandleClassRoom.cpp' || echo '$(srcdir)/'`./handler/HandleClassRoom.cpp
 
-server-HandleClassRoom.obj: ./handler/HandleClassRoom.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-HandleClassRoom.obj -MD -MP -MF $(DEPDIR)/server-HandleClassRoom.Tpo -c -o server-HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-HandleClassRoom.Tpo $(DEPDIR)/server-HandleClassRoom.Po
-#	source='./handler/HandleClassRoom.cpp' object='server-HandleClassRoom.obj' libtool=no \
+HandleClassRoom.obj: ./handler/HandleClassRoom.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleClassRoom.obj -MD -MP -MF $(DEPDIR)/HandleClassRoom.Tpo -c -o HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleClassRoom.Tpo $(DEPDIR)/HandleClassRoom.Po
+#	source='./handler/HandleClassRoom.cpp' object='HandleClassRoom.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
 
-server-teacher.o: ./content/teacher.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-teacher.o -MD -MP -MF $(DEPDIR)/server-teacher.Tpo -c -o server-teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp
-	$(am__mv) $(DEPDIR)/server-teacher.Tpo $(DEPDIR)/server-teacher.Po
-#	source='./content/teacher.cpp' object='server-teacher.o' libtool=no \
+teacher.o: ./content/teacher.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT teacher.o -MD -MP -MF $(DEPDIR)/teacher.Tpo -c -o teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp
+	$(am__mv) $(DEPDIR)/teacher.Tpo $(DEPDIR)/teacher.Po
+#	source='./content/teacher.cpp' object='teacher.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp
 
-server-teacher.obj: ./content/teacher.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-teacher.obj -MD -MP -MF $(DEPDIR)/server-teacher.Tpo -c -o server-teacher.obj `if test -f './content/teacher.cpp'; then $(CYGPATH_W) './content/teacher.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/teacher.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-teacher.Tpo $(DEPDIR)/server-teacher.Po
-#	source='./content/teacher.cpp' object='server-teacher.obj' libtool=no \
+teacher.obj: ./content/teacher.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT teacher.obj -MD -MP -MF $(DEPDIR)/teacher.Tpo -c -o teacher.obj `if test -f './content/teacher.cpp'; then $(CYGPATH_W) './content/teacher.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/teacher.cpp'; fi`
+	$(am__mv) $(DEPDIR)/teacher.Tpo $(DEPDIR)/teacher.Po
+#	source='./content/teacher.cpp' object='teacher.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-teacher.obj `if test -f './content/teacher.cpp'; then $(CYGPATH_W) './content/teacher.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/teacher.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o teacher.obj `if test -f './content/teacher.cpp'; then $(CYGPATH_W) './content/teacher.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/teacher.cpp'; fi`
 
-server-courseitem.o: ./content/courseitem.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-courseitem.o -MD -MP -MF $(DEPDIR)/server-courseitem.Tpo -c -o server-courseitem.o `test -f './content/courseitem.cpp' || echo '$(srcdir)/'`./content/courseitem.cpp
-	$(am__mv) $(DEPDIR)/server-courseitem.Tpo $(DEPDIR)/server-courseitem.Po
-#	source='./content/courseitem.cpp' object='server-courseitem.o' libtool=no \
+courseitem.o: ./content/courseitem.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT courseitem.o -MD -MP -MF $(DEPDIR)/courseitem.Tpo -c -o courseitem.o `test -f './content/courseitem.cpp' || echo '$(srcdir)/'`./content/courseitem.cpp
+	$(am__mv) $(DEPDIR)/courseitem.Tpo $(DEPDIR)/courseitem.Po
+#	source='./content/courseitem.cpp' object='courseitem.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-courseitem.o `test -f './content/courseitem.cpp' || echo '$(srcdir)/'`./content/courseitem.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o courseitem.o `test -f './content/courseitem.cpp' || echo '$(srcdir)/'`./content/courseitem.cpp
 
-server-courseitem.obj: ./content/courseitem.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-courseitem.obj -MD -MP -MF $(DEPDIR)/server-courseitem.Tpo -c -o server-courseitem.obj `if test -f './content/courseitem.cpp'; then $(CYGPATH_W) './content/courseitem.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/courseitem.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-courseitem.Tpo $(DEPDIR)/server-courseitem.Po
-#	source='./content/courseitem.cpp' object='server-courseitem.obj' libtool=no \
+courseitem.obj: ./content/courseitem.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT courseitem.obj -MD -MP -MF $(DEPDIR)/courseitem.Tpo -c -o courseitem.obj `if test -f './content/courseitem.cpp'; then $(CYGPATH_W) './content/courseitem.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/courseitem.cpp'; fi`
+	$(am__mv) $(DEPDIR)/courseitem.Tpo $(DEPDIR)/courseitem.Po
+#	source='./content/courseitem.cpp' object='courseitem.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-courseitem.obj `if test -f './content/courseitem.cpp'; then $(CYGPATH_W) './content/courseitem.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/courseitem.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o courseitem.obj `if test -f './content/courseitem.cpp'; then $(CYGPATH_W) './content/courseitem.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/courseitem.cpp'; fi`
 
-server-roommanager.o: ./content/roommanager.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-roommanager.o -MD -MP -MF $(DEPDIR)/server-roommanager.Tpo -c -o server-roommanager.o `test -f './content/roommanager.cpp' || echo '$(srcdir)/'`./content/roommanager.cpp
-	$(am__mv) $(DEPDIR)/server-roommanager.Tpo $(DEPDIR)/server-roommanager.Po
-#	source='./content/roommanager.cpp' object='server-roommanager.o' libtool=no \
+roommanager.o: ./content/roommanager.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT roommanager.o -MD -MP -MF $(DEPDIR)/roommanager.Tpo -c -o roommanager.o `test -f './content/roommanager.cpp' || echo '$(srcdir)/'`./content/roommanager.cpp
+	$(am__mv) $(DEPDIR)/roommanager.Tpo $(DEPDIR)/roommanager.Po
+#	source='./content/roommanager.cpp' object='roommanager.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-roommanager.o `test -f './content/roommanager.cpp' || echo '$(srcdir)/'`./content/roommanager.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o roommanager.o `test -f './content/roommanager.cpp' || echo '$(srcdir)/'`./content/roommanager.cpp
 
-server-roommanager.obj: ./content/roommanager.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-roommanager.obj -MD -MP -MF $(DEPDIR)/server-roommanager.Tpo -c -o server-roommanager.obj `if test -f './content/roommanager.cpp'; then $(CYGPATH_W) './content/roommanager.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/roommanager.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-roommanager.Tpo $(DEPDIR)/server-roommanager.Po
-#	source='./content/roommanager.cpp' object='server-roommanager.obj' libtool=no \
+roommanager.obj: ./content/roommanager.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT roommanager.obj -MD -MP -MF $(DEPDIR)/roommanager.Tpo -c -o roommanager.obj `if test -f './content/roommanager.cpp'; then $(CYGPATH_W) './content/roommanager.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/roommanager.cpp'; fi`
+	$(am__mv) $(DEPDIR)/roommanager.Tpo $(DEPDIR)/roommanager.Po
+#	source='./content/roommanager.cpp' object='roommanager.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-roommanager.obj `if test -f './content/roommanager.cpp'; then $(CYGPATH_W) './content/roommanager.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/roommanager.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o roommanager.obj `if test -f './content/roommanager.cpp'; then $(CYGPATH_W) './content/roommanager.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/roommanager.cpp'; fi`
 
-server-course.o: ./content/course.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-course.o -MD -MP -MF $(DEPDIR)/server-course.Tpo -c -o server-course.o `test -f './content/course.cpp' || echo '$(srcdir)/'`./content/course.cpp
-	$(am__mv) $(DEPDIR)/server-course.Tpo $(DEPDIR)/server-course.Po
-#	source='./content/course.cpp' object='server-course.o' libtool=no \
+course.o: ./content/course.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT course.o -MD -MP -MF $(DEPDIR)/course.Tpo -c -o course.o `test -f './content/course.cpp' || echo '$(srcdir)/'`./content/course.cpp
+	$(am__mv) $(DEPDIR)/course.Tpo $(DEPDIR)/course.Po
+#	source='./content/course.cpp' object='course.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-course.o `test -f './content/course.cpp' || echo '$(srcdir)/'`./content/course.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o course.o `test -f './content/course.cpp' || echo '$(srcdir)/'`./content/course.cpp
 
-server-course.obj: ./content/course.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-course.obj -MD -MP -MF $(DEPDIR)/server-course.Tpo -c -o server-course.obj `if test -f './content/course.cpp'; then $(CYGPATH_W) './content/course.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/course.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-course.Tpo $(DEPDIR)/server-course.Po
-#	source='./content/course.cpp' object='server-course.obj' libtool=no \
+course.obj: ./content/course.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT course.obj -MD -MP -MF $(DEPDIR)/course.Tpo -c -o course.obj `if test -f './content/course.cpp'; then $(CYGPATH_W) './content/course.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/course.cpp'; fi`
+	$(am__mv) $(DEPDIR)/course.Tpo $(DEPDIR)/course.Po
+#	source='./content/course.cpp' object='course.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-course.obj `if test -f './content/course.cpp'; then $(CYGPATH_W) './content/course.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/course.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o course.obj `if test -f './content/course.cpp'; then $(CYGPATH_W) './content/course.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/course.cpp'; fi`
 
-server-student.o: ./content/student.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-student.o -MD -MP -MF $(DEPDIR)/server-student.Tpo -c -o server-student.o `test -f './content/student.cpp' || echo '$(srcdir)/'`./content/student.cpp
-	$(am__mv) $(DEPDIR)/server-student.Tpo $(DEPDIR)/server-student.Po
-#	source='./content/student.cpp' object='server-student.o' libtool=no \
+student.o: ./content/student.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT student.o -MD -MP -MF $(DEPDIR)/student.Tpo -c -o student.o `test -f './content/student.cpp' || echo '$(srcdir)/'`./content/student.cpp
+	$(am__mv) $(DEPDIR)/student.Tpo $(DEPDIR)/student.Po
+#	source='./content/student.cpp' object='student.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-student.o `test -f './content/student.cpp' || echo '$(srcdir)/'`./content/student.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o student.o `test -f './content/student.cpp' || echo '$(srcdir)/'`./content/student.cpp
 
-server-student.obj: ./content/student.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-student.obj -MD -MP -MF $(DEPDIR)/server-student.Tpo -c -o server-student.obj `if test -f './content/student.cpp'; then $(CYGPATH_W) './content/student.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/student.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-student.Tpo $(DEPDIR)/server-student.Po
-#	source='./content/student.cpp' object='server-student.obj' libtool=no \
+student.obj: ./content/student.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT student.obj -MD -MP -MF $(DEPDIR)/student.Tpo -c -o student.obj `if test -f './content/student.cpp'; then $(CYGPATH_W) './content/student.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/student.cpp'; fi`
+	$(am__mv) $(DEPDIR)/student.Tpo $(DEPDIR)/student.Po
+#	source='./content/student.cpp' object='student.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-student.obj `if test -f './content/student.cpp'; then $(CYGPATH_W) './content/student.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/student.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o student.obj `if test -f './content/student.cpp'; then $(CYGPATH_W) './content/student.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/student.cpp'; fi`
 
-server-game.o: ./content/game.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-game.o -MD -MP -MF $(DEPDIR)/server-game.Tpo -c -o server-game.o `test -f './content/game.cpp' || echo '$(srcdir)/'`./content/game.cpp
-	$(am__mv) $(DEPDIR)/server-game.Tpo $(DEPDIR)/server-game.Po
-#	source='./content/game.cpp' object='server-game.o' libtool=no \
+game.o: ./content/game.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT game.o -MD -MP -MF $(DEPDIR)/game.Tpo -c -o game.o `test -f './content/game.cpp' || echo '$(srcdir)/'`./content/game.cpp
+	$(am__mv) $(DEPDIR)/game.Tpo $(DEPDIR)/game.Po
+#	source='./content/game.cpp' object='game.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-game.o `test -f './content/game.cpp' || echo '$(srcdir)/'`./content/game.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o game.o `test -f './content/game.cpp' || echo '$(srcdir)/'`./content/game.cpp
 
-server-game.obj: ./content/game.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-game.obj -MD -MP -MF $(DEPDIR)/server-game.Tpo -c -o server-game.obj `if test -f './content/game.cpp'; then $(CYGPATH_W) './content/game.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/game.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-game.Tpo $(DEPDIR)/server-game.Po
-#	source='./content/game.cpp' object='server-game.obj' libtool=no \
+game.obj: ./content/game.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT game.obj -MD -MP -MF $(DEPDIR)/game.Tpo -c -o game.obj `if test -f './content/game.cpp'; then $(CYGPATH_W) './content/game.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/game.cpp'; fi`
+	$(am__mv) $(DEPDIR)/game.Tpo $(DEPDIR)/game.Po
+#	source='./content/game.cpp' object='game.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-game.obj `if test -f './content/game.cpp'; then $(CYGPATH_W) './content/game.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/game.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o game.obj `if test -f './content/game.cpp'; then $(CYGPATH_W) './content/game.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/game.cpp'; fi`
 
-server-grade.o: ./content/grade.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-grade.o -MD -MP -MF $(DEPDIR)/server-grade.Tpo -c -o server-grade.o `test -f './content/grade.cpp' || echo '$(srcdir)/'`./content/grade.cpp
-	$(am__mv) $(DEPDIR)/server-grade.Tpo $(DEPDIR)/server-grade.Po
-#	source='./content/grade.cpp' object='server-grade.o' libtool=no \
+grade.o: ./content/grade.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grade.o -MD -MP -MF $(DEPDIR)/grade.Tpo -c -o grade.o `test -f './content/grade.cpp' || echo '$(srcdir)/'`./content/grade.cpp
+	$(am__mv) $(DEPDIR)/grade.Tpo $(DEPDIR)/grade.Po
+#	source='./content/grade.cpp' object='grade.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-grade.o `test -f './content/grade.cpp' || echo '$(srcdir)/'`./content/grade.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grade.o `test -f './content/grade.cpp' || echo '$(srcdir)/'`./content/grade.cpp
 
-server-grade.obj: ./content/grade.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-grade.obj -MD -MP -MF $(DEPDIR)/server-grade.Tpo -c -o server-grade.obj `if test -f './content/grade.cpp'; then $(CYGPATH_W) './content/grade.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/grade.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-grade.Tpo $(DEPDIR)/server-grade.Po
-#	source='./content/grade.cpp' object='server-grade.obj' libtool=no \
+grade.obj: ./content/grade.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grade.obj -MD -MP -MF $(DEPDIR)/grade.Tpo -c -o grade.obj `if test -f './content/grade.cpp'; then $(CYGPATH_W) './content/grade.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/grade.cpp'; fi`
+	$(am__mv) $(DEPDIR)/grade.Tpo $(DEPDIR)/grade.Po
+#	source='./content/grade.cpp' object='grade.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-grade.obj `if test -f './content/grade.cpp'; then $(CYGPATH_W) './content/grade.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/grade.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grade.obj `if test -f './content/grade.cpp'; then $(CYGPATH_W) './content/grade.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/grade.cpp'; fi`
 
-server-LoginCheck.o: ./content/LoginCheck.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-LoginCheck.o -MD -MP -MF $(DEPDIR)/server-LoginCheck.Tpo -c -o server-LoginCheck.o `test -f './content/LoginCheck.cpp' || echo '$(srcdir)/'`./content/LoginCheck.cpp
-	$(am__mv) $(DEPDIR)/server-LoginCheck.Tpo $(DEPDIR)/server-LoginCheck.Po
-#	source='./content/LoginCheck.cpp' object='server-LoginCheck.o' libtool=no \
+LoginCheck.o: ./content/LoginCheck.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT LoginCheck.o -MD -MP -MF $(DEPDIR)/LoginCheck.Tpo -c -o LoginCheck.o `test -f './content/LoginCheck.cpp' || echo '$(srcdir)/'`./content/LoginCheck.cpp
+	$(am__mv) $(DEPDIR)/LoginCheck.Tpo $(DEPDIR)/LoginCheck.Po
+#	source='./content/LoginCheck.cpp' object='LoginCheck.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-LoginCheck.o `test -f './content/LoginCheck.cpp' || echo '$(srcdir)/'`./content/LoginCheck.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o LoginCheck.o `test -f './content/LoginCheck.cpp' || echo '$(srcdir)/'`./content/LoginCheck.cpp
 
-server-LoginCheck.obj: ./content/LoginCheck.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-LoginCheck.obj -MD -MP -MF $(DEPDIR)/server-LoginCheck.Tpo -c -o server-LoginCheck.obj `if test -f './content/LoginCheck.cpp'; then $(CYGPATH_W) './content/LoginCheck.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/LoginCheck.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-LoginCheck.Tpo $(DEPDIR)/server-LoginCheck.Po
-#	source='./content/LoginCheck.cpp' object='server-LoginCheck.obj' libtool=no \
+LoginCheck.obj: ./content/LoginCheck.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT LoginCheck.obj -MD -MP -MF $(DEPDIR)/LoginCheck.Tpo -c -o LoginCheck.obj `if test -f './content/LoginCheck.cpp'; then $(CYGPATH_W) './content/LoginCheck.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/LoginCheck.cpp'; fi`
+	$(am__mv) $(DEPDIR)/LoginCheck.Tpo $(DEPDIR)/LoginCheck.Po
+#	source='./content/LoginCheck.cpp' object='LoginCheck.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-LoginCheck.obj `if test -f './content/LoginCheck.cpp'; then $(CYGPATH_W) './content/LoginCheck.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/LoginCheck.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o LoginCheck.obj `if test -f './content/LoginCheck.cpp'; then $(CYGPATH_W) './content/LoginCheck.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/LoginCheck.cpp'; fi`
 
-server-room.o: ./content/room.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-room.o -MD -MP -MF $(DEPDIR)/server-room.Tpo -c -o server-room.o `test -f './content/room.cpp' || echo '$(srcdir)/'`./content/room.cpp
-	$(am__mv) $(DEPDIR)/server-room.Tpo $(DEPDIR)/server-room.Po
-#	source='./content/room.cpp' object='server-room.o' libtool=no \
+room.o: ./content/room.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT room.o -MD -MP -MF $(DEPDIR)/room.Tpo -c -o room.o `test -f './content/room.cpp' || echo '$(srcdir)/'`./content/room.cpp
+	$(am__mv) $(DEPDIR)/room.Tpo $(DEPDIR)/room.Po
+#	source='./content/room.cpp' object='room.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-room.o `test -f './content/room.cpp' || echo '$(srcdir)/'`./content/room.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o room.o `test -f './content/room.cpp' || echo '$(srcdir)/'`./content/room.cpp
 
-server-room.obj: ./content/room.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-room.obj -MD -MP -MF $(DEPDIR)/server-room.Tpo -c -o server-room.obj `if test -f './content/room.cpp'; then $(CYGPATH_W) './content/room.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/room.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-room.Tpo $(DEPDIR)/server-room.Po
-#	source='./content/room.cpp' object='server-room.obj' libtool=no \
+room.obj: ./content/room.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT room.obj -MD -MP -MF $(DEPDIR)/room.Tpo -c -o room.obj `if test -f './content/room.cpp'; then $(CYGPATH_W) './content/room.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/room.cpp'; fi`
+	$(am__mv) $(DEPDIR)/room.Tpo $(DEPDIR)/room.Po
+#	source='./content/room.cpp' object='room.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-room.obj `if test -f './content/room.cpp'; then $(CYGPATH_W) './content/room.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/room.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o room.obj `if test -f './content/room.cpp'; then $(CYGPATH_W) './content/room.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/room.cpp'; fi`
 
-server-ThreadPool.o: ./ThreadPool.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-ThreadPool.o -MD -MP -MF $(DEPDIR)/server-ThreadPool.Tpo -c -o server-ThreadPool.o `test -f './ThreadPool.cpp' || echo '$(srcdir)/'`./ThreadPool.cpp
-	$(am__mv) $(DEPDIR)/server-ThreadPool.Tpo $(DEPDIR)/server-ThreadPool.Po
-#	source='./ThreadPool.cpp' object='server-ThreadPool.o' libtool=no \
+ThreadPool.o: ./ThreadPool.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ThreadPool.o -MD -MP -MF $(DEPDIR)/ThreadPool.Tpo -c -o ThreadPool.o `test -f './ThreadPool.cpp' || echo '$(srcdir)/'`./ThreadPool.cpp
+	$(am__mv) $(DEPDIR)/ThreadPool.Tpo $(DEPDIR)/ThreadPool.Po
+#	source='./ThreadPool.cpp' object='ThreadPool.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-ThreadPool.o `test -f './ThreadPool.cpp' || echo '$(srcdir)/'`./ThreadPool.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ThreadPool.o `test -f './ThreadPool.cpp' || echo '$(srcdir)/'`./ThreadPool.cpp
 
-server-ThreadPool.obj: ./ThreadPool.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-ThreadPool.obj -MD -MP -MF $(DEPDIR)/server-ThreadPool.Tpo -c -o server-ThreadPool.obj `if test -f './ThreadPool.cpp'; then $(CYGPATH_W) './ThreadPool.cpp'; else $(CYGPATH_W) '$(srcdir)/./ThreadPool.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-ThreadPool.Tpo $(DEPDIR)/server-ThreadPool.Po
-#	source='./ThreadPool.cpp' object='server-ThreadPool.obj' libtool=no \
+ThreadPool.obj: ./ThreadPool.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ThreadPool.obj -MD -MP -MF $(DEPDIR)/ThreadPool.Tpo -c -o ThreadPool.obj `if test -f './ThreadPool.cpp'; then $(CYGPATH_W) './ThreadPool.cpp'; else $(CYGPATH_W) '$(srcdir)/./ThreadPool.cpp'; fi`
+	$(am__mv) $(DEPDIR)/ThreadPool.Tpo $(DEPDIR)/ThreadPool.Po
+#	source='./ThreadPool.cpp' object='ThreadPool.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-ThreadPool.obj `if test -f './ThreadPool.cpp'; then $(CYGPATH_W) './ThreadPool.cpp'; else $(CYGPATH_W) '$(srcdir)/./ThreadPool.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ThreadPool.obj `if test -f './ThreadPool.cpp'; then $(CYGPATH_W) './ThreadPool.cpp'; else $(CYGPATH_W) '$(srcdir)/./ThreadPool.cpp'; fi`
 
-server-database.o: ./database.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-database.o -MD -MP -MF $(DEPDIR)/server-database.Tpo -c -o server-database.o `test -f './database.cpp' || echo '$(srcdir)/'`./database.cpp
-	$(am__mv) $(DEPDIR)/server-database.Tpo $(DEPDIR)/server-database.Po
-#	source='./database.cpp' object='server-database.o' libtool=no \
+database.o: ./database.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT database.o -MD -MP -MF $(DEPDIR)/database.Tpo -c -o database.o `test -f './database.cpp' || echo '$(srcdir)/'`./database.cpp
+	$(am__mv) $(DEPDIR)/database.Tpo $(DEPDIR)/database.Po
+#	source='./database.cpp' object='database.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-database.o `test -f './database.cpp' || echo '$(srcdir)/'`./database.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o database.o `test -f './database.cpp' || echo '$(srcdir)/'`./database.cpp
 
-server-database.obj: ./database.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-database.obj -MD -MP -MF $(DEPDIR)/server-database.Tpo -c -o server-database.obj `if test -f './database.cpp'; then $(CYGPATH_W) './database.cpp'; else $(CYGPATH_W) '$(srcdir)/./database.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-database.Tpo $(DEPDIR)/server-database.Po
-#	source='./database.cpp' object='server-database.obj' libtool=no \
+database.obj: ./database.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT database.obj -MD -MP -MF $(DEPDIR)/database.Tpo -c -o database.obj `if test -f './database.cpp'; then $(CYGPATH_W) './database.cpp'; else $(CYGPATH_W) '$(srcdir)/./database.cpp'; fi`
+	$(am__mv) $(DEPDIR)/database.Tpo $(DEPDIR)/database.Po
+#	source='./database.cpp' object='database.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-database.obj `if test -f './database.cpp'; then $(CYGPATH_W) './database.cpp'; else $(CYGPATH_W) '$(srcdir)/./database.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o database.obj `if test -f './database.cpp'; then $(CYGPATH_W) './database.cpp'; else $(CYGPATH_W) '$(srcdir)/./database.cpp'; fi`
 
-server-Evloop.o: ./Evloop.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Evloop.o -MD -MP -MF $(DEPDIR)/server-Evloop.Tpo -c -o server-Evloop.o `test -f './Evloop.cpp' || echo '$(srcdir)/'`./Evloop.cpp
-	$(am__mv) $(DEPDIR)/server-Evloop.Tpo $(DEPDIR)/server-Evloop.Po
-#	source='./Evloop.cpp' object='server-Evloop.o' libtool=no \
+Evloop.o: ./Evloop.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Evloop.o -MD -MP -MF $(DEPDIR)/Evloop.Tpo -c -o Evloop.o `test -f './Evloop.cpp' || echo '$(srcdir)/'`./Evloop.cpp
+	$(am__mv) $(DEPDIR)/Evloop.Tpo $(DEPDIR)/Evloop.Po
+#	source='./Evloop.cpp' object='Evloop.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Evloop.o `test -f './Evloop.cpp' || echo '$(srcdir)/'`./Evloop.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Evloop.o `test -f './Evloop.cpp' || echo '$(srcdir)/'`./Evloop.cpp
 
-server-Evloop.obj: ./Evloop.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-Evloop.obj -MD -MP -MF $(DEPDIR)/server-Evloop.Tpo -c -o server-Evloop.obj `if test -f './Evloop.cpp'; then $(CYGPATH_W) './Evloop.cpp'; else $(CYGPATH_W) '$(srcdir)/./Evloop.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-Evloop.Tpo $(DEPDIR)/server-Evloop.Po
-#	source='./Evloop.cpp' object='server-Evloop.obj' libtool=no \
+Evloop.obj: ./Evloop.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Evloop.obj -MD -MP -MF $(DEPDIR)/Evloop.Tpo -c -o Evloop.obj `if test -f './Evloop.cpp'; then $(CYGPATH_W) './Evloop.cpp'; else $(CYGPATH_W) '$(srcdir)/./Evloop.cpp'; fi`
+	$(am__mv) $(DEPDIR)/Evloop.Tpo $(DEPDIR)/Evloop.Po
+#	source='./Evloop.cpp' object='Evloop.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-Evloop.obj `if test -f './Evloop.cpp'; then $(CYGPATH_W) './Evloop.cpp'; else $(CYGPATH_W) '$(srcdir)/./Evloop.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Evloop.obj `if test -f './Evloop.cpp'; then $(CYGPATH_W) './Evloop.cpp'; else $(CYGPATH_W) '$(srcdir)/./Evloop.cpp'; fi`
 
-server-RecvTask.o: ./RecvTask.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-RecvTask.o -MD -MP -MF $(DEPDIR)/server-RecvTask.Tpo -c -o server-RecvTask.o `test -f './RecvTask.cpp' || echo '$(srcdir)/'`./RecvTask.cpp
-	$(am__mv) $(DEPDIR)/server-RecvTask.Tpo $(DEPDIR)/server-RecvTask.Po
-#	source='./RecvTask.cpp' object='server-RecvTask.o' libtool=no \
+RecvTask.o: ./RecvTask.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT RecvTask.o -MD -MP -MF $(DEPDIR)/RecvTask.Tpo -c -o RecvTask.o `test -f './RecvTask.cpp' || echo '$(srcdir)/'`./RecvTask.cpp
+	$(am__mv) $(DEPDIR)/RecvTask.Tpo $(DEPDIR)/RecvTask.Po
+#	source='./RecvTask.cpp' object='RecvTask.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-RecvTask.o `test -f './RecvTask.cpp' || echo '$(srcdir)/'`./RecvTask.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o RecvTask.o `test -f './RecvTask.cpp' || echo '$(srcdir)/'`./RecvTask.cpp
 
-server-RecvTask.obj: ./RecvTask.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-RecvTask.obj -MD -MP -MF $(DEPDIR)/server-RecvTask.Tpo -c -o server-RecvTask.obj `if test -f './RecvTask.cpp'; then $(CYGPATH_W) './RecvTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./RecvTask.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-RecvTask.Tpo $(DEPDIR)/server-RecvTask.Po
-#	source='./RecvTask.cpp' object='server-RecvTask.obj' libtool=no \
+RecvTask.obj: ./RecvTask.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT RecvTask.obj -MD -MP -MF $(DEPDIR)/RecvTask.Tpo -c -o RecvTask.obj `if test -f './RecvTask.cpp'; then $(CYGPATH_W) './RecvTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./RecvTask.cpp'; fi`
+	$(am__mv) $(DEPDIR)/RecvTask.Tpo $(DEPDIR)/RecvTask.Po
+#	source='./RecvTask.cpp' object='RecvTask.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-RecvTask.obj `if test -f './RecvTask.cpp'; then $(CYGPATH_W) './RecvTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./RecvTask.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o RecvTask.obj `if test -f './RecvTask.cpp'; then $(CYGPATH_W) './RecvTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./RecvTask.cpp'; fi`
 
-server-SendTask.o: ./SendTask.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-SendTask.o -MD -MP -MF $(DEPDIR)/server-SendTask.Tpo -c -o server-SendTask.o `test -f './SendTask.cpp' || echo '$(srcdir)/'`./SendTask.cpp
-	$(am__mv) $(DEPDIR)/server-SendTask.Tpo $(DEPDIR)/server-SendTask.Po
-#	source='./SendTask.cpp' object='server-SendTask.o' libtool=no \
+SendTask.o: ./SendTask.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT SendTask.o -MD -MP -MF $(DEPDIR)/SendTask.Tpo -c -o SendTask.o `test -f './SendTask.cpp' || echo '$(srcdir)/'`./SendTask.cpp
+	$(am__mv) $(DEPDIR)/SendTask.Tpo $(DEPDIR)/SendTask.Po
+#	source='./SendTask.cpp' object='SendTask.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-SendTask.o `test -f './SendTask.cpp' || echo '$(srcdir)/'`./SendTask.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o SendTask.o `test -f './SendTask.cpp' || echo '$(srcdir)/'`./SendTask.cpp
 
-server-SendTask.obj: ./SendTask.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-SendTask.obj -MD -MP -MF $(DEPDIR)/server-SendTask.Tpo -c -o server-SendTask.obj `if test -f './SendTask.cpp'; then $(CYGPATH_W) './SendTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./SendTask.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-SendTask.Tpo $(DEPDIR)/server-SendTask.Po
-#	source='./SendTask.cpp' object='server-SendTask.obj' libtool=no \
+SendTask.obj: ./SendTask.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT SendTask.obj -MD -MP -MF $(DEPDIR)/SendTask.Tpo -c -o SendTask.obj `if test -f './SendTask.cpp'; then $(CYGPATH_W) './SendTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./SendTask.cpp'; fi`
+	$(am__mv) $(DEPDIR)/SendTask.Tpo $(DEPDIR)/SendTask.Po
+#	source='./SendTask.cpp' object='SendTask.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-SendTask.obj `if test -f './SendTask.cpp'; then $(CYGPATH_W) './SendTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./SendTask.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o SendTask.obj `if test -f './SendTask.cpp'; then $(CYGPATH_W) './SendTask.cpp'; else $(CYGPATH_W) '$(srcdir)/./SendTask.cpp'; fi`
 
-server-ProcessManager.o: ./ProcessManager.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-ProcessManager.o -MD -MP -MF $(DEPDIR)/server-ProcessManager.Tpo -c -o server-ProcessManager.o `test -f './ProcessManager.cpp' || echo '$(srcdir)/'`./ProcessManager.cpp
-	$(am__mv) $(DEPDIR)/server-ProcessManager.Tpo $(DEPDIR)/server-ProcessManager.Po
-#	source='./ProcessManager.cpp' object='server-ProcessManager.o' libtool=no \
+ProcessManager.o: ./ProcessManager.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ProcessManager.o -MD -MP -MF $(DEPDIR)/ProcessManager.Tpo -c -o ProcessManager.o `test -f './ProcessManager.cpp' || echo '$(srcdir)/'`./ProcessManager.cpp
+	$(am__mv) $(DEPDIR)/ProcessManager.Tpo $(DEPDIR)/ProcessManager.Po
+#	source='./ProcessManager.cpp' object='ProcessManager.o' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-ProcessManager.o `test -f './ProcessManager.cpp' || echo '$(srcdir)/'`./ProcessManager.cpp
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ProcessManager.o `test -f './ProcessManager.cpp' || echo '$(srcdir)/'`./ProcessManager.cpp
 
-server-ProcessManager.obj: ./ProcessManager.cpp
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT server-ProcessManager.obj -MD -MP -MF $(DEPDIR)/server-ProcessManager.Tpo -c -o server-ProcessManager.obj `if test -f './ProcessManager.cpp'; then $(CYGPATH_W) './ProcessManager.cpp'; else $(CYGPATH_W) '$(srcdir)/./ProcessManager.cpp'; fi`
-	$(am__mv) $(DEPDIR)/server-ProcessManager.Tpo $(DEPDIR)/server-ProcessManager.Po
-#	source='./ProcessManager.cpp' object='server-ProcessManager.obj' libtool=no \
+ProcessManager.obj: ./ProcessManager.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ProcessManager.obj -MD -MP -MF $(DEPDIR)/ProcessManager.Tpo -c -o ProcessManager.obj `if test -f './ProcessManager.cpp'; then $(CYGPATH_W) './ProcessManager.cpp'; else $(CYGPATH_W) '$(srcdir)/./ProcessManager.cpp'; fi`
+	$(am__mv) $(DEPDIR)/ProcessManager.Tpo $(DEPDIR)/ProcessManager.Po
+#	source='./ProcessManager.cpp' object='ProcessManager.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(server_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o server-ProcessManager.obj `if test -f './ProcessManager.cpp'; then $(CYGPATH_W) './ProcessManager.cpp'; else $(CYGPATH_W) '$(srcdir)/./ProcessManager.cpp'; fi`
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ProcessManager.obj `if test -f './ProcessManager.cpp'; then $(CYGPATH_W) './ProcessManager.cpp'; else $(CYGPATH_W) '$(srcdir)/./ProcessManager.cpp'; fi`
+
+makehouse.o: ./content/makehouse.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT makehouse.o -MD -MP -MF $(DEPDIR)/makehouse.Tpo -c -o makehouse.o `test -f './content/makehouse.cpp' || echo '$(srcdir)/'`./content/makehouse.cpp
+	$(am__mv) $(DEPDIR)/makehouse.Tpo $(DEPDIR)/makehouse.Po
+#	source='./content/makehouse.cpp' object='makehouse.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o makehouse.o `test -f './content/makehouse.cpp' || echo '$(srcdir)/'`./content/makehouse.cpp
+
+makehouse.obj: ./content/makehouse.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT makehouse.obj -MD -MP -MF $(DEPDIR)/makehouse.Tpo -c -o makehouse.obj `if test -f './content/makehouse.cpp'; then $(CYGPATH_W) './content/makehouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/makehouse.cpp'; fi`
+	$(am__mv) $(DEPDIR)/makehouse.Tpo $(DEPDIR)/makehouse.Po
+#	source='./content/makehouse.cpp' object='makehouse.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o makehouse.obj `if test -f './content/makehouse.cpp'; then $(CYGPATH_W) './content/makehouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/makehouse.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

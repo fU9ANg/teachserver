@@ -28,19 +28,6 @@ void CHandleMessage::handleTest (Buf* p)
 void CHandleMessage::handleChangeScene (Buf* p)
 {
     printf ("change scene: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
-////测试使用!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#if 1
-    MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
-    p_head->cLen = sizeof(MSG_HEAD) + sizeof(int);
-    int* p_int = (int*)p_head->cData();
-    if ( *p_int == 1) {
-        *p_int = 3;
-        p->setsize(p_head->cLen);
-
-        SINGLE->sendqueue.enqueue(p);
-        printf("send change scence!\n");
-    }
-#endif
 }
 
 /*
@@ -541,11 +528,6 @@ void CHandleMessage::handleSelectedClassRoom (Buf* p)
     CRoom* proom = ROOMMANAGER->get_room(pp->classroom_id);
     if (MCT_STUDENT == pp->client_type) {
         CStudent* pstudent = new CStudent();
-        if (ROOMMANAGER->get_room_by_fd (p->getfd()))
-        {
-            printf ("student fd exist in the room\n");
-            return;
-        }
         proom->add_student(p->getfd(), pstudent);
         printf("student login room[%d] fd = [%d]\n", pp->classroom_id, p->getfd());
     }

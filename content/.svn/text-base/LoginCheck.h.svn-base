@@ -1,3 +1,7 @@
+/**
+ * @addtogroup content
+ * @{
+ */
 #ifndef LOGIN_H_
 #define LOGIN_H_
 #include "database.h"
@@ -7,6 +11,10 @@
 #include "Single.h"
 #include "roommanager.h"
 #include "student.h"
+
+/**
+ * @brief 登录管理类
+ */
 class LoginCheck{
 public:
     LoginCheck();
@@ -18,3 +26,4 @@ public:
     static int login_whiteboard(int fd, struct sLogin login);
 };
 #endif
+///@}

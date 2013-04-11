@@ -68,13 +68,21 @@ int Evloop::work() {
  */
 void Evloop::accept_cb(struct ev_loop *loop, ev_io *w, int revents) {
     struct sockaddr_in clientaddr;
-    socklen_t socklen = 0;
+    socklen_t socklen = sizeof(struct sockaddr_in);
     int newfd = accept(w->fd, (struct sockaddr*)&clientaddr, &socklen);
     if ( 0 >= newfd) {
         return;
     }
 
-    LOG(INFO) << " get a new client fd = " << newfd ;
+    printf("Client connected! fd = [%d] ip = [%s] port=[%d]\n",
+            newfd,
+            inet_ntoa(clientaddr.sin_addr),
+            htons(clientaddr.sin_port) );
+
+    LOG(INFO) << "Client connected! fd = [" << newfd 
+        <<"] ip = ["<<inet_ntoa(clientaddr.sin_addr)
+        <<"] port = [" << htons(clientaddr.sin_port) <<"]"<<endl;
+
     Evloop::setnonblock(newfd);
 
     Evloop::ioarray[newfd].io = (ev_io*)malloc(sizeof(ev_io));
@@ -102,7 +110,8 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     //收包头长度
     int i = recv_v(w->fd, buf->ptr(), sizeof(int));
     if ( sizeof(int) != i) {
-        LOG(ERROR) << w->fd <<":recv head error! actually received len = "<< i <<endl;;
+        LOG(ERROR) << w->fd <<":recv head error! actually received len = "<< i 
+            <<" info = "<< strerror(errno)<<endl;
         Evloop::closefd(w->fd);
         return;
     }
@@ -111,12 +120,13 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     int *p = (int*)buf->ptr();
     i = recv_v(w->fd, (char*)buf->ptr() + sizeof(int), *p - sizeof(unsigned int));
 
-    if ( (*p - sizeof(unsigned int)) != (unsigned int)i) {
-        LOG(ERROR) << w->fd <<":recv body error! hope = "<< *p <<" actually received len = "<< i <<endl;;
+    if ( (*p - sizeof(unsigned int)) != i) {
+        LOG(ERROR) << w->fd <<":recv body error! hope = "<< *p <<" actually received len = "<< i 
+            <<" info = "<< strerror(errno) <<endl;
         Evloop::closefd(w->fd);
         return;
     }
-    
+
     Evloop::ioarray[w->fd].lasttime = ev_time();
     buf->setfd(w->fd);
     //将buf压入队列
@@ -125,7 +135,7 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
 }
 
 void Evloop::setnonblock(int fd) {
-  fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) | O_NONBLOCK);
+    fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) | O_NONBLOCK);
 }
 
 void Evloop::setreuseaddr(int fd)
@@ -141,7 +151,19 @@ void Evloop::setnodelay (int fd)
 }
 
 void Evloop::closefd(int fd) {
-    LOG(INFO) << "[" << fd << "] disconnected!"<<endl;
+    struct sockaddr_in  remote_addr;
+    socklen_t socklen = sizeof(struct sockaddr_in);
+    getpeername(fd, (struct sockaddr*)&remote_addr, &socklen);
+
+    printf("Client disconnected! fd = [%d] ip = [%s] port=[%d]\n",
+            fd,
+            inet_ntoa(remote_addr.sin_addr),
+            htons(remote_addr.sin_port) );
+
+    LOG(INFO) << "Client disconnected! fd = [" << fd 
+        <<"] ip = ["<< inet_ntoa(remote_addr.sin_addr)
+        <<"] port = [" << htons(remote_addr.sin_port) <<"]"<<endl;
+
     close(fd);
     ev_io_stop(loop, Evloop::ioarray[fd].io);
     free(Evloop::ioarray[fd].io);

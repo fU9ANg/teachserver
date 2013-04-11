@@ -30,11 +30,11 @@ int ProcessManager::process_logic(int argc, char** argv) {
       if(0 < pid){
         return 0;
       }
+    case 'd':
       if(true != lock(LOCK_NOWAIT)) {
         printf("Process already running!\n");
         return 0;
       } 
-    case 'd':
       //初始化日志 
       assert( 0 == system("mkdir -p logs"));
       google::InitGoogleLogging(argv[0]);
@@ -127,10 +127,14 @@ bool ProcessManager::lock(int mode) {
     close(lockfd_);
   }
   else {
-    if ( -1 == ftruncate(lockfd_, 0) ) {
+    if ( 0 == ftruncate(lockfd_, 0) ) {
         if ( 0>= write(lockfd_, szPid, strlen(szPid))) {
             printf("write pid file error!\n");
         }
+    }else {
+        printf("write pid file error!\n");
+        sleep(1);
+        abort();
     }
   }
   return true;

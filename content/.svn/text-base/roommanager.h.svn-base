@@ -1,6 +1,7 @@
 
-/*
- * classmanager.h
+/**
+ * @ingroup content
+ * @{
  */
 
 #ifndef _C_ROOMMANAGER_H
@@ -18,6 +19,9 @@
 
 using namespace std;
 
+/**
+ * @class 教室管理类
+ */
 class CRoomManager
 {
 	//typedef list<CRoom*> CLASSLIST;
@@ -38,6 +42,9 @@ public:
 
 private:
 	CRoomManager () {}
+    /**
+     * @brief 教室map  教室id，教室指针 
+     */
     ROOMMAP m_room_map;
 	static CRoomManager* m_CRoomManager;
 };
@@ -45,3 +52,4 @@ private:
 #define ROOMMANAGER CRoomManager::getInstance()
 
 #endif //_C_CLASSMANAGER_H
+///@}

@@ -1,8 +1,7 @@
-
-/*
- * roommanager.cpp
+/**
+ * @ingroup content
+ * @{
  */
-
 #include "roommanager.h"
 
 CRoomManager* CRoomManager::m_CRoomManager = NULL;
@@ -77,3 +76,4 @@ void CRoomManager::del_client(int fd) {
         it->second->del_client(fd);
     }
 }
+///@}

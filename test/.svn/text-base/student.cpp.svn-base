@@ -94,7 +94,7 @@ void* student_thread(void* p) {
     memset(&loginreq, 0x00, sizeof(struct sLogin));
     loginreq.type = MCT_STUDENT;
 
-    snprintf(loginreq.username, sizeof(loginreq.username), "%s", "26");
+    snprintf(loginreq.username, sizeof(loginreq.username), "%s", "学生26");
     snprintf(loginreq.password, sizeof(loginreq.password), "%s", "123456");
 
     head.cLen = sizeof(MSG_HEAD) + sizeof(struct sLogin);

@@ -1,0 +1,105 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CHandleMessage	HandleMessage.h	/^class CHandleMessage$/;"	c
+HANDLEMAP	HandleMessage.h	/^typedef map<int, handlefunc> HANDLEMAP;$/;"	t
+MSGNAME	HandleMessage.h	30;"	d
+MSGNAME	HandleMessage.h	32;"	d
+MSGNAME	HandleMessage.h	46;"	d
+MSGNAME	HandleMessage.h	49;"	d
+_EXECUTE_	HandleMessage.h	21;"	d
+_HANDLE_MESSAGE_H	HandleMessage.h	7;"	d
+getHandler	HandleMessage.h	/^    static handlefunc getHandler (int iCommandType)$/;"	f	class:CHandleMessage
+handleBuildHouse_Activation	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_Activation (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_CaiHongGu	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_CaiHongGu (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_CaiHongXiaoWu	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_CaiHongXiaoWu (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_EmailAmerica	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_EmailAmerica (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_EmailTibet	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_EmailTibet (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_GameEnd	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_GameEnd (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_GameStart	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_GameStart (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_GetStuGroup	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_GetStuGroup (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_GetStuGroupCount	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_GetStuGroupCount (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_GroupMode	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_GroupMode (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_MuBu	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_MuBu (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_OperatorDemo	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_OperatorDemo (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_Role	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_Role (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_Save	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_Save (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_SaveHouse	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_SaveHouse (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_SetStuGroup	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_SetStuGroup (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_SetStuGroupCount	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_SetStuGroupCount (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_SingleMode	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_SingleMode (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_Stamp	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_Stamp (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_UpdatePos	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_UpdatePos (Buf* p)$/;"	f	class:CHandleMessage
+handleBuildHouse_XiaoGuaiWu	HandleBuildHouse.cpp	/^void CHandleMessage::handleBuildHouse_XiaoGuaiWu (Buf* p)$/;"	f	class:CHandleMessage
+handleCartoon_GameEnd	HandleCartoon.cpp	/^void CHandleMessage::handleCartoon_GameEnd (Buf* p)$/;"	f	class:CHandleMessage
+handleCartoon_GameStart	HandleCartoon.cpp	/^void CHandleMessage::handleCartoon_GameStart (Buf* p)$/;"	f	class:CHandleMessage
+handleCartoon_Pause	HandleCartoon.cpp	/^void CHandleMessage::handleCartoon_Pause (Buf* p)$/;"	f	class:CHandleMessage
+handleCartoon_Play	HandleCartoon.cpp	/^void CHandleMessage::handleCartoon_Play (Buf* p)$/;"	f	class:CHandleMessage
+handleCartoon_Stop	HandleCartoon.cpp	/^void CHandleMessage::handleCartoon_Stop (Buf* p)$/;"	f	class:CHandleMessage
+handleChangeScene	HandleClassRoom.cpp	/^void CHandleMessage::handleChangeScene (Buf* p)$/;"	f	class:CHandleMessage
+handleCommonPlayorPause	HandleClassRoom.cpp	/^void CHandleMessage::handleCommonPlayorPause (Buf* p)$/;"	f	class:CHandleMessage
+handleCommonResume	HandleClassRoom.cpp	/^void CHandleMessage::handleCommonResume (Buf* p)$/;"	f	class:CHandleMessage
+handleCommonStop	HandleClassRoom.cpp	/^void CHandleMessage::handleCommonStop (Buf * p)$/;"	f	class:CHandleMessage
+handleConfirmLeaveEarly	HandleClassRoom.cpp	/^void CHandleMessage::handleConfirmLeaveEarly (Buf* p)$/;"	f	class:CHandleMessage
+handleControlLevel	HandleSprite.cpp	/^void CHandleMessage::handleControlLevel (Buf* p)$/;"	f	class:CHandleMessage
+handleCourseFinished	HandleClassRoom.cpp	/^void CHandleMessage::handleCourseFinished (Buf* p)$/;"	f	class:CHandleMessage
+handleDBRecordFinished	HandleClassRoom.cpp	/^void CHandleMessage::handleDBRecordFinished (Buf* p)$/;"	f	class:CHandleMessage
+handleExercise_GameEnd	HandleExercise.cpp	/^void CHandleMessage::handleExercise_GameEnd (Buf* p)$/;"	f	class:CHandleMessage
+handleExercise_GameStart	HandleExercise.cpp	/^void CHandleMessage::handleExercise_GameStart (Buf* p)$/;"	f	class:CHandleMessage
+handleExercise_Pause	HandleExercise.cpp	/^void CHandleMessage::handleExercise_Pause (Buf* p)$/;"	f	class:CHandleMessage
+handleExercise_Play	HandleExercise.cpp	/^void CHandleMessage::handleExercise_Play (Buf* p)$/;"	f	class:CHandleMessage
+handleExercise_Stop	HandleExercise.cpp	/^void CHandleMessage::handleExercise_Stop (Buf* p)$/;"	f	class:CHandleMessage
+handleGetAllStudentInfo	HandleClassRoom.cpp	/^void CHandleMessage::handleGetAllStudentInfo (Buf* p)$/;"	f	class:CHandleMessage
+handleGetAllStudentInfoCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetAllStudentInfoCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetClassDB	HandleClassRoom.cpp	/^void CHandleMessage::handleGetClassDB (Buf* p)$/;"	f	class:CHandleMessage
+handleGetClassDBCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetClassDBCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetClassRoomDB	HandleClassRoom.cpp	/^void CHandleMessage::handleGetClassRoomDB (Buf* p)$/;"	f	class:CHandleMessage
+handleGetClassRoomDBCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetClassRoomDBCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseDB	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseDB (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseDBCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseDBCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseGroup	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseGroup (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseItem	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseItem (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseItemCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseItemCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetCourseItemKeyInfoReq	HandleClassRoom.cpp	/^void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {$/;"	f	class:CHandleMessage
+handleGetGradeDB	HandleClassRoom.cpp	/^void CHandleMessage::handleGetGradeDB (Buf* p)$/;"	f	class:CHandleMessage
+handleGetGradeDBCount	HandleClassRoom.cpp	/^void CHandleMessage::handleGetGradeDBCount (Buf* p)$/;"	f	class:CHandleMessage
+handleGetStudentDetailInfo	HandleClassRoom.cpp	/^void CHandleMessage::handleGetStudentDetailInfo (Buf* p)$/;"	f	class:CHandleMessage
+handleGetTeacherInfo	HandleClassRoom.cpp	/^void CHandleMessage::handleGetTeacherInfo (Buf* p)$/;"	f	class:CHandleMessage
+handleLeaveEarly	HandleClassRoom.cpp	/^void CHandleMessage::handleLeaveEarly (Buf* p)$/;"	f	class:CHandleMessage
+handleLockStudent	HandleClassRoom.cpp	/^void CHandleMessage::handleLockStudent (Buf* p)$/;"	f	class:CHandleMessage
+handleLogin	HandleClassRoom.cpp	/^void CHandleMessage::handleLogin (Buf* p)$/;"	f	class:CHandleMessage
+handleLoginClassRoom	HandleClassRoom.cpp	/^void CHandleMessage::handleLoginClassRoom (Buf* p)$/;"	f	class:CHandleMessage
+handleLoginResult	HandleClassRoom.cpp	/^void CHandleMessage::handleLoginResult (Buf* p)$/;"	f	class:CHandleMessage
+handleLogout	HandleClassRoom.cpp	/^void CHandleMessage::handleLogout (Buf* p)$/;"	f	class:CHandleMessage
+handleLogoutClassRoom	HandleClassRoom.cpp	/^void CHandleMessage::handleLogoutClassRoom (Buf* p)$/;"	f	class:CHandleMessage
+handleLogoutReuslt	HandleClassRoom.cpp	/^void CHandleMessage::handleLogoutReuslt (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_AddPic	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_AddPic (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_CalcScore	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_CalcScore (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_DeletePic	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_DeletePic (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_EndGame	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_EndGame (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_GameStart	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_GameStart (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_IconStatus	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_IconStatus (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_MovePic	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_MovePic (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_Pause	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_Pause (Buf* p)$/;"	f	class:CHandleMessage
+handlePuzzle_Play	HandlePuzzle.cpp	/^void CHandleMessage::handlePuzzle_Play (Buf* p)$/;"	f	class:CHandleMessage
+handleSceneEnd	HandleClassRoom.cpp	/^void CHandleMessage::handleSceneEnd (Buf* p)$/;"	f	class:CHandleMessage
+handleSelectedClassRoom	HandleClassRoom.cpp	/^void CHandleMessage::handleSelectedClassRoom (Buf* p)$/;"	f	class:CHandleMessage
+handleSetCourseGroup	HandleClassRoom.cpp	/^void CHandleMessage::handleSetCourseGroup (Buf* p)$/;"	f	class:CHandleMessage
+handleShowSpriteAnimation	HandleSprite.cpp	/^void CHandleMessage::handleShowSpriteAnimation (Buf* p)$/;"	f	class:CHandleMessage
+handleShowSpriteControl	HandleSprite.cpp	/^void CHandleMessage::handleShowSpriteControl (Buf* p)$/;"	f	class:CHandleMessage
+handleTest	HandleClassRoom.cpp	/^void CHandleMessage::handleTest (Buf* p)$/;"	f	class:CHandleMessage
+handlefunc	HandleMessage.h	/^typedef void (*handlefunc)(Buf*);$/;"	t
+initHandlers	HandleMessage.h	/^    static void initHandlers (void)$/;"	f	class:CHandleMessage
+m_HandleMap	HandleMessage.cpp	/^HANDLEMAP CHandleMessage::m_HandleMap;$/;"	m	class:CHandleMessage	file:
+m_HandleMap	HandleMessage.h	/^    static HANDLEMAP m_HandleMap;$/;"	m	class:CHandleMessage
+postDBRecord	HandleMessage.cpp	/^bool CHandleMessage::postDBRecord (Buf* buf, int iCase)$/;"	f	class:CHandleMessage
+postDBRecordCount	HandleMessage.cpp	/^bool CHandleMessage::postDBRecordCount (Buf* p, int iCase)$/;"	f	class:CHandleMessage
+postMessage	HandleMessage.cpp	/^bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)$/;"	f	class:CHandleMessage
+postStudentToWhite	HandleMessage.cpp	/^bool CHandleMessage::postStudentToWhite (Buf* p, enum CommandType iCommandType)$/;"	f	class:CHandleMessage
+postTeacherToAllStudent	HandleMessage.cpp	/^bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandType)$/;"	f	class:CHandleMessage
+postTeacherToStudent	HandleMessage.cpp	/^bool CHandleMessage::postTeacherToStudent (Buf* p, enum CommandType iCommandType, int iStuId)$/;"	f	class:CHandleMessage
+postTeacherToWhite	HandleMessage.cpp	/^bool CHandleMessage::postTeacherToWhite (Buf* p, enum CommandType iCommandType)$/;"	f	class:CHandleMessage
+setHandler	HandleMessage.h	/^    static void setHandler (int iCommandType, handlefunc hHandler)$/;"	f	class:CHandleMessage

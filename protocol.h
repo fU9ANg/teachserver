@@ -25,18 +25,18 @@ enum CommandType
     CT_GetClassDB,       // 获得班级信息 (教师端)
     CT_LoginClassRoom,   // 进入教室  老師->服務器
     CT_LogoutClassRoom,  // 退出教室 (教师端和所有学生端)
-    CT_GetStudentDetailInfo,   // 获得学生列表 (所有端)
-    ST_GetStudentDetailInfo,   // 获得学生列表 (所有端)
-    CT_GetAllStudentInfoCount, // 获得所有学生列表数量 (所有端)
-    CT_GetAllStudentInfo,// 获得所有学生列表 (所有端)
-    CT_LeaveEarly,       // 早退 (教师端)
-    ST_LeaveEarly,       // 早退通知给 (学生端)
-    CT_ConfirmLeaveEarly,// 早退确认 (学生端) *
-    CT_GetTeacherInfo,   // 获得教师信息 (所有学生端和教师端)
-    ST_GetTeacherInfo,
-    CT_LockStudent,      // 锁定学生端 (教师端) *
-    ST_LockStudent,      // 锁定学生端 (学生端) *
-    CT_SelectedClassRoom,
+    CT_GetStudentDetailInfo,    // 获得某一学生详细信息  所有端->服务器
+    ST_GetStudentDetailInfo,    // 返回某一学生详细信息  服务器->所有端
+    CT_GetAllStudentInfoCount,  // 获得所有学生列表数量  所有端->服务器
+    CT_GetAllStudentInfo,       // 获得所有学生列表   所有端->服务器
+    CT_LeaveEarly,              // 早退  教师端->服务器
+    ST_LeaveEarly,              // 早退通知给  服务器->学生端
+    CT_ConfirmLeaveEarly,       // 早退确认  学生端->服务器 *
+    CT_GetTeacherInfo,          // 获得教师信息  所有学生端和教师端->服务器
+    ST_GetTeacherInfo,          // 返回教师信息  服务器->所有端
+    CT_LockStudent,             // 锁定学生端  教师端->服务器 *
+    ST_LockStudent,             // 锁定学生端  服务器->学生端 *
+    CT_SelectedClassRoom,       // 选择某一平板属于某一教室  所有端->服务器
     CT_CourseFinished,      // 请求课程是否结束 (所有端)
     ST_CourseFinished,      // 服务请求课程是否结束
     CT_GetDBRecordFinished, // 请求所有数据库记录是否完成
@@ -133,7 +133,8 @@ enum CommandType
     //////////////////
     CT_Puzzle_GameStart = 700,  // 点击拼图开始 (教师端)
     ST_Puzzle_GameStart,        // 发送拼图游戏开始信息 (学生端和白板端)
-    //CT_Puzzle_GetPic,         // 发送某一拼图原图 (学生端和白板端) **
+    CT_Puzzle_GetPic,         // 发送某一拼图原图 (学生端和白板端) **
+    ST_Puzzle_GetPic,         // 发送某一拼图原图 (学生端和白板端) **
     CT_Puzzle_IconStatus,       // 获得拼图是否正确的状态 (学生端) *
     ST_Puzzle_IconStatus,       // 发送拼图是否正确的状态 (白板端) *
     CT_Puzzle_Play,             // 拼图播放 (学生端) *
@@ -186,6 +187,14 @@ enum mClientType
     MCT_STUDENT = 1,
     MCT_TEACHER,
     MCT_WHITEBOARD,
+};
+
+enum eClientStatus
+{
+    eCS_ONLINE  = 1,
+    eCS_OFFLINE = 2,
+    eCS_LEAVEEARLY = 3,
+    eCS_NOLOGIN = 4
 };
 
 struct sLogin
@@ -363,13 +372,13 @@ struct sLoginOutClassRoom
 | len | CT_LogoutClassRoom | struct sLoginOutClassRoom |
 */
 
-struct sSetStudentDetail
+struct sStudentDetail
 {
     int  iStudentId;
     char sStudentName[20];
 };
 /*
-| len | CT_SetStudentDetailInfo | struct sSetStudentDetailInfo |
+| len | CT_GetStudentDetailInfo | struct sStudentDetailInfo |
 */
 
 struct sGetStudentDetailInfo
@@ -377,7 +386,7 @@ struct sGetStudentDetailInfo
     char sNumber[20];
     char sFirstName[20];
     char sLastName[20];
-    char sSex[2];
+    char sSex[10];
     char sSchoolName[20];
     char sGradeName[20];
     char sClassName[20];
@@ -403,6 +412,7 @@ struct sGetAllStudentInfo
 {
     int iStudentId;
     char sPicName[128];
+    char sStudentName[20];
 };
 /*
 select s.student_id, r.path AS picture_name from student AS s, resource AS r where s.picture_id=r.resource_id;
@@ -464,7 +474,7 @@ struct sControlLevel
 
 struct sBuildHouseCaiHongXiaoWu
 {
-    char sText[2];
+    char sText[12];
 };
 /*
 | len | CT_BuildHouse_CaiHongXiaoWu | struct sBuildHouseCaiHongXiaoWu |
@@ -509,11 +519,20 @@ enum ePuzzleActionTypePic
     AP_ADD,
 };
 
+//学生拼图正确时发送发送学生是那个拼图块拼正确了
 struct sPuzzleUpdatePic
 {
-    int action_type;
     int pic_idx; // 某张拼图块
-    int x, y;
+};
+
+//拼图开始数据
+struct sJigsawInitData
+{
+	char picturePath[512];
+	int	stencilId;
+	int	rowCount;
+	int columnCount;
+
 };
 
 ///////////////////
