@@ -71,6 +71,7 @@ void CHandleMessage::handleControlLevel (Buf* p)
 
     cout << "process: CT_ControlLevel" << endl;
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
+    cout<<"level : " <<*(int*)head->cData() <<endl;
 
     if (head->cType == CT_ControlLevel) {
         CHandleMessage::postTeacherToWhite (p, ST_ControlLevel);
