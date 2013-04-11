@@ -92,3 +92,4 @@
     MSGNAME (CT_Puzzle_CalcScore, handlePuzzle_CalcScore);
     MSGNAME (CT_Puzzle_EndGame, handlePuzzle_EndGame);
     MSGNAME (CT_Scene_End, handleSceneEnd);
+    MSGNAME (CT_Puzzle_GetPic, handlePuzzle_GetPic);
