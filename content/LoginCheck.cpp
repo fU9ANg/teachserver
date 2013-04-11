@@ -40,12 +40,12 @@ void LoginCheck::check(Buf* pbuf) {
 
     struct sLoginOutResult loginout;
     loginout.succeed = (0 == result) ? RES_SUCCEED : RES_FAIL;
-    sprintf (loginout.message, "hellllllooooooo");
+    sprintf (loginout.message, (0 == result) ? "Login succeed" : "Login failed");
     MSG_HEAD* head = (MSG_HEAD*)pbuf->ptr();
     head->cLen = sizeof(MSG_HEAD) + sizeof(loginout);
     head->cType = CT_LoginResult;
     memcpy(head->cData(), &loginout, sizeof(loginout));
-    pbuf->setsize (head->cLen);     // fix:
+    pbuf->setsize (head->cLen);     // fixed:
     SINGLE->sendqueue.enqueue(pbuf);
     return;
 }
@@ -124,12 +124,15 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
         CStudent* pStudent = pRoom->get_student_by_fd (fd);
         if (pStudent == NULL) {
             LOG(ERROR) << "in login_student function. error: not found STUDENT in CLASSMANGER with fd" << endl;
+            return -1;
         }
+
         pStudent->setName (strFirstName, strLastName);
         pStudent->setAccount (strAccount);
         pStudent->setId (id);
         pStudent->setPictureName (strPictureName);
         pStudent->setOnLine (true);
+        pStudent->setStudentStatus (eCS_ONLINE);
 
         Buf* pp = SINGLE->bufpool.malloc();
         MSG_HEAD* p_head = (MSG_HEAD*)pp->ptr();
@@ -138,14 +141,37 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
 
         TSendStudentStatusReq body;    
         body.student_id = pStudent->getId();
-        body.status = 0x00000000;      
+        body.status = eCS_ONLINE;
         memcpy(p_head->cData(), &body, sizeof(body));
 
-
+        // send student state to teacher.
         pp->setsize(p_head->cLen);      
         pp->setfd(pRoom->get_teacher_fd());        
         SINGLE->sendqueue.enqueue(pp);
 
+        // send student state to other students.
+        CRoom::STUDENTMAP::iterator it;
+        int idx = 0;
+        for (it = pRoom->m_student_map.begin(); it != pRoom->m_student_map.end(); ++it)
+        {
+            pp = SINGLE->bufpool.malloc ();
+            if (pp != NULL)
+            {
+                cout << "send student status to other student id=" << ++idx << endl;
+                p_head = (MSG_HEAD*) pp->ptr();
+                p_head->cLen = MSG_HEAD_LEN + sizeof (TSendStudentStatusReq);
+                p_head->cType = ST_SendStudentStatus;
+
+                memset (&body, 0x00, sizeof (TSendStudentStatusReq));
+                body.student_id = pStudent->getId ();
+                body.status = eCS_ONLINE;
+                memcpy (p_head->cData(), &body, sizeof (TSendStudentStatusReq));
+
+                pp->setsize (p_head->cLen);
+                pp->setfd (it->first);
+                SINGLE->sendqueue.enqueue (pp);
+            }
+        }
         return 0;
     }
     printf("login failed: [%s][%s]", login.password, strpwd.c_str());

@@ -34,6 +34,14 @@ void CRoom::set_white_fd(int fd) {
 }
 
 void CRoom::add_student(int fd, CStudent* pstudent) {
+    STUDENTMAP::iterator iter = m_student_map.find(fd);
+
+    if (iter != m_student_map.end()) {
+        printf("fd [%d] is exist in the room!", fd);
+        delete iter->second;
+        m_student_map.erase(fd);
+    }
+
     m_student_map.insert(pair<int, CStudent*>(fd, pstudent));
     printf("%d:%d---------------%p\n",m_room_id, fd, pstudent);
 }
@@ -53,7 +61,7 @@ void CRoom::del_student(int fd) {
 
         TSendStudentStatusReq body;
         body.student_id = it->second->getId();
-        body.status = 0xFFFFFFFF;
+        body.status = eCS_OFFLINE;//0xFFFFFFFF;
         memcpy(p_head->cData(), &body, sizeof(body));
 
         p->setsize(p_head->cLen);
@@ -62,6 +70,18 @@ void CRoom::del_student(int fd) {
 
         delete it->second;
         m_student_map.erase(it);
+        STUDENTMAP::iterator itt;
+        //向每个学生发送该学生断开消息
+        for( itt = m_student_map.begin(); itt != m_student_map.end(); ++itt) {
+            Buf* pp = SINGLE->bufpool.malloc();
+            MSG_HEAD* pp_head = (MSG_HEAD*)pp->ptr();
+            pp_head->cLen = sizeof(MSG_HEAD) + sizeof(TSendStudentStatusReq);
+            pp_head->cType = ST_SendStudentStatus;
+            memcpy(pp_head->cData(), &body, sizeof(body));
+            pp->setsize(p_head->cLen);
+            pp->setfd(itt->first);
+            SINGLE->sendqueue.enqueue(pp);
+        }
     }
 }
 
@@ -198,4 +218,50 @@ void CRoom::teacher_disconnect() {
         p->setfd(it->first);
         SINGLE->sendqueue.enqueue(p);
     }
+}
+
+CGroup* CRoom::get_group_by_fd (int fd)
+{
+    CGroup* group = NULL;
+
+    GROUPMAP::iterator it;
+    for (it = m_buildhouse_groups.begin(); \
+            it != m_buildhouse_groups.end(); it++)
+    {
+        group = it->second->get_group_by_fd (fd);
+        if (group != NULL)
+            return group;
+    }
+
+    return NULL;
+}
+
+bool CRoom::add_group (int id, CGroup* cg)
+{   
+    if (cg)
+    {
+        m_buildhouse_groups.insert(std::pair<int,CGroup*> (id, cg));
+        return true;
+    }
+    return false;
+}
+
+SceneType CRoom::get_current_st (void)
+{
+    return m_current_st;
+}
+
+SceneState CRoom::get_current_ss (void)
+{
+    return m_current_ss;
+}
+
+void CRoom::set_current_st (SceneType st)
+{
+    m_current_st = st;
+}
+
+void CRoom::set_current_ss (SceneState ss)
+{
+    m_current_ss = ss;
 }

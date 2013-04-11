@@ -21,21 +21,45 @@
 #include "game.h"
 
 #include "course.h"
+#include "makehouse.h"
 
 #include "HandleMessage.h"
+
+typedef enum SceneType
+{
+    ST_SCENE1 = 1,
+    ST_SCENE2 = 2,
+    ST_SCENE3 = 3,
+    ST_SCENE4 = 4,
+} SceneType;
+
+typedef enum SceneState
+{
+    SS_START = 1,
+    SS_PAUSE = 2,
+    SS_END   = 3,
+} SceneState;
 
 class CRoom
 {
 	typedef map<int, CStudent*> STUDENTMAP;
     typedef list<CCourse*> COURSELIST;
     typedef list<CGame*> GAMELIST;
+    typedef map<int, CGroup*> GROUPMAP; /* map<group_id, CGroup*> */
+
+private:
+    GROUPMAP m_buildhouse_groups;
+
+public:
+    CGroup* get_group_by_fd (int fd);
+    bool add_group (int id, CGroup* cg);
 
 public:
 	 CRoom(int id, string class_name, string white_board);
 	~CRoom ();
 
-    //friend bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandType);
     friend class CHandleMessage;
+    friend class LoginCheck;
 
     int  get_room_id();
     void set_teacher_fd(int fd);
@@ -63,6 +87,10 @@ public:
     int reset();
     void teacher_disconnect();
 
+    SceneType get_current_st (void);
+    SceneState get_current_ss (void);
+    void set_current_st (SceneType);
+    void set_current_ss (SceneState);
 private:
     CTeacher m_teacher;
     int m_room_id;
@@ -75,6 +103,9 @@ private:
     STUDENTMAP m_student_map;
     COURSELIST m_course_list;
     GAMELIST m_game_list;
+
+    SceneType   m_current_st;
+    SceneState  m_current_ss;
 };
 
-#endif //_C_CLASS_H
+#endif //_C_ROOM_H
