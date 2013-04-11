@@ -10,6 +10,10 @@
 #include <cstdlib>
 #include <list>
 #include <map>
+#include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
+
 
 #include "protocol.h"
 #include "Single.h"

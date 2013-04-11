@@ -21,6 +21,7 @@ HANDLEMAP CHandleMessage::m_HandleMap;
 */
 bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
 {
+    cout << "postMessage.........." << endl;
     if (p == NULL)
         return false;
 
@@ -49,9 +50,24 @@ bool CHandleMessage::postTeacherToWhite (Buf* p, enum CommandType iCommandType)
     if (p == NULL)
         return false;
 
+#ifdef TEACHER_NOT_LOGIN
+    CRoom* proom = ROOMMANAGER->get_room_by_name("A教室");
+
+    if( NULL == proom) {
+        SINGLE->bufpool.free(p);       
+        return false;
+    }  
+    proom->set_teacher_fd(p->getfd());                                                                                                                                       
+    proom->set_teacher_name("教师A");
+    proom->set_class_name("一班");
+    printf("Teacher login class room [%d] success!\n", proom->get_room_id());
+#endif
+
+
     CRoom* pc = ROOMMANAGER->get_room_by_fd (p->getfd());
 
-    if (pc != NULL && pc->get_teacher_fd() == p->getfd()) {
+    if (pc != NULL && pc->get_teacher_fd() == p->getfd()) 
+    {
 
         MSG_HEAD* head = (MSG_HEAD*)p->ptr();
 
@@ -60,7 +76,8 @@ bool CHandleMessage::postTeacherToWhite (Buf* p, enum CommandType iCommandType)
         p->setsize (head->cLen);
         SINGLE->sendqueue.enqueue (p);
     }
-    else {
+    else 
+    {
         cout << "Error: not found 'teacher_fd' in Room" << endl;
         SINGLE->bufpool.free(p);
         return false;
@@ -114,10 +131,12 @@ bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandT
     CRoom* pc = ROOMMANAGER->get_room_by_fd (p->getfd());
     if (pc != NULL) {
 
+        int i = 0;
         CRoom::STUDENTMAP::iterator it;
         for (it = pc->m_student_map.begin(); \
              it != pc->m_student_map.end (); ++it)
         {
+            i++;
             pbuf = SINGLE->bufpool.malloc ();
             if (pbuf != NULL) {
                 MSG_HEAD* head = (MSG_HEAD*)pbuf->ptr();
@@ -139,9 +158,12 @@ bool CHandleMessage::postTeacherToAllStudent (Buf* p, enum CommandType iCommandT
                 return false;
             }
         }
+        if ( 0 == i ) {
+            printf("send to %d students!\n", i);
+        }
     }
     else {
-        cout << "Error: not found 'teacher_fd' in Room" << endl;
+        cout << __FILE__ << ":" <<__FUNCTION__<< ":" << __LINE__<<"Error: not found 'teacher_fd' in Room" << endl;
         p->reset();
         SINGLE->bufpool.free(p);
         return false;
@@ -415,10 +437,12 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
                 struct sGetAllStudentInfo stu_info;
 
                 strcpy (stu_info.sPicName, prst->getString ("picture_name").c_str());
+                strcpy (stu_info.sStudentName, prst->getString ("student_name").c_str());
                 stu_info.iStudentId= prst->getInt ("student_id");
 
                 cout << "stu_info.iStudentId:" << stu_info.iStudentId << endl;
                 cout << "stu_info.sPicName:" << stu_info.sPicName << endl;
+                cout << "stu_info.sStudentName:" << stu_info.sStudentName << endl;
 
                 Buf* p = SINGLE->bufpool.malloc ();
                 memcpy (p->ptr(), &head, sizeof (MSG_HEAD));
