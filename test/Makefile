@@ -1,12 +1,13 @@
 CPP=ccache g++ 
 CC=ccache gcc
-CFLAGS=-Wall -O2 -Werror -g
+CFLAGS=-Wall -O0 -Werror -g
 LINKS	= -lpthread -lrt -lev -lglog -lmysqlcppconn -llua5.2 -lgtest
 
 OBJS	= twomapT_unittest.o \
 		  PoolT_unittest.o \
 		  libev_unittest.o \
 		  database_unittest.o \
+		  follow_unitest.o \
           ../ThreadPool.o \
 		  ../ProcessManager.o \
 		  ../Single.o \

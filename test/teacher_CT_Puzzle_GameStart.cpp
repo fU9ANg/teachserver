@@ -11,11 +11,11 @@
 
 
 #include "protocol.h"
-#define SERV_IP "192.168.0.177"
+#define SERV_IP "192.168.0.166"
 #define SERV_PORT 9999 
 void login(int fd);
 void loginclassroom(int fd);
-void send_CT_ShowSpriteAnimation(int fd);
+void send_ST_Puzzle_GameStart(int fd);
 
 int main(int argc, char* argv[]){
     int cntFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -32,6 +32,9 @@ int main(int argc, char* argv[]){
  //   sleep(3);
 //    send_CT_ShowSpriteAnimation(cntFd);
   //  sleep(100);
+  //
+    sleep(1);
+    send_ST_Puzzle_GameStart(cntFd);
 
     char buf[1024] = {0};
     while(true) {
@@ -93,9 +96,18 @@ void loginclassroom(int fd) {
     send( fd, buf, head.cLen, 0);
 }
 
-void send_CT_ShowSpriteAnimation(int fd) {
+void send_ST_Puzzle_GameStart(int fd){
     MSG_HEAD head;
-    head.cLen = sizeof(MSG_HEAD);
-    head.cType = CT_ShowSpriteAnimation;
-    send(fd, &head, head.cLen, 0);
+    head.cLen = sizeof(MSG_HEAD) + sizeof(struct sJigsawInitData);
+    head.cType = CT_Puzzle_GameStart;
+    struct sJigsawInitData body;
+    body.rowCount = 3;
+    body.columnCount = 3;
+    strcpy(body.picturePath, "http://d.lanrentuku.com/down/png/1001/I_like_buttons/CuteBall-Favorites000.png");
+
+    char buf[1024];
+    memcpy(buf, &head, sizeof(MSG_HEAD));
+    memcpy(buf + sizeof(MSG_HEAD), &body, sizeof(body));
+
+    send(fd, buf, head.cLen, 0);
 }

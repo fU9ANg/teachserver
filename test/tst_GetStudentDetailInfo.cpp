@@ -22,6 +22,7 @@ int main (void)
     struct sockaddr_in inaddr;
     char buffer[STR_MAX];
 
+
     if ((fd = socket (PF_INET, SOCK_STREAM, 0)) < 0) {
         printf ("error: in socket ()\n");
         return (1);
@@ -39,9 +40,14 @@ int main (void)
 
     MSG_HEAD head;
     head.cLen = sizeof (MSG_HEAD);
-    head.cType = CT_GetAllStudentInfo;
+    head.cType = CT_GetStudentDetailInfo;
     memcpy (buffer, &head, sizeof (head));
 
+    struct sStudentDetail *sd = (sStudentDetail*) ((char*) buffer + MSG_HEAD_LEN);
+    sd->iStudentId = 1;
+    strcpy (sd->sStudentName, "学生1");
+    //memcpy ((char*)buffer+MSG_HEAD_LEN, &sd, sizeof (struct sStudentDetail));
+    head.cLen = head.cLen + sizeof (struct sStudentDetail);
     send (fd, buffer, head.cLen, 0);
 
 #if 1
