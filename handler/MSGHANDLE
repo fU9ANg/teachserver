@@ -75,6 +75,13 @@
     MSGNAME (CT_BuildHouse_EmailTibet, handleBuildHouse_EmailTibet);
     MSGNAME (CT_BuildHouse_EmailAmerica, handleBuildHouse_EmailAmerica);
 
+    MSGNAME (CT_BuildHouse_Update, handleBuildHouse_Update);
+    //MSGNAME (CT_BuildHouse_Move, handleBuildHouse_Move);
+    //MSGNAME (CT_BuildHouse_Zoom, handleBuildHouse_Zoom);
+    MSGNAME (CT_BuildHouse_Change_Layer, handleBuildHouse_Change_Layer);
+    MSGNAME (CT_BuildHouse_Add_Pic, handleBuildHouse_Add_Pic);
+    MSGNAME (CT_BuildHouse_Del_Pic, handleBuildHouse_Del_Pic);
+
     MSGNAME (CT_BuildHouse_Activation, handleBuildHouse_Activation);
     MSGNAME (CT_BuildHouse_Role, handleBuildHouse_Role);
     MSGNAME (CT_BuildHouse_Stamp, handleBuildHouse_Stamp);
@@ -93,3 +100,4 @@
     MSGNAME (CT_Puzzle_EndGame, handlePuzzle_EndGame);
     MSGNAME (CT_Scene_End, handleSceneEnd);
     MSGNAME (CT_Puzzle_GetPic, handlePuzzle_GetPic);
+    MSGNAME (CT_Puzzle_UpdatePic, handlePuzzle_UpdatePic);

@@ -60,7 +60,7 @@ am_server_OBJECTS = main.$(OBJEXT) Single.$(OBJEXT) Config.$(OBJEXT) \
 	LoginCheck.$(OBJEXT) room.$(OBJEXT) ThreadPool.$(OBJEXT) \
 	database.$(OBJEXT) Evloop.$(OBJEXT) RecvTask.$(OBJEXT) \
 	SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) Sock.$(OBJEXT) \
-	makehouse.$(OBJEXT)
+	makehouse.$(OBJEXT) puzzle.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.
@@ -95,20 +95,20 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/fu9ang/github/teachserver/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/sxkj2/github/teachserver/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /home/fu9ang/github/teachserver/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/fu9ang/github/teachserver/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/fu9ang/github/teachserver/missing --run automake-1.11
-AWK = mawk
+AUTOCONF = ${SHELL} /home/sxkj2/github/teachserver/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/sxkj2/github/teachserver/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/sxkj2/github/teachserver/missing --run automake-1.11
+AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
+CFLAGS = 
 CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -O2
+CXXFLAGS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -127,7 +127,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/fu9ang/github/teachserver/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/sxkj2/github/teachserver/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = main
@@ -142,10 +142,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/fu9ang/github/teachserver
-abs_srcdir = /home/fu9ang/github/teachserver
-abs_top_builddir = /home/fu9ang/github/teachserver
-abs_top_srcdir = /home/fu9ang/github/teachserver
+abs_builddir = /home/sxkj2/github/teachserver
+abs_srcdir = /home/sxkj2/github/teachserver
+abs_top_builddir = /home/sxkj2/github/teachserver
+abs_top_srcdir = /home/sxkj2/github/teachserver
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -165,7 +165,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/fu9ang/github/teachserver/install-sh
+install_sh = ${SHELL} /home/sxkj2/github/teachserver/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -191,7 +191,25 @@ server_LDADD = -lglog -lpthread -llua5.2 -lev -ldl -lrt -lmysqlcppconn
 #server_LDFLAGS = -g -Wall -Werror
 #server_CFLAGS = -g -Wall -Werror
 #server_CPPFLAGS= -g -Wall -Werror
-server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h ./Evloop.h ./SendTask.h ./ProcessManager.h ./Config.cpp ./Mutex.h ./handler/HandleMessage.cpp ./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp ./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp ./handler/HandleSprite.cpp ./handler/HandleMessage.h ./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h ./database.h ./content/teacher.cpp ./content/courseitem.cpp ./content/roommanager.cpp ./content/course.cpp ./content/courseitem.h ./content/student.cpp ./content/room.h ./content/teacher.h ./content/student.h ./content/course.h ./content/game.cpp ./content/grade.h ./content/grade.cpp ./content/LoginCheck.cpp ./content/room.cpp ./content/roommanager.h ./content/LoginCheck.h ./content/game.h ./ThreadPool.cpp ./Sock.h ./database.cpp ./SQL.h ./protocol.h ./Buf.h ./PoolT.h ./Single.h ./task.h ./Evloop.cpp ./RecvTask.cpp ./AtomicT.h ./SendTask.cpp ./ProcessManager.cpp ./Config.h ./RecvTask.h ./Sock.c ./content/makehouse.cpp
+server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h \
+	./Evloop.h ./SendTask.h ./ProcessManager.h ./Config.cpp \
+	./Mutex.h ./handler/HandleMessage.cpp \
+	./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp \
+	./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp \
+	./handler/HandleSprite.cpp ./handler/HandleMessage.h \
+	./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h \
+	./database.h ./content/teacher.cpp ./content/courseitem.cpp \
+	./content/roommanager.cpp ./content/course.cpp \
+	./content/courseitem.h ./content/student.cpp ./content/room.h \
+	./content/teacher.h ./content/student.h ./content/course.h \
+	./content/game.cpp ./content/grade.h ./content/grade.cpp \
+	./content/LoginCheck.cpp ./content/room.cpp \
+	./content/roommanager.h ./content/LoginCheck.h \
+	./content/game.h ./ThreadPool.cpp ./Sock.h ./database.cpp \
+	./SQL.h ./protocol.h ./Buf.h ./PoolT.h ./Single.h ./task.h \
+	./Evloop.cpp ./RecvTask.cpp ./AtomicT.h ./SendTask.cpp \
+	./ProcessManager.cpp ./Config.h ./RecvTask.h ./Sock.c \
+	./content/makehouse.cpp ./content/puzzle.cpp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -316,6 +334,7 @@ include ./$(DEPDIR)/game.Po
 include ./$(DEPDIR)/grade.Po
 include ./$(DEPDIR)/main.Po
 include ./$(DEPDIR)/makehouse.Po
+include ./$(DEPDIR)/puzzle.Po
 include ./$(DEPDIR)/room.Po
 include ./$(DEPDIR)/roommanager.Po
 include ./$(DEPDIR)/student.Po
@@ -726,6 +745,20 @@ makehouse.obj: ./content/makehouse.cpp
 #	source='./content/makehouse.cpp' object='makehouse.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o makehouse.obj `if test -f './content/makehouse.cpp'; then $(CYGPATH_W) './content/makehouse.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/makehouse.cpp'; fi`
+
+puzzle.o: ./content/puzzle.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT puzzle.o -MD -MP -MF $(DEPDIR)/puzzle.Tpo -c -o puzzle.o `test -f './content/puzzle.cpp' || echo '$(srcdir)/'`./content/puzzle.cpp
+	$(am__mv) $(DEPDIR)/puzzle.Tpo $(DEPDIR)/puzzle.Po
+#	source='./content/puzzle.cpp' object='puzzle.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o puzzle.o `test -f './content/puzzle.cpp' || echo '$(srcdir)/'`./content/puzzle.cpp
+
+puzzle.obj: ./content/puzzle.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT puzzle.obj -MD -MP -MF $(DEPDIR)/puzzle.Tpo -c -o puzzle.obj `if test -f './content/puzzle.cpp'; then $(CYGPATH_W) './content/puzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/puzzle.cpp'; fi`
+	$(am__mv) $(DEPDIR)/puzzle.Tpo $(DEPDIR)/puzzle.Po
+#	source='./content/puzzle.cpp' object='puzzle.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o puzzle.obj `if test -f './content/puzzle.cpp'; then $(CYGPATH_W) './content/puzzle.cpp'; else $(CYGPATH_W) '$(srcdir)/./content/puzzle.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

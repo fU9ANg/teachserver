@@ -18,11 +18,13 @@
 #define SQL_SELECT_CLASS_DB "select class_name from class"
 #define SQL_SELECT_CLASSROOM_DB "select classroom_name, white_board from classroom"
 #define SQL_SELECT_STUDENT_DB "SELECT s.student_id, r.path AS picture_name, s.account AS student_name FROM student AS s, resource AS r WHERE s.picture_id = r.resource_id"
-#define SQL_SELECT_COURSEITEM_DB "SELECT c.course_name, i.item_name from course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND c.course_name=?"
+//#define SQL_SELECT_COURSEITEM_DB "SELECT c.course_name, i.item_name from course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND c.course_name=?"
+#define SQL_SELECT_COURSEITEM_DB "SELECT c.course_name, i.item_name from course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND (c.course_name=? OR c.course_name=? OR c.course_name=? OR c.course_name=?)"
 
 #define SQL_SELECT_ROOM "SELECT classroom_id, classroom_name, white_board FROM classroom"
 
-#define SQL_SELECT_ITEM_KEYS "SELECT keys_info FROM course_item WHERE course_item_id = ?"
+//#define SQL_SELECT_ITEM_KEYS "SELECT keys_info FROM course_item WHERE course_item_id = ?"
+#define SQL_SELECT_ITEM_KEYS "select ci.keys_info from course_item as ci, course as c, item as i where c.course_id=ci.course_id and i.item_id=ci.item_id and item_name=?"
 
 #define SQL_SELECT_STUDENT_DETAILINFO "SELECT s.number, s.last_name, s.first_name, s.sex, sc.school_name, g.grade_name, c.class_name, s.account, t.first_name AS tf_name, t.last_name AS tl_name, s.picture_id FROM student AS s, school AS sc, grade AS g, class AS c, teacher AS t WHERE t.teacher_id = s.class_teacher_id AND sc.school_id = s.school_id AND g.grade_id = s.grade_id AND c.class_id = s.class_id AND s.student_id=? AND s.account=?"
 

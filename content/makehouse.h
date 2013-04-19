@@ -7,6 +7,8 @@
 #include <iostream>
 #include "student.h"
 #include "Mutex.h"
+#include "Buf.h"
+#include "Single.h"
 
 using namespace std;
 
@@ -21,6 +23,7 @@ class CNode{
         bool unlock(int user_id);
         int get_node_id();
         void set_node_id(int node_id);
+        void set_name(string name);
         void get_location(int& x, int& y);
         void get_location(int& x, int& y, double& angle, double& zoom);
     private:
@@ -32,6 +35,7 @@ class CNode{
         double m_angle; //角度
         double m_zoom; //放大倍数
         char m_path[512];
+        string m_name;
 };
 
 class CMakeHouse{
@@ -41,7 +45,7 @@ class CMakeHouse{
         bool lock(int user_id, int node_id);
         bool unlock(int user_id, int node_id);
         int add(int user_id, CNode* p_node);
-        int move(int mode_id, int to_x, int to_y);
+        int move(int node_id, int to_x, int to_y);
 
         /**
          * @brief 将节点上移count层
@@ -79,7 +83,7 @@ class CGroup
         string m_group_name;
         CMakeHouse m_make_house;
         STUDENTMAP m_student_map;
-        
+        int m_white_position;
 
     public:
         CGroup (string name);
@@ -88,6 +92,7 @@ class CGroup
         bool add_student_to_group (int fd, CStudent* stu);
         CGroup* get_group_by_fd (int fd);
         CStudent* get_student_by_fd (int fd);
+        void broadcast(Buf* p);
 
 };
 

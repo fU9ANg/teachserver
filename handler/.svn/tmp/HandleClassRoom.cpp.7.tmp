@@ -361,12 +361,11 @@ void CHandleMessage::handleGetStudentDetailInfo (Buf* p)
     {
         try {
             sStudentDetail* sd = (sStudentDetail*) ((char*)((MSG_HEAD*)p->ptr()) + MSG_HEAD_LEN);
-            cout << "stu_id:" << sd->iStudentId << ", stu_name:" << sd->sStudentName << endl;
+            /// cout << "stu_id:" << sd->iStudentId << ", stu_name:" << sd->sStudentName << endl;
 
             MutexLockGuard guard (DATABASE->m_mutex);
             PreparedStatement* pstmt = NULL;
             struct sGetStudentDetailInfo detail_info;
-            (void) memset (&detail_info, 0x00, sizeof (detail_info));
 
             pstmt = DATABASE->preStatement (SQL_SELECT_STUDENT_DETAILINFO);
             pstmt->setInt (1, sd->iStudentId);
@@ -436,7 +435,7 @@ void CHandleMessage::handleGetAllStudentInfo (Buf* p)
 void CHandleMessage::handleLeaveEarly (Buf* p)
 {
     cout << "CT_LeaveEarly" << endl;
-    if (NULL == p)
+    if (NULL != p)
         return;
 
 /*

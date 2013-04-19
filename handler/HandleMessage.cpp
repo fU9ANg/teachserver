@@ -21,7 +21,7 @@ HANDLEMAP CHandleMessage::m_HandleMap;
 */
 bool CHandleMessage::postMessage (Buf* p, enum CommandType iCommandType, void* data, unsigned int iLen)
 {
-    cout << "postMessage.........." << endl;
+    //cout << "postMessage.........." << endl;
     if (p == NULL)
         return false;
 
@@ -199,6 +199,8 @@ bool CHandleMessage::postTeacherToStudent (Buf* p, enum CommandType iCommandType
                 p->setfd (it->first);
                 p->setsize (head->cLen);
                 SINGLE->sendqueue.enqueue (p);
+                cout << "send sT_LeaveEarly to student: id=" << iStuId << endl;
+                return true;
             }
         }
         cout << "Error: not found 'student_fd' in Room" << endl;
@@ -243,7 +245,8 @@ bool CHandleMessage::postDBRecordCount (Buf* p, int iCase)
         strcat (str, "student");
     }
     else if (iCase == 6) {
-        strcat (str, "course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND c.course_name=?");
+        //strcat (str, "course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND c.course_name=?");
+        strcat (str, "course_item AS ci, course AS c, item AS i WHERE ci.course_id=c.course_id AND ci.item_id=i.item_id AND (c.course_name=? OR c.course_name=? OR c.course_name=? OR c.course_name=?)");
     }
 #endif
 
@@ -266,8 +269,29 @@ bool CHandleMessage::postDBRecordCount (Buf* p, int iCase)
         MutexLockGuard guard(DATABASE->m_mutex);
         PreparedStatement* pstmt = DATABASE->preStatement(str);
         if (iCase == 6) {
+        #if 0 // fixed: to update
             sGetCourseItem* ci = (sGetCourseItem *) ((char*)((MSG_HEAD*)p->ptr()) + sizeof (MSG_HEAD));
             pstmt->setString (1, ci->sCourseName);
+        #else
+#ifdef _TEACHER_NOLOGIN
+            // only for h**king test............
+            pstmt->setString (1, "拼图");
+            pstmt->setString (2, "造房子");
+            pstmt->setString (3, "暖身操");
+            pstmt->setString (4, "动画片");
+#else
+            CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+            if (room != NULL)
+            {
+                CRoom::COURSELIST::iterator it;
+                int ii = 1;
+                for (it = room->m_course_list.begin (); it != room->m_course_list.end (); ++it) {
+                    pstmt->setString (ii++, (*it)->getName());
+                    cout << "COURSE NAME: " << (*it)->getName() << endl;
+                }
+            }
+#endif
+        #endif
         }
         ResultSet* prst = pstmt->executeQuery ();
         while (prst->next ()) {
@@ -336,8 +360,27 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
             pstmt = DATABASE->preStatement (SQL_SELECT_STUDENT_DB);
         else if (iCase == 6) {
             pstmt = DATABASE->preStatement (SQL_SELECT_COURSEITEM_DB);
+#if 1   // send count of all selected course by teacher
+            #ifdef _TEACHER_NOLOGIN
+            // only for h**king test............
+            pstmt->setString (1, "拼图");
+            pstmt->setString (2, "造房子");
+            pstmt->setString (3, "暖身操");
+            pstmt->setString (4, "动画片");
+            #else
+            CRoom* room = ROOMMANAGER->get_room_by_fd (buf->getfd());
+            if (room != NULL)
+            {
+                CRoom::COURSELIST::iterator it;
+                int ii = 1;
+                for (it = room->m_course_list.begin (); it != room->m_course_list.end (); ++it)
+                    pstmt->setString (ii++, (*it)->getName());
+            }
+            #endif
+#else
             sGetCourseItem* ci = (sGetCourseItem *) ((char*)((MSG_HEAD*)buf->ptr()) + sizeof (MSG_HEAD));
             pstmt->setString (1, ci->sCourseName);
+#endif
         }
         else {
             cout << "error: index" << endl;
@@ -347,7 +390,7 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
         ResultSet* prst = pstmt->executeQuery();
         unsigned int index = 0, type = 0;
         while(prst->next()) {
-            printf ("index = %d------------------------------------------------------\n", index);
+            //printf ("index = %d------------------------------------------------------\n", index);
             if (iCase == 1) {
                 memset (&head, 0x00, sizeof (head));
                 //head.cType = CT_GetCourseDB * 100 + index++;
@@ -432,7 +475,7 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
                 memset (&head, 0x00, sizeof (MSG_HEAD));
                 type = 10000 + index++;
                 memcpy (&head.cType, &type, sizeof (unsigned int));
-                cout << "begin:-head.cType = " << head.cType << endl;
+                /// cout << "begin:-head.cType = " << head.cType << endl;
                 head.cLen = sizeof (MSG_HEAD) + sizeof (struct sGetAllStudentInfo);
                 struct sGetAllStudentInfo stu_info;
 
@@ -440,9 +483,9 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
                 strcpy (stu_info.sStudentName, prst->getString ("student_name").c_str());
                 stu_info.iStudentId= prst->getInt ("student_id");
 
-                cout << "stu_info.iStudentId:" << stu_info.iStudentId << endl;
-                cout << "stu_info.sPicName:" << stu_info.sPicName << endl;
-                cout << "stu_info.sStudentName:" << stu_info.sStudentName << endl;
+                /// cout << "stu_info.iStudentId:" << stu_info.iStudentId << endl;
+                /// cout << "stu_info.sPicName:" << stu_info.sPicName << endl;
+                /// cout << "stu_info.sStudentName:" << stu_info.sStudentName << endl;
 
                 Buf* p = SINGLE->bufpool.malloc ();
                 memcpy (p->ptr(), &head, sizeof (MSG_HEAD));
@@ -450,9 +493,9 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
                 p->setfd (buf->getfd ());
                 p->setsize(head.cLen);
                 SINGLE->sendqueue.enqueue (p);
-                cout << "address = " << p << endl;
-                cout << "ended:-head.cLen = " << head.cLen << endl;
-                cout << "ended:-head.cType = " << head.cType << endl;
+                /// cout << "address = " << p << endl;
+                /// cout << "ended:-head.cLen = " << head.cLen << endl;
+                /// cout << "ended:-head.cType = " << head.cType << endl;
             }
 
             else if (iCase == 6) {
@@ -479,12 +522,14 @@ bool CHandleMessage::postDBRecord (Buf* buf, int iCase)
             }
 
         }
-#if 1
+#if 1   // send finished flags
         do {
-            cout << "send finished flags -----------" << endl;
+            usleep (100);
+            //cout << "send finished flags -----------" << endl;
             Buf* p = SINGLE->bufpool.malloc ();
             MSG_HEAD* phead = (MSG_HEAD*)p->ptr();
             struct sDBRecordFinished finished;
+            memset (&finished, 0x00, sizeof (sDBRecordFinished));
             if (iCase == 5)
                 finished.iFlagFinished = 10000;
             else

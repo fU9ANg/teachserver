@@ -76,7 +76,6 @@ public:
     void set_teacher_name(string name);
     string get_teacher_name ();
     void set_class_name(string name);
-    string get_class_name ();
     void set_white_fd(int fd);
     void add_student(int fd, CStudent* pstudent);
     void del_student(int fd);
@@ -89,7 +88,6 @@ public:
     CCourse * get_course_by_id (int id);
 
     void add_course (CCourse *);
-    void clear_all_course ();
 
     int  get_teacher_fd ();
     int  get_white_fd ();

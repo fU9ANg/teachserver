@@ -103,8 +103,9 @@ int ProcessManager::run() {
 
   //主线程死循环
   while (true) {
-    cout<<"new client count = "<<evloop->getClientCount()<<endl;
-    sleep(3);
+    //cout<<"new client count = "<<evloop->getClientCount()<<endl;
+    LOG(INFO) << "new client count = " << evloop->getClientCount() << endl;
+    sleep(5);
   }
 
   thrpool_->kill();

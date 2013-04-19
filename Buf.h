@@ -3,6 +3,8 @@
 
 
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 class Buf {
 public:
     Buf(size_t inSize = 5120) {
@@ -18,6 +20,12 @@ public:
             ptr_ = NULL;
         }
     }
+
+    Buf(Buf& b) {
+        size_ = b.size_;
+        this->ptr_ = malloc(size_);
+        memcpy(this->ptr_, b.ptr_, size_);
+    };
 
     void* ptr() {
         return ptr_;
@@ -51,6 +59,11 @@ public:
     }
     void setid(int id) {
         id_ = id;
+    }
+
+    Buf& operator= (Buf& b) {
+        memcpy(this->ptr_, b.ptr(), size_);
+        return *this;
     }
 private:
     void* ptr_;

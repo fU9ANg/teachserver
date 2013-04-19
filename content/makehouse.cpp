@@ -47,6 +47,10 @@ void CNode::set_node_id(int node_id) {
     m_node_id = node_id;
 }
 
+void CNode::set_name(string name) {
+    m_name = name;
+}
+
 void CNode::get_location(int& x, int& y) {
     x = m_position_x;
     y = m_position_y;
@@ -121,6 +125,14 @@ int CMakeHouse::layer_down(int node_id, int count) {
     return i;
 }
 
+int CMakeHouse::move(int node_id, int to_x, int to_y) {
+    NODEMAP::iterator iter = m_node_map.find(node_id);
+    if (iter != m_node_map.end()){
+        iter->second->move(to_x, to_y);
+    }
+    return 0;
+}
+
 ////////// Class CGroup //////////
 CGroup::CGroup (string name) : m_group_name(name)
 {
@@ -162,7 +174,7 @@ CGroup* CGroup::get_group_by_fd (int fd)
 CStudent* CGroup::get_student_by_fd (int fd)
 {
     STUDENTMAP::iterator it;
-#if 0
+#if 1
     it = m_student_map.find (fd);
     if (it != m_student_map.end())
     {
@@ -176,4 +188,13 @@ CStudent* CGroup::get_student_by_fd (int fd)
     }
 #endif
     return NULL;
+}
+
+void CGroup::broadcast(Buf* p) {
+    STUDENTMAP::iterator it;
+    for (it=m_student_map.begin(); it!=m_student_map.end();++it) {
+        Buf* p_buf = SINGLE->bufpool.malloc();
+        *p_buf = *p;
+        SINGLE->sendqueue.enqueue(p_buf);
+    }
 }

@@ -17,6 +17,7 @@
 */
 void CHandleMessage::handleTest (Buf* p)
 {
+    cout << "CT_Test\n";
     //todo:
 }
 
@@ -27,9 +28,10 @@ void CHandleMessage::handleTest (Buf* p)
 */
 void CHandleMessage::handleChangeScene (Buf* p)
 {
+    cout << "CT_ChangeScene\n";
     printf ("change scene: %d\n", *(int *)((char *)p->ptr () + sizeof (MSG_HEAD)));
 ////测试使用!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-#if 1
+#if 0
     MSG_HEAD* p_head = (MSG_HEAD*)p->ptr();
     p_head->cLen = sizeof(MSG_HEAD) + sizeof(int);
     int* p_int = (int*)p_head->cData();
@@ -41,6 +43,7 @@ void CHandleMessage::handleChangeScene (Buf* p)
         printf("send change scence!\n");
     }
 #endif
+    CHandleMessage::postTeacherToAllStudent(p, ST_ChangeScene);
 }
 
 /*
@@ -50,6 +53,7 @@ void CHandleMessage::handleChangeScene (Buf* p)
 */
 void CHandleMessage::handleLogin (Buf* p)
 {
+    cout << "CT_Login\n";
     LoginCheck::check(p);
 }
 
@@ -60,7 +64,7 @@ void CHandleMessage::handleLogin (Buf* p)
 */
 void CHandleMessage::handleLoginResult (Buf* p)
 {
-    //todo:
+    cout << "CT_LoginResult\n";
 }
 
 /*
@@ -105,13 +109,18 @@ void CHandleMessage::handleSetCourseGroup (Buf* p)
         pstmt->setString (2, cg->sCourseGroupName);
         ResultSet* prst = pstmt->executeQuery ();
 
+        cout << "get roooooooooooooooooooooooooooom" << endl;
+        CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
+        if (room != NULL) {
+            cout << "clear all course on list" << endl;
+            room->clear_all_course ();
+        }
         while (prst->next())
         {
-            CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
             if (room != NULL)
             {
                 CCourse* course = new CCourse ();
-                /*if (course != NULL)*/{
+                if (course != NULL){
                     cout << "course_id: " << prst->getInt ("course_id") << endl;
                     cout << "course_name: " << prst->getString ("course_name") << endl;
                     course->setId (prst->getInt ("course_id"));
@@ -142,6 +151,7 @@ void CHandleMessage::handleGetCourseGroup (Buf* p)
     cout << "CT_GetCourseGroup\n";
     string sResult;
 
+#if 1
     CRoom* room = ROOMMANAGER->get_room_by_fd (p->getfd());
     if (room != NULL)
     {
@@ -151,17 +161,21 @@ void CHandleMessage::handleGetCourseGroup (Buf* p)
             sResult += ",";
         }
     }
-
+#else
+    sResult += "拼图,造房子,暖身操,动画片,";
+#endif
     struct sGetCourseGroup cList;
     memset (&cList, 0x00, sizeof (sGetCourseGroup));
+    cout << "Course Name List: " << sResult.c_str() << "Course List Size: " << sResult.size() << endl;
     strncpy (cList.sCourseList, sResult.c_str(), sResult.size());
-    cout << "get courseItem: " << cList.sCourseList << endl;
-    cout << "get courseItem: " << sResult.c_str() << endl;
+    cout << "get course List: " << cList.sCourseList << endl;
+    cout << "get course List: " << sResult.c_str() << endl;
+    cout << "Buf.fd: " << p->getfd() << endl;
 
-    MSG_HEAD* head = (MSG_HEAD*) p;
-    head->cType = CT_GetCourseGroup;
+    MSG_HEAD* head = (MSG_HEAD*) p->ptr();
+    head->cType = ST_GetCourseGroup;
     head->cLen = MSG_HEAD_LEN + sizeof (struct sGetCourseGroup);
-    memcpy ((char*)p + MSG_HEAD_LEN, &cList, sizeof (struct sGetCourseGroup));
+    memcpy ((char*)p->ptr() + MSG_HEAD_LEN, &cList, sizeof (struct sGetCourseGroup));
 
     p->setsize (head->cLen);
     SINGLE->sendqueue.enqueue (p);
@@ -198,7 +212,7 @@ void CHandleMessage::handleGetCourseItem (Buf* p)
 */
 void CHandleMessage::handleLogout (Buf* p)
 {
-    //todo:
+    cout << "CT_Logout\n";
 }
 
 /*
@@ -208,7 +222,7 @@ void CHandleMessage::handleLogout (Buf* p)
 */
 void CHandleMessage::handleLogoutReuslt (Buf* p)
 {
-    //todo:
+    cout << "CT_LogoutReuslt\n";
 }
 
 /*
@@ -291,10 +305,22 @@ void CHandleMessage::handleLoginClassRoom (Buf* p)
     CRoom* proom = ROOMMANAGER->get_room_by_name(st_login_class_room.sClassRoomName);
     if( NULL == proom) {
         SINGLE->bufpool.free(p);
-        LOG(ERROR) << "cat find class room " << st_login_class_room.sClassRoomName <<endl;
-        printf("cat find class room [%s]\n", st_login_class_room.sClassRoomName);
+        LOG(ERROR) << "can't find class room " << st_login_class_room.sClassRoomName <<endl;
+        printf("can't find class room [%s]\n", st_login_class_room.sClassRoomName);
         return;
     }
+    if ((p->getfd() == proom->get_teacher_fd()) || \
+        (strcmp(st_login_class_room.sTeacherName, proom->get_teacher_name().c_str()) == 0))
+#if 0
+        || \
+        (strcmp(st_login_class_room.sClassName, proom->get_class_name().c_str()) == 0) || \
+        (strcmp(st_login_class_room.sClassRoomName, proom->get_room_name().c_str()) == 0))
+#endif
+    {
+        cout << "classroom used by teachername='" << proom->get_teacher_name() << "'" << endl;
+        return;
+    }
+
     proom->set_teacher_fd(p->getfd());
     proom->set_teacher_name(st_login_class_room.sTeacherName);
     proom->set_class_name(st_login_class_room.sClassName);
@@ -327,13 +353,12 @@ void CHandleMessage::handleLogoutClassRoom (Buf* p)
 */
 void CHandleMessage::handleGetStudentDetailInfo (Buf* p)
 {
-    cout << "...CT_GetStudentDetailInfo" << endl;
+    cout << "CT_GetStudentDetailInfo" << endl;
     
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
 
     if (head->cType == CT_GetStudentDetailInfo)
     {
-        cout << "CT_GetStudentDetailInfo..." << endl;
         try {
             sStudentDetail* sd = (sStudentDetail*) ((char*)((MSG_HEAD*)p->ptr()) + MSG_HEAD_LEN);
             cout << "stu_id:" << sd->iStudentId << ", stu_name:" << sd->sStudentName << endl;
@@ -341,6 +366,7 @@ void CHandleMessage::handleGetStudentDetailInfo (Buf* p)
             MutexLockGuard guard (DATABASE->m_mutex);
             PreparedStatement* pstmt = NULL;
             struct sGetStudentDetailInfo detail_info;
+            (void) memset (&detail_info, 0x00, sizeof (detail_info));
 
             pstmt = DATABASE->preStatement (SQL_SELECT_STUDENT_DETAILINFO);
             pstmt->setInt (1, sd->iStudentId);
@@ -410,7 +436,7 @@ void CHandleMessage::handleGetAllStudentInfo (Buf* p)
 void CHandleMessage::handleLeaveEarly (Buf* p)
 {
     cout << "CT_LeaveEarly" << endl;
-    if (NULL != p)
+    if (NULL == p)
         return;
 
 /*
@@ -457,7 +483,7 @@ void CHandleMessage::handleGetTeacherInfo (Buf* p)
 {
     if (p == NULL) return;
 
-    cout << "process: CT_GetTeacherInfo" << endl;
+    cout << "CT_GetTeacherInfo" << endl;
 
     struct sGetTeacherInfo ti;
     memset (&ti, 0x00, sizeof (ti));
@@ -541,6 +567,9 @@ void CHandleMessage::handleSelectedClassRoom (Buf* p)
     CRoom* proom = ROOMMANAGER->get_room(pp->classroom_id);
     if (MCT_STUDENT == pp->client_type) {
         CStudent* pstudent = new CStudent();
+        pstudent->setId (0);
+        pstudent->setOnLine (false);
+        pstudent->setStudentStatus (eCS_OFFLINE);
         if (ROOMMANAGER->get_room_by_fd (p->getfd()))
         {
             printf ("student fd exist in the room\n");
@@ -580,6 +609,9 @@ void CHandleMessage::handleDBRecordFinished (Buf* p)
     if (p == NULL) {
         return;
     }
+
+    p->reset();
+    SINGLE->bufpool.free (p);
 #if 0
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
     struct sDBRecordFinished finished;
@@ -605,8 +637,11 @@ void CHandleMessage::handleGetCourseItemKeyInfoReq (Buf* p) {
     try {
         MutexLockGuard guard (DATABASE->m_mutex);
         PreparedStatement* pstmt = DATABASE->preStatement(SQL_SELECT_ITEM_KEYS);
-        cout << "Req: " << *(int*)p_head->cData();
-        pstmt->setInt(1, *(int*)p_head->cData());
+        //cout << "Req: " << *(int*)p_head->cData();
+        //pstmt->setInt(1, *(int*)p_head->cData());
+        GetCourseItemKeyInfoReq *req = (GetCourseItemKeyInfoReq*) ((char *)p_head->cData());
+        cout << "Req: '" << req->course_item << "'" << endl;
+        pstmt->setString (1, req->course_item);
         ResultSet* rst = pstmt->executeQuery();
         while(rst->next()) {
             strcpy(rsp.keys, rst->getString("keys_info").c_str());

@@ -10,7 +10,7 @@ LoginCheck::~LoginCheck() {
 void LoginCheck::check(Buf* pbuf) {
     struct sLogin login;
     memcpy(&login, ((MSG_HEAD*)pbuf->ptr())->cData(), sizeof(login));
-    printf ("username = [%s], password = [%s]\n", login.username, login.password);
+    //printf ("username = [%s], password = [%s]\n", login.username, login.password);
     int result = 0;
 
     switch(login.type) {
@@ -39,8 +39,10 @@ void LoginCheck::check(Buf* pbuf) {
 #endif
 
     struct sLoginOutResult loginout;
+    (void) memset (&loginout, 0x00, sizeof (loginout));
     loginout.succeed = (0 == result) ? RES_SUCCEED : RES_FAIL;
-    sprintf (loginout.message, (0 == result) ? "Login succeed" : "Login failed");
+    strcpy (loginout.message, (0 == result) ? "Login succeed" : "Login failed");
+    cout << "loginout.succeed: " << loginout.succeed << " loginout.message: " << loginout.message << endl;
     MSG_HEAD* head = (MSG_HEAD*)pbuf->ptr();
     head->cLen = sizeof(MSG_HEAD) + sizeof(loginout);
     head->cType = CT_LoginResult;
@@ -136,13 +138,14 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
 
         Buf* pp = SINGLE->bufpool.malloc();
         MSG_HEAD* p_head = (MSG_HEAD*)pp->ptr();
-        p_head->cLen = sizeof(MSG_HEAD) + sizeof(TSendStudentStatusReq); 
+        p_head->cLen = sizeof(MSG_HEAD) + sizeof (unsigned int) + sizeof(TSendStudentStatusReq); 
         p_head->cType = ST_SendStudentStatus;
 
         TSendStudentStatusReq body;    
         body.student_id = pStudent->getId();
         body.status = eCS_ONLINE;
-        memcpy(p_head->cData(), &body, sizeof(body));
+        *((unsigned int *)p_head->cData()) = 1;      // 设置变化状态的个数为1
+        memcpy((char*)p_head->cData() + sizeof (unsigned int), &body, sizeof(body));
 
         // send student state to teacher.
         pp->setsize(p_head->cLen);      
@@ -151,23 +154,39 @@ int LoginCheck::login_student(int fd, struct sLogin login) {
 
         // send student state to other students.
         CRoom::STUDENTMAP::iterator it;
+        char tempbuf[512];
+        char* ptempbuf = tempbuf;
         int idx = 0;
+        memset (&tempbuf, 0x00, sizeof (tempbuf));
+        for (it = pRoom->m_student_map.begin(); it != pRoom->m_student_map.end(); ++it)
+        {
+            idx++;
+            cout << "id:" << it->second->getId() << ", status:" << it->second->getStudentStatus() << endl;
+            ((TSendStudentStatusReq*)ptempbuf)->student_id = it->second->getId();
+            ((TSendStudentStatusReq*)ptempbuf)->status = it->second->getStudentStatus();
+            ptempbuf += sizeof (TSendStudentStatusReq);
+
+        }
+
+        cout << "idx:" << idx << ", total len:" << idx * sizeof (TSendStudentStatusReq) << endl;
+        //
         for (it = pRoom->m_student_map.begin(); it != pRoom->m_student_map.end(); ++it)
         {
             pp = SINGLE->bufpool.malloc ();
             if (pp != NULL)
             {
-                cout << "send student status to other student id=" << ++idx << endl;
                 p_head = (MSG_HEAD*) pp->ptr();
-                p_head->cLen = MSG_HEAD_LEN + sizeof (TSendStudentStatusReq);
+                p_head->cLen = MSG_HEAD_LEN + sizeof (TSendStudentStatusReq) * idx + sizeof (int);
                 p_head->cType = ST_SendStudentStatus;
 
-                memset (&body, 0x00, sizeof (TSendStudentStatusReq));
-                body.student_id = pStudent->getId ();
-                body.status = eCS_ONLINE;
-                memcpy (p_head->cData(), &body, sizeof (TSendStudentStatusReq));
+                memcpy (p_head->cData(), &idx, sizeof (int));
+                //cout << "  idx ;; " << *(int *)p_head->cData() << endl;
+                memcpy ((char*)p_head->cData() + sizeof (int), tempbuf, sizeof (TSendStudentStatusReq)*idx);
+                //cout << " ID: " << ((TSendStudentStatusReq*) ((char*) p_head->cData() + sizeof (int)))->student_id << endl;
+                //cout << " STATUS: " << ((TSendStudentStatusReq*) ((char*) p_head->cData()+ sizeof (int)))->status << endl;
 
                 pp->setsize (p_head->cLen);
+                //cout << "p_head->cLen = " << p_head->cLen << endl;
                 pp->setfd (it->first);
                 SINGLE->sendqueue.enqueue (pp);
             }

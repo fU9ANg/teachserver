@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 project(server)
 
 #SET( CMAKE_CXX_FLAGS_DEBUG " -O0 -Wall -Werror -g -ggdb -DTEACHER_NOT_LOGIN")
-SET( CMAKE_CXX_FLAGS_DEBUG " -O0 -Wall -Werror -g -ggdb")
+#SET( CMAKE_CXX_FLAGS_DEBUG " -O0 -Wall -Werror -g -ggdb")
+SET( CMAKE_CXX_FLAGS_DEBUG " -O0 -Wall -g -ggdb")
 SET( CMAKE_C_FLAGS_DEBUG " -O0 -Wall -Werror -g -ggdb")
 SET( CMAKE_BUILD_TYPE Debug )
 
@@ -49,6 +50,7 @@ SET( SRC_LIST
 ./content/roommanager.cpp
 ./content/LoginCheck.cpp
 ./content/makehouse.cpp
+./content/puzzle.cpp
 )
 
 SET(EXTRA_LIBS 

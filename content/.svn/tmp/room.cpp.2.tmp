@@ -43,8 +43,7 @@ void CRoom::add_student(int fd, CStudent* pstudent) {
     }
 
     m_student_map.insert(pair<int, CStudent*>(fd, pstudent));
-    printf ("student=%p, used socket_fd=%d, into room (id=%d)\n", \
-            pstudent, fd, m_room_id);
+    printf("%d:%d---------------%p\n",m_room_id, fd, pstudent);
 }
 
 void CRoom::update_all_student_status (int fd)
@@ -63,7 +62,7 @@ void CRoom::update_all_student_status (int fd)
     // 设置某一学生的状态为OFFLINE
     it = m_student_map.find (fd);
     if (m_student_map.end() != it) {
-        printf("room [%d] student disconnected fd [%d], id [%i], name [%s]\n",
+        printf("room [%d] student disconnected fd [%d] id [%i], name [%s]\n",
                 m_room_id,
                 it->first,
                 it->second->getId(),
@@ -77,8 +76,6 @@ void CRoom::update_all_student_status (int fd)
         (void) memset (&body, 0x00, sizeof (body));
         body.student_id = it->second->getId();
         body.status = it->second->getStudentStatus();
-        //if (body.student_id == 0)
-        //    continue;
         (void)memcpy (p_current_data, &body, sizeof (body));
         cout << "body.student_id = " << body.student_id << endl;
         cout << "body.status = " << body.status << endl;
@@ -102,12 +99,9 @@ void CRoom::update_all_student_status (int fd)
         pp->setsize (head->cLen);
         pp->setfd (it->first);
         cout << "================================++++++++++++++++++++===============" << endl;
-        cout << "CTYPE: " << ((MSG_HEAD*) (p->ptr()))->cType << endl;
         cout << "LEN: " << *(unsigned int*) ((char*)p->ptr() + MSG_HEAD_LEN) << endl;
         cout << "STUDENT_ID: " << *(unsigned int*) ((char*)p->ptr() + MSG_HEAD_LEN + sizeof (unsigned int)) << endl;
         cout << "STATUS: " << *(unsigned int*) ((char*)p->ptr() + MSG_HEAD_LEN + sizeof (int) + sizeof (int)) << endl;
-        cout << "STUDENT_ID: " << *(unsigned int*) ((char*)p->ptr() + MSG_HEAD_LEN + sizeof (int) + sizeof (int) + sizeof (int)) << endl;
-        cout << "STATUS: " << *(unsigned int*) ((char*)p->ptr() + MSG_HEAD_LEN + sizeof (int) + sizeof (int)+ sizeof (int) + sizeof (int)) << endl;
         SINGLE->sendqueue.enqueue (pp);
     }
 
@@ -164,14 +158,14 @@ void CRoom::del_client(int fd) {
     }
 
     if (fd == m_white_fd) {
-        printf("room [%d] whiteboard disconnected!\n", m_room_id);
+        printf("room [%d] teacher disconnected!\n", m_room_id);
         m_white_fd = 0;
         return;
     }
-    //del_student(fd);
+    // del_student(fd);
 
     // 改为向所有的学生端发送数据
-    update_all_student_status (fd);
+    //update_all_student_status (fd);
 }
 
 CStudent* CRoom::get_student_by_fd (int fd)
@@ -217,15 +211,6 @@ void CRoom::add_course (CCourse* pCourse)
         m_course_list.push_back (pCourse);
 }
 
-void CRoom::clear_all_course ()
-{
-    COURSELIST::iterator it;
-    for (it = m_course_list.begin(); it != m_course_list.end(); ) {
-        delete *it;
-        m_course_list.erase(it++);
-    }
-}
-
 int CRoom::get_teacher_fd ()
 {
     return this->m_teacher_fd;
@@ -234,11 +219,6 @@ int CRoom::get_teacher_fd ()
 string CRoom::get_room_name ()
 {
     return this->m_room_name;
-}
-
-string CRoom::get_class_name()
-{
-    return this->m_class_name;
 }
 
 int CRoom::get_white_fd ()
@@ -250,7 +230,7 @@ CRoom* CRoom::get_room_by_fd (int fd)
 {
     STUDENTMAP::iterator itt;
     for (itt = m_student_map.begin(); itt != m_student_map.end(); ++itt) {
-        printf("[student_fd=%d][student=%p]\n", itt->first, itt->second);
+        printf("[%d][%p]\n", itt->first, itt->second);
     }
 
     STUDENTMAP::iterator it = m_student_map.find(fd);
@@ -285,7 +265,6 @@ int CRoom::reset() {
     }
     m_white_fd = 0;
     m_teacher_fd = 0;
-    m_teacher_name.clear();
     return 0;
 }
 
@@ -298,7 +277,7 @@ void CRoom::teacher_disconnect() {
         p_head->cType = ST_SendStudentStatus;
 
         TSendStudentStatusReq body;
-        body.student_id = 0xFFFFFFFF;
+        body.student_id = 0XFFFFFFFF;
         body.status = 0xFFFFFFFF;
         memcpy(p_head->cData(), &body, sizeof(body));
 
@@ -306,10 +285,6 @@ void CRoom::teacher_disconnect() {
         p->setfd(it->first);
         SINGLE->sendqueue.enqueue(p);
     }
-
-    /// 释放某个电子教室
-    this->reset();
-    
 }
 
 CGroup* CRoom::get_group_by_fd (int fd)
@@ -404,15 +379,4 @@ void CRoom::end_puzzle_by_fd(int fd) {
     if (NULL != p_puzzle) {
         p_puzzle->end();
     }
-}
-
-void CRoom::build_house_start(){
-    CGroup* p_group = new CGroup("group1");
-    STUDENTMAP::iterator iter;
-    for(iter = m_student_map.begin(); iter != m_student_map.end(); ++iter) {
-        p_group->add_student_to_group(iter->first, iter->second);
-    }
-}
-
-void CRoom::build_house_end(){
 }

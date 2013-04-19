@@ -6,6 +6,9 @@ enum CommandType
 {
     CT_Test = 1,
     CT_ChangeScene = 100,
+    ST_ChangeScene,
+    CT_ControlChangeScene,
+    ST_ControlChangeScene,
 
     CT_Login = 150,      // 登录 (所有端)
     CT_LoginResult,      // 登录结果 (所有端)
@@ -13,6 +16,7 @@ enum CommandType
     CT_GetCourseDB,      // 获得数据库中的课程信息 (教师端)
     CT_SetCourseGroup,   // 设置开启的课程列表 (教师端)
     CT_GetCourseGroup,      // 获得课程列表 (教师端和所有学生端)
+    ST_GetCourseGroup,      // 服务器回应课程列表 (教师端和所有学生端)
     CT_GetCourseItemCount,  // 获得课程列表的子项数量 (教师端)
     CT_GetCourseItem,    // 获得课程列表的子项 (教师端)
     CT_Logout,           // 登出 (所有端)
@@ -121,6 +125,15 @@ enum CommandType
     CT_BuildHouse_EmailAmerica,         // 启动邮件2 (教师端) *
     ST_BuildHouse_EmailAmerica,         // 显示邮件2信息 (白板端) *
 
+    CT_BuildHouse_Update,               // 更新操作 (包括 移动,旋转,缩放)
+    ST_BuildHouse_Update,               // 服务器->关联的学生端
+    CT_BuildHouse_Change_Layer,         // 更新层次
+    ST_BuildHouse_Change_Layer,         // 服务器->关联的学生端
+    CT_BuildHouse_Add_Pic,              // 添加一张图片
+    ST_BuildHouse_Add_Pic,              // 服务器->关联的学生端
+    CT_BuildHouse_Del_Pic,              // 删除一张图片
+    ST_BuildHouse_Del_Pic,              // 服务器->关联的学生端
+
     CT_BuildHouse_Activation,           // 激活 (教师端) *
     ST_BuildHouse_Activation,           // 激活场景 (白板端) *
     CT_BuildHouse_Role,                 // 角色登场 (教师端) *
@@ -135,6 +148,8 @@ enum CommandType
     ST_Puzzle_GameStart,        // 发送拼图游戏开始信息 (学生端和白板端)
     CT_Puzzle_GetPic,         // 发送某一拼图原图 (学生端和白板端) **
     ST_Puzzle_GetPic,         // 发送某一拼图原图 (学生端和白板端) **
+    CT_Puzzle_UpdatePic,        // 学生端拼成功一块后发送
+    ST_Puzzle_UpdatePic,        // 学生端拼成功一块后转发到白板端
     CT_Puzzle_IconStatus,       // 获得拼图是否正确的状态 (学生端) *
     ST_Puzzle_IconStatus,       // 发送拼图是否正确的状态 (白板端) *
     CT_Puzzle_Play,             // 拼图播放 (学生端) *
@@ -157,7 +172,13 @@ enum CommandType
 };
 
 
+
 // 下面是所有用到的数据结构体
+//
+struct sCommonStruct
+{
+    unsigned int iValue;
+};
 
 struct sDBRecordFinished
 {
@@ -329,10 +350,11 @@ struct sGetCourseItem
 /**
  * 学生在线状态
  */
+
+//| MSG_HEAD | len | struct1 | student2 | ... | studentx |
+//unsigned int len;
 typedef struct ST_SendStudentStatusReq {
     unsigned int student_id;
-    //0 断线
-    //!0 在线
     unsigned int status;
 }TSendStudentStatusReq;
 
@@ -438,12 +460,24 @@ enum ePuzzleType
     PT_SQUARE = 1,  // 方块
     PT_CIRCLE,      // 圆形
 };
+struct sPuzzleType
+{
+    unsigned int type;
+};
+
+struct sPuzzleSize
+{
+    unsigned int rowCount;
+    unsigned int columnCount;
+};
+/*
 
 struct sPuzzleGameStart
 {
     char type;
     char size;  // 20/12
 };
+*/
 /*
 | len | CT_Puzzle_GameStart | struct sPuzzleGameStart |
 | len | ST_Puzzle_GameStart | struct sPuzzleGameStart |
@@ -522,6 +556,7 @@ enum ePuzzleActionTypePic
 //学生拼图正确时发送发送学生是那个拼图块拼正确了
 struct sPuzzleUpdatePic
 {
+    int student_id;
     int pic_idx; // 某张拼图块
 };
 
@@ -547,12 +582,48 @@ typedef struct sSubmitData
 }MSG_HEAD;
 
 typedef struct _stCT_GetCourseItemKeyInfoReq{
-    unsigned int course_item_id;
+    //unsigned int course_item_id;
+    char course_item[64];
 }GetCourseItemKeyInfoReq;
 
 typedef struct _stCT_GetCourseItemKeyInfoRsp{
     char keys[512];
 }GetCourseItemKeyInfoRsp;
+
+typedef struct Make_House_Update {
+    int node_id;
+    float to_x;
+    float to_y;
+    float zoom;
+    float angle;
+} TMake_House_Update;
+/*
+typedef struct Make_House_Move{
+    int node_id;
+    float to_x;
+    float to_y;
+}TMake_House_Move;
+
+typedef struct Make_House_Zoom{
+    int node_id;
+    float zoom;
+    float angle;
+}TMake_House_Zoom;
+*/
+typedef struct Make_House_Change_Layer{
+    int node_id;
+    int layer;
+}TMake_House_Change_Layer;
+
+typedef struct Make_House_Add_Pic {
+    int node_id;
+    char picture_name[40];
+}TMake_House_Add_Pic;
+
+typedef struct Make_House_Del_Pic {
+    int node_id;
+    char picture_name[40];
+}TMake_House_Del_Pic;
 
 #define MSG_HEAD_LEN sizeof(struct sSubmitData)
 

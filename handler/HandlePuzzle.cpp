@@ -4,6 +4,7 @@
  */
 
 #include "HandleMessage.h"
+#include "roommanager.h"
 
 #include "protocol.h"
 #include "Buf.h"
@@ -18,6 +19,10 @@ void CHandleMessage::handlePuzzle_GameStart (Buf* p)
 {
     //todo:
     CHandleMessage::postTeacherToAllStudent(p, ST_Puzzle_GameStart);
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if (NULL != p_room) {
+        p_room->puzzle_start();
+    }
     printf("send  Puzzle_GameStart to students!\n");
     return;
 }
@@ -167,19 +172,19 @@ void CHandleMessage::handlePuzzle_CalcScore (Buf* p)
 */
 void CHandleMessage::handlePuzzle_EndGame (Buf* p)
 {
-#ifdef _EXECUTE_
-    if (p == NULL)
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if (NULL == p_room) {
+        SINGLE->bufpool.free(p);
         return;
-
-    cout << "process: CT_Puzzle_EndGame" << endl;
-    MSG_HEAD* head = (MSG_HEAD*)p->ptr();
-
-    if (head->cType == CT_Puzzle_EndGame) {
-        CHandleMessage::postTeacherToWhite (p, ST_Puzzle_EndGame);
     }
 
-    return;
-#endif
+    if (p->getfd() == p_room->get_teacher_fd()) {
+        p_room->puzzle_end();
+    }
+    else{
+        p_room->end_puzzle_by_fd(p->getfd());
+    }
+    SINGLE->bufpool.free(p);
 }
 
 void CHandleMessage::handlePuzzle_GetPic(Buf* p)
@@ -246,4 +251,36 @@ void CHandleMessage::handlePuzzle_GetPic(Buf* p)
         } while (0);
 #endif
 #endif
+}
+
+void CHandleMessage::handlePuzzle_UpdatePic(Buf* p) {
+    MSG_HEAD* pp = (MSG_HEAD*)p->ptr();
+    pp->cType = ST_Puzzle_UpdatePic;
+    struct sPuzzleUpdatePic *updatepic = (struct sPuzzleUpdatePic*)pp->cData();
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if (NULL == p_room ) {
+        SINGLE->bufpool.free(p);
+        printf("cat find room %s %s %d!\n", __FILE__, __FUNCTION__, __LINE__);
+        return;
+    }
+
+    CStudent* p_student = p_room->get_student_by_fd(p->getfd());
+
+    if (NULL == p_student ) {
+        printf("cat find student %s %s %d!\n", __FILE__, __FUNCTION__, __LINE__);
+        SINGLE->bufpool.free(p);
+        return;
+    }
+
+#if 0
+    updatepic->student_id = p_student->getId();
+#else
+    updatepic->student_id = 1;
+#endif
+
+    p->setfd(p_room->get_white_fd());
+    p->setsize(sizeof(MSG_HEAD) + sizeof(struct sPuzzleUpdatePic));
+    SINGLE->sendqueue.enqueue(p);
+
+    //postStudentToWhite(p, ST_Puzzle_UpdatePic);
 }

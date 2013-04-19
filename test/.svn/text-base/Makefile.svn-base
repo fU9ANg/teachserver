@@ -5,6 +5,7 @@ LINKS	= -lpthread -lrt -lev -lglog -lmysqlcppconn -llua5.2 -lgtest
 
 OBJS	= twomapT_unittest.o \
 		  PoolT_unittest.o \
+		  Buf_unittest.o \
 		  libev_unittest.o \
 		  database_unittest.o \
 		  follow_unitest.o \
@@ -33,6 +34,8 @@ OBJS	= twomapT_unittest.o \
 		  ../content/roommanager.o \
 		  ../content/student.o \
 		  ../content/teacher.o \
+		  ../content/makehouse.o \
+		  ../content/puzzle.o \
 		  ../Config.o \
 		  gtest_main.o
 #Evloop_unittest.o \

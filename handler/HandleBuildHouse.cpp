@@ -7,6 +7,8 @@
 
 #include "protocol.h"
 #include "Buf.h"
+#include "makehouse.h"
+#include "roommanager.h"
 
 /*
 =====================
@@ -210,6 +212,14 @@ void CHandleMessage::handleBuildHouse_GameStart (Buf* p)
 
     cout << "process: CT_BuildHouse_GameStart" << endl;
     MSG_HEAD* head = (MSG_HEAD*)p->ptr();
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if (NULL == p_room) {
+        SINGLE->bufpool.free(p);
+        return;
+    }
+
+    //造房子开始
+    p_room->build_house_start();
 
     if (head->cType == CT_BuildHouse_GameStart) {
         CHandleMessage::postTeacherToWhite (p, ST_BuildHouse_GameStart);
@@ -387,4 +397,114 @@ void CHandleMessage::handleBuildHouse_Stamp (Buf* p)
 void CHandleMessage::handleBuildHouse_SaveHouse (Buf* p)
 {
     //todo:
+}
+
+/*
+void CHandleMessage::handleBuildHouse_Move(Buf* p)
+{
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if ( NULL == p_room) {
+        return;
+    }
+    CGroup* p_group = p_room->get_group_by_fd(p->getfd());
+    if ( NULL == p_group) {
+        return;
+    }
+
+    TMake_House_Move* t_move = (TMake_House_Move*)p->ptr();
+    p_group->get_make_house()->move(t_move->node_id, t_move->to_x, t_move->to_y);
+
+    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Move);
+}
+
+void CHandleMessage::handleBuildHouse_Zoom(Buf* p)
+{
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if ( NULL == p_room) {
+        return;
+    }
+    CGroup* p_group = p_room->get_group_by_fd(p->getfd());
+    if ( NULL == p_group) {
+        return;
+    }
+
+    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Zoom);
+}
+*/
+
+/*
+=====================
+ 更新操作 (包括 移动,旋转,缩放)
+=====================
+*/
+void CHandleMessage::handleBuildHouse_Update (Buf* p)
+{
+}
+
+/*
+=====================
+ 更新层次
+=====================
+*/
+void CHandleMessage::handleBuildHouse_Change_Layer(Buf* p)
+{
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if ( NULL == p_room) {
+        return;
+    }
+    CGroup* p_group = p_room->get_group_by_fd(p->getfd());
+    if ( NULL == p_group) {
+        return;
+    }
+
+    TMake_House_Change_Layer* t_change_layer = (TMake_House_Change_Layer*)p->ptr();
+    p_group->get_make_house()->layer_up(t_change_layer->node_id, t_change_layer->layer);
+
+    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Change_Layer);
+}
+
+/*
+=====================
+ 添加一张图片
+=====================
+*/
+void CHandleMessage::handleBuildHouse_Add_Pic(Buf* p)
+{
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if ( NULL == p_room) {
+        return;
+    }
+
+    CGroup* p_group = p_room->get_group_by_fd(p->getfd());
+    if ( NULL == p_group) {
+        return;
+    }
+
+    TMake_House_Add_Pic* p_add_pic = (TMake_House_Add_Pic*)p->ptr(); 
+    CNode* p_node = new CNode();
+    p_node->set_node_id(p_add_pic->node_id);
+    p_node->set_name(p_add_pic->picture_name);
+
+    p_group->get_make_house()->add(p->getfd(), p_node);
+
+    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Add_Pic);
+}
+
+/*
+=====================
+ 删除一张图片
+=====================
+*/
+void CHandleMessage::handleBuildHouse_Del_Pic(Buf* p)
+{
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
+    if ( NULL == p_room) {
+        return;
+    }
+    CGroup* p_group = p_room->get_group_by_fd(p->getfd());
+    if ( NULL == p_group) {
+        return;
+    }
+    //TMake_House_Del_Pic * p_del_pic = (TMake_House_Del_Pic*)p->ptr();
+    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Del_Pic);
 }
