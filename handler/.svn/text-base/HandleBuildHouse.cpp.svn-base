@@ -439,6 +439,29 @@ void CHandleMessage::handleBuildHouse_Zoom(Buf* p)
 */
 void CHandleMessage::handleBuildHouse_Update (Buf* p)
 {
+    cout << "CT_BuildHouse_Update" << endl;
+
+    CRoom* p_room = ROOMMANAGER->get_room_by_fd (p->getfd());
+    if (p_room == NULL)
+        return;
+    CGroup* p_group = p_room->get_group_by_fd (p->getfd());
+    if (p_group == NULL)
+        return;
+
+    TMake_House_Update* t_update = (TMake_House_Update*) ((char*)p->ptr() + MSG_HEAD_LEN);
+
+    CMakeHouse* p_make_house = p_group->get_make_house();
+    if (p_make_house == NULL)
+        return;
+
+    if (p_make_house->update (p->getfd(), t_update->node_id, \
+            t_update->x, t_update->y, t_update->angle, t_update->zoom) != 0)
+    {
+        cout << "CT_BuildHouse_Update Failure!" << endl;
+        return ;
+    }
+
+    p_group->sendToOtherStudent (p, ST_BuildHouse_Update);
 }
 
 /*
@@ -448,6 +471,8 @@ void CHandleMessage::handleBuildHouse_Update (Buf* p)
 */
 void CHandleMessage::handleBuildHouse_Change_Layer(Buf* p)
 {
+    cout << "CT_BuildHouse_Change_Layer" << endl;
+
     CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
     if ( NULL == p_room) {
         return;
@@ -457,10 +482,18 @@ void CHandleMessage::handleBuildHouse_Change_Layer(Buf* p)
         return;
     }
 
-    TMake_House_Change_Layer* t_change_layer = (TMake_House_Change_Layer*)p->ptr();
-    p_group->get_make_house()->layer_up(t_change_layer->node_id, t_change_layer->layer);
+    TMake_House_Change_Layer* t_change_layer = \
+           (TMake_House_Change_Layer*) (((char*)p->ptr()) + MSG_HEAD_LEN);
+    if (t_change_layer < 0)
+        p_group->get_make_house()->layer_up(t_change_layer->node_id, t_change_layer->layer);
+    else if (t_change_layer > 0)
+        p_group->get_make_house()->layer_down(t_change_layer->node_id, t_change_layer->layer);
+    else {
+        cout << "change layer = 0" << endl;
+        return;
+    }
 
-    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Change_Layer);
+    p_group->sendToOtherStudent (p, ST_BuildHouse_Change_Layer);
 }
 
 /*
@@ -470,6 +503,7 @@ void CHandleMessage::handleBuildHouse_Change_Layer(Buf* p)
 */
 void CHandleMessage::handleBuildHouse_Add_Pic(Buf* p)
 {
+    cout << "CT_BuildHouse_Add_Pic" << endl;
     CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
     if ( NULL == p_room) {
         return;
@@ -480,14 +514,18 @@ void CHandleMessage::handleBuildHouse_Add_Pic(Buf* p)
         return;
     }
 
-    TMake_House_Add_Pic* p_add_pic = (TMake_House_Add_Pic*)p->ptr(); 
-    CNode* p_node = new CNode();
+    TMake_House_Add_Pic* p_add_pic = (TMake_House_Add_Pic*)((char*)p->ptr() + MSG_HEAD_LEN); 
+    CNode* p_node = new CNode(p->getfd());
+
+    unsigned int node_id = p_room->getAutoNodeId();
+    p_add_pic->node_id = node_id;
+
     p_node->set_node_id(p_add_pic->node_id);
     p_node->set_name(p_add_pic->picture_name);
 
-    p_group->get_make_house()->add(p->getfd(), p_node);
+    p_group->get_make_house()->add(p_node->get_node_id(), p_node);
 
-    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Add_Pic);
+    p_group->sendToOtherStudent (p, ST_BuildHouse_Add_Pic);
 }
 
 /*
@@ -497,6 +535,7 @@ void CHandleMessage::handleBuildHouse_Add_Pic(Buf* p)
 */
 void CHandleMessage::handleBuildHouse_Del_Pic(Buf* p)
 {
+    cout << "CT_BuildHouse_Del_Pic" << endl;
     CRoom* p_room = ROOMMANAGER->get_room_by_fd(p->getfd());
     if ( NULL == p_room) {
         return;
@@ -505,6 +544,13 @@ void CHandleMessage::handleBuildHouse_Del_Pic(Buf* p)
     if ( NULL == p_group) {
         return;
     }
-    //TMake_House_Del_Pic * p_del_pic = (TMake_House_Del_Pic*)p->ptr();
-    CHandleMessage::postTeacherToAllStudent(p, ST_BuildHouse_Del_Pic);
+
+    TMake_House_Del_Pic* p_del_pic = (TMake_House_Del_Pic*) ((char*)p->ptr() + MSG_HEAD_LEN);
+
+    if (p_group->get_make_house()->del(p_del_pic->node_id) != 0) {
+        cout << "CT_BuildHouse_Del_Pic Failure!" << endl;
+        return ;
+    }
+
+    p_group->sendToOtherStudent (p, ST_BuildHouse_Del_Pic);
 }

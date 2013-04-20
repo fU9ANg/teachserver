@@ -166,8 +166,14 @@ enum CommandType
     CT_Puzzle_EndGame,          // 结束拼图课程 (教师端) *
     ST_Puzzle_EndGame,          // 结束拼图课程 (白板端和所有学生端) *
 
+
+
     CT_Scene_End,
     ST_Scene_End,
+    CT_RainbowValley_HouseNum = 800,
+    ST_RainbowValley_HouseNum,
+    CT_RainbowValley_HouseInfo,
+    ST_RainbowValley_HouseInfo,
     ST_Dynamic_MessageType = 10000,  // 要求所发送的学生信息从10000号开始
 };
 
@@ -592,8 +598,8 @@ typedef struct _stCT_GetCourseItemKeyInfoRsp{
 
 typedef struct Make_House_Update {
     int node_id;
-    float to_x;
-    float to_y;
+    float x;
+    float y;
     float zoom;
     float angle;
 } TMake_House_Update;
@@ -624,6 +630,21 @@ typedef struct Make_House_Del_Pic {
     int node_id;
     char picture_name[40];
 }TMake_House_Del_Pic;
+
+typedef struct sRainbowValley_House_Num{
+	int num;
+}THouse_Number;
+
+
+//|MWG_HEAD|int len|sRainbowValley_HouseItem_Info1|sRainbowValley_HouseItem_Info2|...|
+typedef struct sRainbowValley_HouseItem_Info{
+	char picture_name[40];
+	int layer;
+	float x;
+	float y;
+	float zoom;
+	float angle;
+}THouseItem_Info;
 
 #define MSG_HEAD_LEN sizeof(struct sSubmitData)
 

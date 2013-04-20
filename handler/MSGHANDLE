@@ -101,3 +101,8 @@
     MSGNAME (CT_Scene_End, handleSceneEnd);
     MSGNAME (CT_Puzzle_GetPic, handlePuzzle_GetPic);
     MSGNAME (CT_Puzzle_UpdatePic, handlePuzzle_UpdatePic);
+
+    //////////////////
+
+    MSGNAME (CT_RainbowValley_HouseNum, handleRainbowValley_HouseNum);
+    MSGNAME (CT_RainbowValley_HouseInfo, handleRainbowValley_HouseInfo);

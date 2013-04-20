@@ -1,55 +1,19 @@
 K 25
 svn:wc:ra_dav:version-url
 V 178
-/svn/4.YW/!svn/ver/227/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content
-END
-roommanager.h
-K 25
-svn:wc:ra_dav:version-url
-V 192
-/svn/4.YW/!svn/ver/166/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/roommanager.h
-END
-room.cpp
-K 25
-svn:wc:ra_dav:version-url
-V 187
-/svn/4.YW/!svn/ver/227/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/room.cpp
-END
-tags
-K 25
-svn:wc:ra_dav:version-url
-V 182
-/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/tags
-END
-game.h
-K 25
-svn:wc:ra_dav:version-url
-V 185
-/svn/4.YW/!svn/ver/115/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/game.h
-END
-courseitem.cpp
-K 25
-svn:wc:ra_dav:version-url
-V 192
-/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/courseitem.cpp
-END
-teacher.h
-K 25
-svn:wc:ra_dav:version-url
-V 187
-/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/teacher.h
+/svn/4.YW/!svn/ver/245/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content
 END
 makehouse.cpp
 K 25
 svn:wc:ra_dav:version-url
 V 192
-/svn/4.YW/!svn/ver/225/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/makehouse.cpp
+/svn/4.YW/!svn/ver/245/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/makehouse.cpp
 END
 room.h
 K 25
 svn:wc:ra_dav:version-url
 V 185
-/svn/4.YW/!svn/ver/226/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/room.h
+/svn/4.YW/!svn/ver/245/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/room.h
 END
 grade.cpp
 K 25
@@ -57,29 +21,29 @@ svn:wc:ra_dav:version-url
 V 187
 /svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/grade.cpp
 END
-courseitem.h
-K 25
-svn:wc:ra_dav:version-url
-V 190
-/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/courseitem.h
-END
 main.cpp
 K 25
 svn:wc:ra_dav:version-url
 V 186
 /svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/main.cpp
 END
-student.cpp
+courseitem.h
 K 25
 svn:wc:ra_dav:version-url
 V 190
-/svn/4.YW/!svn/ver/186/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/student.cpp
+/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/courseitem.h
 END
 makehouse.h
 K 25
 svn:wc:ra_dav:version-url
 V 190
-/svn/4.YW/!svn/ver/220/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/makehouse.h
+/svn/4.YW/!svn/ver/245/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/makehouse.h
+END
+student.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 190
+/svn/4.YW/!svn/ver/186/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/student.cpp
 END
 grade.h
 K 25
@@ -152,4 +116,40 @@ K 25
 svn:wc:ra_dav:version-url
 V 189
 /svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/teacher.cpp
+END
+room.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 187
+/svn/4.YW/!svn/ver/245/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/room.cpp
+END
+roommanager.h
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/4.YW/!svn/ver/166/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/roommanager.h
+END
+tags
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/tags
+END
+game.h
+K 25
+svn:wc:ra_dav:version-url
+V 185
+/svn/4.YW/!svn/ver/115/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/game.h
+END
+courseitem.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/courseitem.cpp
+END
+teacher.h
+K 25
+svn:wc:ra_dav:version-url
+V 187
+/svn/4.YW/!svn/ver/99/%E4%B8%9A%E5%8A%A1/004.%E5%B9%BC%E6%95%99%E5%B9%B3%E5%8F%B0%E5%B1%95%E6%BC%94%E7%89%88/3.%E5%8A%9F%E8%83%BD/%E6%9C%8D%E5%8A%A1%E5%99%A8/teachserver/content/teacher.h
 END

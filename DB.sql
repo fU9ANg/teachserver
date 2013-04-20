@@ -248,7 +248,7 @@ CREATE TABLE `item` (
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
 INSERT INTO `item` VALUES (1,'空白');
-INSERT INTO `item` VALUES (2,'串场动画');
+INSERT INTO `item` VALUES (2,'动画串场');
 INSERT INTO `item` VALUES (3,'控场动画');
 INSERT INTO `item` VALUES (4,'互动');
 INSERT INTO `item` VALUES (5,'互动环节2');
@@ -259,6 +259,7 @@ INSERT INTO `item` VALUES (8,'拍照');
 INSERT INTO `item` VALUES (9,'拼图');
 INSERT INTO `item` VALUES (10,'示范造房');
 INSERT INTO `item` VALUES (11,'学生造房');
+INSERT INTO `item` VALUES (12, '造房串场');
 /*!40000 ALTER TABLE `item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +285,7 @@ INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (1,3, '待
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (1,6, '开始,停止');
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (2,2, '待机,一级,二级,三级,大幕拉开,下一章节');
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (2,7, '开始,停止');
-INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,2, '待机,一级,二级,三级,进入下一阶段,彩,虹,小,屋,彩虹谷,小怪物,创造游戏,下一章');
+INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,12, '待机,一级,二级,三级,进入下一阶段,彩,虹,小,屋,彩虹谷,小怪物,创造游戏,下一章');
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,4, '监视器,彩虹谷,下一章节');
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,8, '盖章,咔嚓');
 INSERT INTO `course_item`(`course_id`, `item_id`, `keys_info`) VALUES (3,10, '');

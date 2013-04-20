@@ -54,13 +54,13 @@ am_server_OBJECTS = main.$(OBJEXT) Single.$(OBJEXT) Config.$(OBJEXT) \
 	HandleMessage.$(OBJEXT) HandleBuildHouse.$(OBJEXT) \
 	HandleExercise.$(OBJEXT) HandlePuzzle.$(OBJEXT) \
 	HandleCartoon.$(OBJEXT) HandleSprite.$(OBJEXT) \
-	HandleClassRoom.$(OBJEXT) teacher.$(OBJEXT) \
-	courseitem.$(OBJEXT) roommanager.$(OBJEXT) course.$(OBJEXT) \
-	student.$(OBJEXT) game.$(OBJEXT) grade.$(OBJEXT) \
-	LoginCheck.$(OBJEXT) room.$(OBJEXT) ThreadPool.$(OBJEXT) \
-	database.$(OBJEXT) Evloop.$(OBJEXT) RecvTask.$(OBJEXT) \
-	SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) Sock.$(OBJEXT) \
-	makehouse.$(OBJEXT) puzzle.$(OBJEXT)
+	HandleClassRoom.$(OBJEXT) HandleRainbowValley.$(OBJEXT) \
+	teacher.$(OBJEXT) courseitem.$(OBJEXT) roommanager.$(OBJEXT) \
+	course.$(OBJEXT) student.$(OBJEXT) game.$(OBJEXT) \
+	grade.$(OBJEXT) LoginCheck.$(OBJEXT) room.$(OBJEXT) \
+	ThreadPool.$(OBJEXT) database.$(OBJEXT) Evloop.$(OBJEXT) \
+	RecvTask.$(OBJEXT) SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) \
+	Sock.$(OBJEXT) makehouse.$(OBJEXT) puzzle.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@
@@ -197,7 +197,8 @@ server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h \
 	./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp \
 	./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp \
 	./handler/HandleSprite.cpp ./handler/HandleMessage.h \
-	./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h \
+	./handler/HandleClassRoom.cpp \
+	./handler/HandleRainbowValley.cpp ./ThreadPool.h ./twomapT.h \
 	./database.h ./content/teacher.cpp ./content/courseitem.cpp \
 	./content/roommanager.cpp ./content/course.cpp \
 	./content/courseitem.h ./content/student.cpp ./content/room.h \
@@ -319,6 +320,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HandleExercise.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HandleMessage.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HandlePuzzle.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HandleRainbowValley.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/HandleSprite.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LoginCheck.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ProcessManager.Po@am__quote@
@@ -521,6 +523,20 @@ HandleClassRoom.obj: ./handler/HandleClassRoom.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./handler/HandleClassRoom.cpp' object='HandleClassRoom.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
+
+HandleRainbowValley.o: ./handler/HandleRainbowValley.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleRainbowValley.o -MD -MP -MF $(DEPDIR)/HandleRainbowValley.Tpo -c -o HandleRainbowValley.o `test -f './handler/HandleRainbowValley.cpp' || echo '$(srcdir)/'`./handler/HandleRainbowValley.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/HandleRainbowValley.Tpo $(DEPDIR)/HandleRainbowValley.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./handler/HandleRainbowValley.cpp' object='HandleRainbowValley.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleRainbowValley.o `test -f './handler/HandleRainbowValley.cpp' || echo '$(srcdir)/'`./handler/HandleRainbowValley.cpp
+
+HandleRainbowValley.obj: ./handler/HandleRainbowValley.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleRainbowValley.obj -MD -MP -MF $(DEPDIR)/HandleRainbowValley.Tpo -c -o HandleRainbowValley.obj `if test -f './handler/HandleRainbowValley.cpp'; then $(CYGPATH_W) './handler/HandleRainbowValley.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleRainbowValley.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/HandleRainbowValley.Tpo $(DEPDIR)/HandleRainbowValley.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='./handler/HandleRainbowValley.cpp' object='HandleRainbowValley.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleRainbowValley.obj `if test -f './handler/HandleRainbowValley.cpp'; then $(CYGPATH_W) './handler/HandleRainbowValley.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleRainbowValley.cpp'; fi`
 
 teacher.o: ./content/teacher.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT teacher.o -MD -MP -MF $(DEPDIR)/teacher.Tpo -c -o teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp

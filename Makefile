@@ -54,13 +54,13 @@ am_server_OBJECTS = main.$(OBJEXT) Single.$(OBJEXT) Config.$(OBJEXT) \
 	HandleMessage.$(OBJEXT) HandleBuildHouse.$(OBJEXT) \
 	HandleExercise.$(OBJEXT) HandlePuzzle.$(OBJEXT) \
 	HandleCartoon.$(OBJEXT) HandleSprite.$(OBJEXT) \
-	HandleClassRoom.$(OBJEXT) teacher.$(OBJEXT) \
-	courseitem.$(OBJEXT) roommanager.$(OBJEXT) course.$(OBJEXT) \
-	student.$(OBJEXT) game.$(OBJEXT) grade.$(OBJEXT) \
-	LoginCheck.$(OBJEXT) room.$(OBJEXT) ThreadPool.$(OBJEXT) \
-	database.$(OBJEXT) Evloop.$(OBJEXT) RecvTask.$(OBJEXT) \
-	SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) Sock.$(OBJEXT) \
-	makehouse.$(OBJEXT) puzzle.$(OBJEXT)
+	HandleClassRoom.$(OBJEXT) HandleRainbowValley.$(OBJEXT) \
+	teacher.$(OBJEXT) courseitem.$(OBJEXT) roommanager.$(OBJEXT) \
+	course.$(OBJEXT) student.$(OBJEXT) game.$(OBJEXT) \
+	grade.$(OBJEXT) LoginCheck.$(OBJEXT) room.$(OBJEXT) \
+	ThreadPool.$(OBJEXT) database.$(OBJEXT) Evloop.$(OBJEXT) \
+	RecvTask.$(OBJEXT) SendTask.$(OBJEXT) ProcessManager.$(OBJEXT) \
+	Sock.$(OBJEXT) makehouse.$(OBJEXT) puzzle.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 server_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.
@@ -95,20 +95,20 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/sxkj2/github/teachserver/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/sxkj2/bbbb/teachserver/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /home/sxkj2/github/teachserver/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/sxkj2/github/teachserver/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/sxkj2/github/teachserver/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/sxkj2/bbbb/teachserver/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/sxkj2/bbbb/teachserver/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/sxkj2/bbbb/teachserver/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = 
+CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = 
+CXXFLAGS = -g -O2
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
@@ -127,7 +127,7 @@ LDFLAGS =
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/sxkj2/github/teachserver/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/sxkj2/bbbb/teachserver/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = main
@@ -142,10 +142,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
-abs_builddir = /home/sxkj2/github/teachserver
-abs_srcdir = /home/sxkj2/github/teachserver
-abs_top_builddir = /home/sxkj2/github/teachserver
-abs_top_srcdir = /home/sxkj2/github/teachserver
+abs_builddir = /home/sxkj2/bbbb/teachserver
+abs_srcdir = /home/sxkj2/bbbb/teachserver
+abs_top_builddir = /home/sxkj2/bbbb/teachserver
+abs_top_srcdir = /home/sxkj2/bbbb/teachserver
 ac_ct_CC = gcc
 ac_ct_CXX = g++
 am__include = include
@@ -165,7 +165,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/sxkj2/github/teachserver/install-sh
+install_sh = ${SHELL} /home/sxkj2/bbbb/teachserver/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -197,7 +197,8 @@ server_SOURCES = ./main.cpp ./config.h ./Single.cpp ./QueueT.h \
 	./handler/HandleBuildHouse.cpp ./handler/HandleExercise.cpp \
 	./handler/HandlePuzzle.cpp ./handler/HandleCartoon.cpp \
 	./handler/HandleSprite.cpp ./handler/HandleMessage.h \
-	./handler/HandleClassRoom.cpp ./ThreadPool.h ./twomapT.h \
+	./handler/HandleClassRoom.cpp \
+	./handler/HandleRainbowValley.cpp ./ThreadPool.h ./twomapT.h \
 	./database.h ./content/teacher.cpp ./content/courseitem.cpp \
 	./content/roommanager.cpp ./content/course.cpp \
 	./content/courseitem.h ./content/student.cpp ./content/room.h \
@@ -319,6 +320,7 @@ include ./$(DEPDIR)/HandleClassRoom.Po
 include ./$(DEPDIR)/HandleExercise.Po
 include ./$(DEPDIR)/HandleMessage.Po
 include ./$(DEPDIR)/HandlePuzzle.Po
+include ./$(DEPDIR)/HandleRainbowValley.Po
 include ./$(DEPDIR)/HandleSprite.Po
 include ./$(DEPDIR)/LoginCheck.Po
 include ./$(DEPDIR)/ProcessManager.Po
@@ -521,6 +523,20 @@ HandleClassRoom.obj: ./handler/HandleClassRoom.cpp
 #	source='./handler/HandleClassRoom.cpp' object='HandleClassRoom.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleClassRoom.obj `if test -f './handler/HandleClassRoom.cpp'; then $(CYGPATH_W) './handler/HandleClassRoom.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleClassRoom.cpp'; fi`
+
+HandleRainbowValley.o: ./handler/HandleRainbowValley.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleRainbowValley.o -MD -MP -MF $(DEPDIR)/HandleRainbowValley.Tpo -c -o HandleRainbowValley.o `test -f './handler/HandleRainbowValley.cpp' || echo '$(srcdir)/'`./handler/HandleRainbowValley.cpp
+	$(am__mv) $(DEPDIR)/HandleRainbowValley.Tpo $(DEPDIR)/HandleRainbowValley.Po
+#	source='./handler/HandleRainbowValley.cpp' object='HandleRainbowValley.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleRainbowValley.o `test -f './handler/HandleRainbowValley.cpp' || echo '$(srcdir)/'`./handler/HandleRainbowValley.cpp
+
+HandleRainbowValley.obj: ./handler/HandleRainbowValley.cpp
+	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT HandleRainbowValley.obj -MD -MP -MF $(DEPDIR)/HandleRainbowValley.Tpo -c -o HandleRainbowValley.obj `if test -f './handler/HandleRainbowValley.cpp'; then $(CYGPATH_W) './handler/HandleRainbowValley.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleRainbowValley.cpp'; fi`
+	$(am__mv) $(DEPDIR)/HandleRainbowValley.Tpo $(DEPDIR)/HandleRainbowValley.Po
+#	source='./handler/HandleRainbowValley.cpp' object='HandleRainbowValley.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o HandleRainbowValley.obj `if test -f './handler/HandleRainbowValley.cpp'; then $(CYGPATH_W) './handler/HandleRainbowValley.cpp'; else $(CYGPATH_W) '$(srcdir)/./handler/HandleRainbowValley.cpp'; fi`
 
 teacher.o: ./content/teacher.cpp
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT teacher.o -MD -MP -MF $(DEPDIR)/teacher.Tpo -c -o teacher.o `test -f './content/teacher.cpp' || echo '$(srcdir)/'`./content/teacher.cpp

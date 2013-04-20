@@ -6,6 +6,7 @@
 
 CRoom::CRoom(int id, string class_name, string white_board):
     m_room_id(id),m_room_name(class_name),m_white_board(white_board) {
+        m_node_id = 1;
 }
 
 int CRoom::get_room_id() {
@@ -407,12 +408,71 @@ void CRoom::end_puzzle_by_fd(int fd) {
 }
 
 void CRoom::build_house_start(){
+#if 1
     CGroup* p_group = new CGroup("group1");
     STUDENTMAP::iterator iter;
     for(iter = m_student_map.begin(); iter != m_student_map.end(); ++iter) {
         p_group->add_student_to_group(iter->first, iter->second);
     }
+
+    //m_buildhouse_groups.insert (pair <int, CGroup*> (1, p_group));
+    add_group (1, p_group);
+#else
+    init_buildhouse_group (NUMS_STU_OF_GROUP);
+#endif
 }
 
 void CRoom::build_house_end(){
+
+    // clear groups of buildhouse
+    GROUPMAP::iterator iter;
+    for (iter = m_buildhouse_groups.begin(); iter != m_buildhouse_groups.end(); iter++) {
+        delete iter->second;
+        m_buildhouse_groups.erase(iter);
+    }
+}
+
+void CRoom::init_buildhouse_group (int numsOfStudent)
+{
+    int icnt = 0;
+    int iGroup = 1;
+    char sGroupName[64];
+
+    if (numsOfStudent < 1) {
+        cout << "ERROR: init_buildhouse_group(), numsOfStudent < 1" << endl;
+        return;
+    }
+
+    CGroup* p_group;
+    (void) memset (sGroupName, 0x00, sizeof (sGroupName));
+    sprintf (sGroupName, "BuildHouse_Group%d", iGroup++);
+    if ((p_group = new CGroup (sGroupName)) == NULL) {
+        cout << "ERROR: can't init build_house group" << endl;
+        return;
+    }
+
+    STUDENTMAP::iterator it;
+    for (it = m_student_map.begin(); it != m_student_map.end(); it++) {
+
+        p_group->add_student_to_group (it->first, it->second);
+
+        if (icnt == numsOfStudent) {
+            (void) memset (sGroupName, 0x00, sizeof (sGroupName));
+            sprintf (sGroupName, "BuildHouse_Group%d", iGroup++);
+            if ((p_group = new CGroup (sGroupName)) == NULL) {
+                cout << "ERROR: can't init build_house group" << endl;
+                return;
+            }
+            icnt = 0;
+            m_buildhouse_groups.insert (std::pair <int, CGroup*> (iGroup -1, p_group));
+            continue;
+        }
+
+        icnt++;
+    }
+}
+
+unsigned int CRoom::getAutoNodeId ()
+{
+    return (m_node_id++);
 }

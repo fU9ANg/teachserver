@@ -1,40 +1,79 @@
+
 #include "makehouse.h"
-CNode::CNode(){
+
+CNode::CNode(int client_fd)
+{
+    m_client_fd = client_fd;
+    m_position_x = 0.f;
+    m_position_y = 0.f;
+    m_angle = 0.f;
+    m_zoom = 0.f;
 };
 
-CNode::CNode(int x, int y){
+CNode::CNode(int client_fd, float x, float y)
+{
+    m_client_fd = client_fd;
     m_position_x = x;
     m_position_y = y;
 };
 
-CNode::~CNode(){
-}
-
-int CNode::move(int x,int y) {
+CNode::CNode(int client_fd, float x, float y, float angle)
+{
+    m_client_fd = client_fd;
     m_position_x = x;
     m_position_y = y;
-    return 0;
-}
+    m_angle = angle;
+};
 
-int CNode::move(int x,int y, double angle, double zoom) {
+CNode::CNode(int client_fd, float x, float y, float angle, float zoom)
+{
+    m_client_fd = client_fd;
     m_position_x = x;
     m_position_y = y;
     m_angle = angle;
     m_zoom = zoom;
-    return 0;
+};
+
+CNode::~CNode()
+{
 }
 
-bool CNode::lock(int user_id) {
-    if ( 0 == m_user_id) {
-        m_user_id = user_id;
+int CNode::update (int client_fd, float x, float y, float angle, float zoom)
+{
+    if (this->m_client_fd == client_fd) {
+        m_position_x = x;
+        m_position_y = y;
+        m_angle = angle;
+        m_zoom = zoom;
+    }
+    else {
+        cout << "update node 'client_fd != m_client_fd' in CNode::update" << endl;
+        return (1);
+    }
+    return (0);
+}
+
+int CMakeHouse::update (int client_fd, int node_id, float x, float y, float angle, float zoom)
+{
+    NODEMAP::iterator it = m_node_map.find (node_id);
+    if (it != m_node_map.end()) {
+        return (it->second->update (client_fd, x, y, angle, zoom));
+    }
+
+    return (1);
+}
+
+bool CNode::lock(int client_fd) {
+    if ( 0 == m_client_fd) {
+        m_client_fd = client_fd;
         return true;
     }
     return false;
 }
 
-bool CNode::unlock(int user_id) {
-    if ( 0 != m_user_id) {
-        m_user_id = 0;
+bool CNode::unlock(int client_fd) {
+    if ( 0 != m_client_fd) {
+        m_client_fd = 0;
         return true;
     }
     return false;
@@ -51,37 +90,60 @@ void CNode::set_name(string name) {
     m_name = name;
 }
 
-void CNode::get_location(int& x, int& y) {
+void CNode::get_location(float& x, float& y) {
     x = m_position_x;
     y = m_position_y;
 }
-void CNode::get_location(int& x, int& y, double& angle, double& zoom) {
+void CNode::get_location(float& x, float& y, float& angle, float& zoom)
+{
     x = m_position_x;
     y = m_position_y;
     angle = m_angle;
     zoom = m_zoom;
 }
 
-CMakeHouse::CMakeHouse(){
+CMakeHouse::CMakeHouse()
+{
 }
 
-CMakeHouse::~CMakeHouse(){
+CMakeHouse::~CMakeHouse()
+{
 }
 
-bool CMakeHouse::lock(int user_id, int node_id) {
+bool CMakeHouse::lock(int client_fd, int node_id)
+{
     return true;
 }
-bool CMakeHouse::unlock(int user_id, int node_id) {
+
+bool CMakeHouse::unlock(int client_fd, int node_id)
+{
     return true;
 }
 
-int CMakeHouse::add(int user_id, CNode* p_node) {
-    m_node_map.insert(pair<int, CNode*>(user_id, p_node));
+int CMakeHouse::add(int node_id, CNode* p_node)
+{
+    if (p_node == NULL)
+        return (1);
+
+    m_node_map.insert(pair<int, CNode*>(node_id, p_node));
     return 0;
 }
 
-list<CNode*>::iterator CMakeHouse::get_iterator_by_node_id(int node_id) {
-    list<CNode*>::iterator iter;
+int CMakeHouse::del(int node_id)
+{
+    NODEMAP::iterator it;
+    it = m_node_map.find (node_id);
+    if (it != m_node_map.end()) {
+        delete it->second;
+        m_node_map.erase(node_id);
+        return (0);
+    }
+    return (1);
+}
+
+std::list <CNode*>::iterator CMakeHouse::get_iterator_by_node_id(int node_id)
+{
+    std::list <CNode*>::iterator iter;
     for( iter = m_node_layer_list.begin();
          iter != m_node_layer_list.end(); iter++ ) {
         if ( (*iter)->get_node_id() == node_id) {
@@ -91,9 +153,10 @@ list<CNode*>::iterator CMakeHouse::get_iterator_by_node_id(int node_id) {
     return m_node_layer_list.end();
 }
 
-int CMakeHouse::layer_up(int node_id, int count) {
+int CMakeHouse::layer_up(int node_id, int count)
+{
     MutexLockGuard guard(this->m_node_layer_list_lock);
-    list<CNode*>::iterator iter = get_iterator_by_node_id(node_id);
+    NODELIST::iterator iter = get_iterator_by_node_id(node_id);
     if (iter == m_node_layer_list.end()) {
         return -1;
     }
@@ -108,9 +171,10 @@ int CMakeHouse::layer_up(int node_id, int count) {
     return i;
 }
 
-int CMakeHouse::layer_down(int node_id, int count) {
+int CMakeHouse::layer_down(int node_id, int count)
+{
     MutexLockGuard guard(this->m_node_layer_list_lock);
-    list<CNode*>::iterator iter = get_iterator_by_node_id(node_id);
+    NODELIST::iterator iter = get_iterator_by_node_id(node_id);
     if (iter == m_node_layer_list.end()) {
         return -1;
     }
@@ -123,14 +187,6 @@ int CMakeHouse::layer_down(int node_id, int count) {
         }
     }
     return i;
-}
-
-int CMakeHouse::move(int node_id, int to_x, int to_y) {
-    NODEMAP::iterator iter = m_node_map.find(node_id);
-    if (iter != m_node_map.end()){
-        iter->second->move(to_x, to_y);
-    }
-    return 0;
 }
 
 ////////// Class CGroup //////////
@@ -154,6 +210,10 @@ bool CGroup::add_student_to_group (int fd, CStudent* stu)
     {
         m_student_map.insert (std::pair<int, CStudent*> (fd, stu));
         return true;
+    }
+    else
+    {
+        cout << "ERROR: add_student_to_group() " << endl;
     }
 
     return false;
@@ -190,11 +250,37 @@ CStudent* CGroup::get_student_by_fd (int fd)
     return NULL;
 }
 
-void CGroup::broadcast(Buf* p) {
+void CGroup::broadcast(Buf* p)
+{
     STUDENTMAP::iterator it;
     for (it=m_student_map.begin(); it!=m_student_map.end();++it) {
         Buf* p_buf = SINGLE->bufpool.malloc();
         *p_buf = *p;
         SINGLE->sendqueue.enqueue(p_buf);
     }
+}
+
+void CGroup::sendToOtherStudent (Buf* p, enum CommandType eType)
+{
+    STUDENTMAP::iterator it;
+    for (it = m_student_map.begin(); it != m_student_map.end (); it++) {
+        if (p->getfd() == it->first) {
+            continue;
+        }
+
+        Buf* pp = SINGLE->bufpool.malloc ();
+        if (pp == NULL) {
+            cout << "out of memory" << endl;
+            return;
+        }
+        (void) memcpy (pp, p, ((MSG_HEAD *)p)->cLen);
+        ((MSG_HEAD*)p)->cType = eType;
+        pp->setfd (it->first);
+        SINGLE->sendqueue.enqueue (pp);
+    }
+
+    p->reset ();
+    SINGLE->bufpool.free (p);
+
+    return;
 }

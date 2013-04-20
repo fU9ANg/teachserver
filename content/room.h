@@ -26,6 +26,8 @@
 #include "HandleMessage.h"
 #include "puzzle.h"
 
+#define NUMS_STU_OF_GROUP   5
+
 typedef enum SceneType
 {
     ST_SCENE1 = 1,
@@ -46,7 +48,7 @@ class CRoom
 	typedef map<int, CStudent*> STUDENTMAP;
     typedef list<CCourse*> COURSELIST;
     typedef list<CGame*> GAMELIST;
-    typedef map<int, CGroup*> GROUPMAP; /* map<group_id, CGroup*> */
+    typedef map<int, CGroup*>  GROUPMAP;  /* map<group_id, CGroup *> */
     typedef map<int, CPuzzle*> PUZZLEMAP; /* map<group_id, CPuzzle*> */
 
 private:
@@ -99,12 +101,16 @@ public:
     int reset();
     void teacher_disconnect();
 
-    SceneType get_current_st (void);
+    SceneType  get_current_st (void);
     SceneState get_current_ss (void);
     void set_current_st (SceneType);
     void set_current_ss (SceneState);
 
     void update_all_student_status (int fd);
+    void init_buildhouse_group (int numsOfStudent);
+
+    unsigned int getAutoNodeId ();
+
 private:
     CTeacher m_teacher;
     int m_room_id;
@@ -116,10 +122,12 @@ private:
     string m_white_board;
     STUDENTMAP m_student_map;
     COURSELIST m_course_list;
-    GAMELIST m_game_list;
+    GAMELIST   m_game_list;
 
     SceneType   m_current_st;
     SceneState  m_current_ss;
+
+    unsigned int m_node_id;
 };
 
 #endif //_C_ROOM_H

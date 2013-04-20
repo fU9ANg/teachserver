@@ -86,6 +86,12 @@ int RecvTask::work ()
         if (0 != SINGLE->recvqueue.dequeue(p, 3)) {
             continue;
         }
+
+        if (p == NULL) {
+            cout << "ERROR: p==NULL in RecvTask::work()" << endl;
+            return (0);
+        }
+
         MSG_HEAD* head = (MSG_HEAD*) p->ptr();
         if (head != NULL)
         {
