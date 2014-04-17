@@ -108,7 +108,10 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
     }
 
     //收包头长度
-    int i = recv_v(w->fd, buf->ptr(), sizeof(int));
+    struct timeval timeout;
+    timeout.tv_sec  = 0;
+    timeout.tv_usec = 500;
+    int i = recv_n (w->fd, buf->ptr (), sizeof (int), &timeout);
     if ( sizeof(int) != i) {
         LOG(ERROR) << w->fd <<":recv head error! actually received len = "<< i 
             <<" info = "<< strerror(errno)<<endl;
@@ -118,7 +121,7 @@ void Evloop::recv_cb(struct ev_loop *loop, ev_io *w, int revents) {
 
     //收包体
     int *p = (int*)buf->ptr();
-    i = recv_v(w->fd, (char*)buf->ptr() + sizeof(int), *p - sizeof(unsigned int));
+    i = recv_n(w->fd, (char*)buf->ptr() + sizeof(int), *p - sizeof(unsigned int), &timeout);
 
     if ( (*p - sizeof(unsigned int)) != i) {
         LOG(ERROR) << w->fd <<":recv body error! hope = "<< *p <<" actually received len = "<< i 
